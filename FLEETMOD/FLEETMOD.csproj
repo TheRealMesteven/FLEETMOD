@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07CEDE4B-0881-4DC0-AA95-39BB897B6F98}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FLEETMOD</RootNamespace>
+    <AssemblyName>FLEETMOD</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony" />
+    <Reference Include="ACTk.Runtime" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>D:\Steam\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass" />
+    <Reference Include="Photon3Unity3D" />
+    <Reference Include="PLInputBase" />
+    <Reference Include="PulsarPluginLoader" />
+    <Reference Include="PulsarPluginLoader" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\Steam\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule" />
+    <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutToBeDestroyed.cs" />
+    <Compile Include="ActuallyJoinRoom.cs" />
+    <Compile Include="AddHostileShip.cs" />
+    <Compile Include="AttemptToTransferNeutralCargo.cs" />
+    <Compile Include="CalculateStats.cs" />
+    <Compile Include="ClaimShip.cs" />
+    <Compile Include="ClassChangeMessage.cs" />
+    <Compile Include="ClickEngage.cs" />
+    <Compile Include="CPEI_HandleActivateWarpDrive.cs" />
+    <Compile Include="EnemyClaimShip.cs" />
+    <Compile Include="EPlayerButtonType2.cs" />
+    <Compile Include="GetCachedFriendlyPlayerOfClassPatch.cs" />
+    <Compile Include="GetClassColorFromID.cs" />
+    <Compile Include="GetIsPlayerShipPatch.cs" />
+    <Compile Include="GetJoinGameElementFromRoomInfo.cs" />
+    <Compile Include="GetNumEnemiesLeft.cs" />
+    <Compile Include="GetShipUIElementForShip.cs" />
+    <Compile Include="GetTextOfCaptainOrderID.cs" />
+    <Compile Include="Internal_AttemptBlindJump.cs" />
+    <Compile Include="JumpBtnClick.cs" />
+    <Compile Include="KickSelf.cs" />
+    <Compile Include="MyVariables.cs" />
+    <Compile Include="NetworkToggleWarpCharge.cs" />
+    <Compile Include="OnButtonClick.cs" />
+    <Compile Include="OnButtonPress.cs" />
+    <Compile Include="OnCollect.cs" />
+    <Compile Include="OnEndWarp.cs" />
+    <Compile Include="OnPhotonSerializeView.cs" />
+    <Compile Include="OnWarp.cs" />
+    <Compile Include="Plugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemovePlayer.cs" />
+    <Compile Include="SafeLabelSetText.cs" />
+    <Compile Include="ServerAddCrewBotPlayer.cs" />
+    <Compile Include="ServerChangePlayerNames.cs" />
+    <Compile Include="ServerCreateShip.cs" />
+    <Compile Include="SetPlayerAsClassID.cs" />
+    <Compile Include="SetShipAsTarget.cs" />
+    <Compile Include="SetupTips.cs" />
+    <Compile Include="ShouldBeHostileToShip.cs" />
+    <Compile Include="ShouldShowClassSelectionScreen.cs" />
+    <Compile Include="TakeDamage.cs" />
+    <Compile Include="TeamMessage.cs" />
+    <Compile Include="Update.cs" />
+    <Compile Include="UpdateAllRightShips.cs" />
+    <Compile Include="UpdateButtons.cs" />
+    <Compile Include="UpdatePlayerOverview.cs" />
+    <Compile Include="UpdatePLGame.cs" />
+    <Compile Include="UpdatePLInGameUI.cs" />
+    <Compile Include="UpdatePLRepairDepot.cs" />
+    <Compile Include="UpdatePLTabMenu.cs" />
+    <Compile Include="UpdatePLWarpDriveScreen.cs" />
+    <Compile Include="UpdateRaceSectors.cs" />
+    <Compile Include="UpdateShipName.cs" />
+    <Compile Include="UpdateSpaceScrap.cs" />
+    <Compile Include="WarpSkipButtonClicked.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\0Harmony.dll" />
+    <Content Include="Lib\ACTk.Runtime.dll" />
+    <Content Include="Lib\Assembly-CSharp-firstpass.dll" />
+    <Content Include="Lib\Assembly-CSharp.dll" />
+    <Content Include="Lib\Photon3Unity3D.dll" />
+    <Content Include="Lib\PLInputBase.dll" />
+    <Content Include="Lib\PulsarPluginLoader.dll" />
+    <Content Include="Lib\UnityEngine.dll" />
+    <Content Include="Lib\UnityEngine.IMGUIModule.dll" />
+    <Content Include="Lib\UnityEngine.InputLegacyModule.dll" />
+    <Content Include="Lib\UnityEngine.InputModule.dll" />
+    <Content Include="Lib\UnityEngine.TextRenderingModule.dll" />
+    <Content Include="Lib\UnityEngine.UI.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
