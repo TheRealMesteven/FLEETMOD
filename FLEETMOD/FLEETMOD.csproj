@@ -132,6 +132,7 @@
     <Content Include="Lib\Photon3Unity3D.dll" />
     <Content Include="Lib\PLInputBase.dll" />
     <Content Include="Lib\PulsarPluginLoader.dll" />
+    <Content Include="Lib\UnityEngine.CoreModule.dll" />
     <Content Include="Lib\UnityEngine.dll" />
     <Content Include="Lib\UnityEngine.IMGUIModule.dll" />
     <Content Include="Lib\UnityEngine.InputLegacyModule.dll" />
