@@ -98,7 +98,7 @@ namespace FLEETMOD
 					{
 						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp")
 						{
-							PLGlobal.SafeLabelSetText(PLInGameUI.Instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(36, true)));
+							PLGlobal.SafeLabelSetText(PLInGameUI.Instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true)));
 							PLInGameUI.Instance.SkipWarpLabel.enabled = true;
 						}
 						else
@@ -124,7 +124,7 @@ namespace FLEETMOD
 							{
 								if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp")
 								{
-									text = text + "<color=#AAAAAA><color=#ffff00>" + PLInput.Instance.GetPrimaryKeyStringForAction(36, true) + "</color> Skip Warp</color>\n";
+									text = text + "<color=#AAAAAA><color=#ffff00>" + PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true) + "</color> Skip Warp</color>\n";
 								}
 							}
 							else

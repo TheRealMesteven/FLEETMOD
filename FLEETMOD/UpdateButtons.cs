@@ -112,7 +112,7 @@ namespace FLEETMOD
 								else
 								{
 									EFriendRelationship friendRelationship = SteamFriends.GetFriendRelationship(__instance.MyPlayer.GetPhotonPlayer().SteamID);
-									bool flag12 = friendRelationship == 3 || friendRelationship == 6;
+									bool flag12 = friendRelationship == EFriendRelationship.k_EFriendRelationshipFriend || friendRelationship == EFriendRelationship.k_EFriendRelationshipIgnoredFriend;
 									if (flag12)
 									{
 										text = "View Profile";
