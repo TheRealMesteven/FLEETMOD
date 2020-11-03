@@ -53,6 +53,6 @@ namespace FLEETMOD
 		}
 
 		// Token: 0x04000013 RID: 19
-		public static string myversion = "FLEETMOD v1.46";
+		public static string myversion = "FLEETMOD v1.47";
 	}
 }
