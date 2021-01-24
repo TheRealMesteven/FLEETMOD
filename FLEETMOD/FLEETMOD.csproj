@@ -40,7 +40,7 @@
     <Reference Include="Photon3Unity3D" />
     <Reference Include="PLInputBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\PLInputBase.dll</HintPath>
+      <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
     <Reference Include="PulsarPluginLoader" />
     <Reference Include="PulsarPluginLoader" />
@@ -135,7 +135,6 @@
     <Content Include="Lib\UnityEngine.dll" />
     <Content Include="Lib\UnityEngine.IMGUIModule.dll" />
     <Content Include="Lib\UnityEngine.InputLegacyModule.dll" />
-    <Content Include="Lib\UnityEngine.InputModule.dll" />
     <Content Include="Lib\UnityEngine.TextRenderingModule.dll" />
     <Content Include="Lib\UnityEngine.UI.dll" />
   </ItemGroup>
