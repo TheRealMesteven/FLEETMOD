@@ -38,7 +38,10 @@
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass" />
     <Reference Include="Photon3Unity3D" />
-    <Reference Include="PLInputBase" />
+    <Reference Include="PLInputBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\PLInputBase.dll</HintPath>
+    </Reference>
     <Reference Include="PulsarPluginLoader" />
     <Reference Include="PulsarPluginLoader" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -53,10 +56,6 @@
       <HintPath>Lib\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule" />
-    <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\UnityEngine.InputModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\UnityEngine.TextRenderingModule.dll</HintPath>
