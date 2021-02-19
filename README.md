@@ -15,11 +15,12 @@ Future Features:
 + Crew Organised Player Display - Not Started
 
 Current Bugs:
-A) F1 - Ship spawning bind - appears non functional
-B) Command Banner isnt displaying Admiral
-C) Right Display is flickering
-D) Skip Warp Display non-functional
+ - F1 - Ship spawning bind - appears non functional
+ - Cannot Pickup Scrap
+ - Command Banner isnt displaying Admiral
+ - Right Display is flickering
+ - Skip Warp Display non-functional
 
 Less Important:
-B) Warp needs a check for warping without to a sector without a waypoint setup. // Needs a bit more refinement for manual warps
-C) Every FleetMod gets skip warp option (Not all can trigger)
+ - Warp needs a check for warping without to a sector without a waypoint setup. // Needs a bit more refinement for manual warps
+ - Every FleetMod gets skip warp option (Not all can trigger)
