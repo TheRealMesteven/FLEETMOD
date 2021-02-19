@@ -82,7 +82,7 @@ namespace FLEETMOD
 						PLStarmap.Instance.CurrentShipPath.Clear();
 						PLServer.Instance.m_ShipCourseGoals.Clear();
 					}
-					bool flag10 = __instance != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null;
+					bool flag10 = __instance != null &&  PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null;
 					if (flag10)
 					{
 						bool flag11 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist != PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
@@ -91,12 +91,12 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						}
 						PLNetworkManager.Instance.LocalPlayer.StartingShip.LastBeginWarpServerTime = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.LastBeginWarpServerTime;
-						bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
+						bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked";
 						if (flag12)
 						{
 							PLMusic.PostEvent("play_sx_playermenu_click_major", PLServer.Instance.gameObject);
 							PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
-							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLCreateGameMenu());
+							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLCreateGameMenu(true));
 							PLTabMenu.Instance.TabMenuActive = false;
 						}
 						bool flag13 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID != 0;
