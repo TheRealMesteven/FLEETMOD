@@ -14,7 +14,7 @@ namespace FLEETMOD
 		public static void Postfix(PLServer __instance)
 		{
 			bool isrunningmod = MyVariables.isrunningmod;
-			if (isrunningmod)
+            if (isrunningmod)
 			{
 				bool flag = __instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null;
 				if (flag)
@@ -91,7 +91,7 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						}
 						PLNetworkManager.Instance.LocalPlayer.StartingShip.LastBeginWarpServerTime = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.LastBeginWarpServerTime;
-						bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime < 60f && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
+						bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
 						if (flag12)
 						{
 							PLMusic.PostEvent("play_sx_playermenu_click_major", PLServer.Instance.gameObject);
