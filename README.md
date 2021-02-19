@@ -16,5 +16,10 @@ Future Features:
 
 Current Bugs:
 A) F1 - Ship spawning bind - appears non functional
-B) Warp needs a check for warping without to a sector without a waypoint setup.
+B) Command Banner isnt displaying Admiral
+C) Right Display is flickering
+D) Skip Warp Display non-functional
+
+Less Important:
+B) Warp needs a check for warping without to a sector without a waypoint setup. // Needs a bit more refinement for manual warps
 C) Every FleetMod gets skip warp option (Not all can trigger)
