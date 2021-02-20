@@ -1,7 +1,5 @@
 Features:
-+ Fix Warp Issue - Finished
-- Fix Exception Spam - Finished
-- Fix Connection Issue - Finished
+- Updated to latest version
 
 
 Future Features:
@@ -14,7 +12,6 @@ Future Features:
 + Reintegrate Ship Claiming - Not Started
 + Crew Organised Player Display - Not Started
 
-Current Bugs:
-A) F1 - Ship spawning bind - appears non functional
-B) Warp needs a check for warping without to a sector without a waypoint setup.
-C) Every FleetMod gets skip warp option (Not all can trigger)
+Less Important:
+ - Warp needs a check for warping without to a sector without a waypoint setup. // Needs a bit more refinement for manual warps
+ - Every FleetMod gets skip warp option (Not all can trigger)
