@@ -96,7 +96,7 @@ namespace FLEETMOD
 					}
 					if (PLNetworkManager.Instance != null && PLNetworkManager.Instance.LocalPlayer != null)
 					{
-						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp")
+						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0) // If the skipwarp label should appear (Host nickname as skipwarp indicates we're in warp)
 						{
 							PLGlobal.SafeLabelSetText(PLInGameUI.Instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true)));
 							PLInGameUI.Instance.SkipWarpLabel.enabled = true;
