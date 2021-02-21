@@ -40,7 +40,7 @@ namespace FLEETMOD
 						PLPlayer localPlayer = PLNetworkManager.Instance.LocalPlayer;
 						localPlayer.FBBiscuitsSoldSinceWarp++;
 					}
-                    List<PLPlayer> list2 = new List<PLPlayer>();;
+                    List<PLPlayer> list2 = new List<PLPlayer>();
                     for (int i = 0; i < PLServer.Instance.AllPlayers.Count; i++)
 					{
                         PLPlayer plplayer = PLServer.Instance.AllPlayers[i];
