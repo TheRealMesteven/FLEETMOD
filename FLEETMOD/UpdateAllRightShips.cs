@@ -25,14 +25,44 @@ namespace FLEETMOD
 						bool flag2 = displayShipRightInfo.Ship.ShipID == PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore();
 						if (flag2)
 						{
-							displayShipRightInfo.NameLabel.color = Color.yellow;
-						}
+                            displayShipRightInfo.NameLabel.color = Color.yellow;
+                            foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                            {
+                                if (plplayer != null && plplayer.GetClassID() == 0 && PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer() != null)
+                                {
+                                    if (PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer().GetScore() == displayShipRightInfo.Ship.ShipID) // If Captain And Owns This Ship
+                                    {
+                                        displayShipRightInfo.TitleLabel.enabled = true;
+                                        PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "ADMIRAL • " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•") + 2));
+                                        displayShipRightInfo.TitleLabel.color = Color.yellow;
+                                    }
+                                }
+                            }
+                        }
 						bool flag3 = displayShipRightInfo.Ship.GetIsPlayerShip() && displayShipRightInfo.Ship.ShipID != PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore();
-						if (flag3)
-						{
-							displayShipRightInfo.NameLabel.color = Color.green;
-						}
-					}
+                        if (flag3)
+                        {
+                            displayShipRightInfo.NameLabel.color = Color.green;
+                            foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                            {
+                                if (plplayer != null && plplayer.GetClassID() == 0 && PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer() != null)
+                                {
+                                    if (PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer().GetScore() == displayShipRightInfo.Ship.ShipID) // If Captain And Owns This Ship
+                                    {
+                                        displayShipRightInfo.TitleLabel.enabled = true;
+                                        PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "CAPTAIN • " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•") + 2));
+                                        displayShipRightInfo.TitleLabel.color = Color.green;
+                                    }
+                                }
+                            }
+                        }
+                        if (displayShipRightInfo.Ship.GetIsPlayerShip() && displayShipRightInfo.TitleLabel.enabled && displayShipRightInfo.NameLabel.GetComponent<RectTransform>().anchoredPosition3D.y == 0f)
+                        {
+                            displayShipRightInfo.TitleLabel.alignment = TextAnchor.MiddleRight;
+                            displayShipRightInfo.NameLabel.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(displayShipRightInfo.NameLabel.transform.localPosition.x, -5f, displayShipRightInfo.NameLabel.transform.localPosition.z);
+                            displayShipRightInfo.TitleLabel.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(displayShipRightInfo.TitleLabel.transform.localPosition.x, 15f, displayShipRightInfo.TitleLabel.transform.localPosition.z);
+                        }
+                    }
 				}
 			}
 		}
