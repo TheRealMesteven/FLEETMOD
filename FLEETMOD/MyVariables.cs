@@ -7,5 +7,7 @@ namespace FLEETMOD
 	{
 		// Token: 0x0400000C RID: 12
 		public static bool isrunningmod = false;
-	}
+        public static bool shipfriendlyfire = true;
+        public static bool shipgodmode = false;
+    }
 }

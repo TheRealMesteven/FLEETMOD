@@ -22,7 +22,7 @@ namespace FLEETMOD
 		{
 			get
 			{
-				return "Michael";
+				return "Micheal + Mest";
 			}
 		}
 
@@ -49,10 +49,10 @@ namespace FLEETMOD
 		// Token: 0x06000078 RID: 120 RVA: 0x000020AE File Offset: 0x000002AE
 		public override string HarmonyIdentifier()
 		{
-			return "Michael.Fleetmod";
+			return "Michael+Mest.Fleetmod";
 		}
 
 		// Token: 0x04000013 RID: 19
-		public static string myversion = "FLEETMOD v1.47";
+		public static string myversion = "FLEETMOD v1.48";
 	}
 }
