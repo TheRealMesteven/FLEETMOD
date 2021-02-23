@@ -26,8 +26,32 @@ namespace FLEETMOD
 							break;
 						}
 					}
-				}
-			}
+				}/*
+                bool flag = PLServer.Instance != null;
+                if (flag)
+                {
+                    if (PhotonNetwork.isMasterClient)
+                    {
+                        float lowestrange = -1;
+                        foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
+                        {
+                            if (plshipInfoBase != null && plshipInfoBase.TagID == -23)
+                            {
+                                if (lowestrange > plshipInfoBase.MyStats.WarpRange || lowestrange == -1)
+                                {
+                                    lowestrange = plshipInfoBase.MyStats.WarpRange;
+                                }
+                            }
+                        }
+                        ___m_WarpRange = lowestrange;
+                        MyVariables.warprange = ___m_WarpRange;
+                    }
+                    else
+                    {
+                        ___m_WarpRange = MyVariables.warprange;
+                    }
+                }*/
+            }
 		}
 	}
 }

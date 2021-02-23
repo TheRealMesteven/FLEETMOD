@@ -69,7 +69,7 @@ namespace FLEETMOD
 					PLNetworkManager.Instance.LocalPlayer.GetPlayerID(),
 					__instance.ShipNameField.text
 				});
-				PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu(string.Concat(new string[]
+                PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu(string.Concat(new string[]
 				{
 					"<color=#0066FF>You Are Now The Captain Of ",
 					__instance.ShipNameField.text,

@@ -78,7 +78,7 @@ namespace FLEETMOD
 						PLNetworkManager.Instance.ConsoleText.Insert(0, "You Have Joined - Press TAB Button To Choose Your Class And Ship");
 						PLNetworkManager.Instance.LocalPlayer.SetHasStarted(true);
 						PhotonNetwork.player.SetScore(1);
-					}
+                    }
 					bool flag10 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == -1 && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("•") && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 4f;
 					if (flag10)
 					{

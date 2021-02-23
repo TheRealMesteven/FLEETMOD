@@ -28,8 +28,8 @@ namespace FLEETMOD
 						{
 							plshipInfoBase.SkipWarp();
 							plshipInfoBase.InWarp = false;
-							plshipInfoBase.WarpChargeStage = EWarpChargeStage.E_WCS_COLD_START;
-						}
+                            plshipInfoBase.WarpChargeStage = EWarpChargeStage.E_WCS_COLD_START;
+                        }
 					}
 				}
 				result = false;
