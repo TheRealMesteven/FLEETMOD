@@ -1,17 +1,31 @@
-Features:
-- Updated to latest version
+Added Features:
++ All Updated & Functional
 
+Current Test Feature Additions:
++ Rewrite Cargo Transfer (Reidentify player ship as players custom ship) - Finished
++ f8 Only appears to captains - Finished
++ Sector Commander titles for fleets (Captain Names) - Finished
++ Added Invulnerability command (Effects all ships) - Finished
++* Added a ship friendly fire command (Add ship targetting instead of tp) - Needs Serverwide Update
 
 Future Features:
-+ Restored Captain Orders - Can Implement
-+ Sector Commander titles for fleets - Can Implement (Would Perfer to add Captain Names For All Fleet Ships)
-+ Command To Spawn A New Fleet Ship - Not Started
-+ Restore Automated Plotting - Not Started
-+ Ship Friendly Fire - Not Started
-+ Reintegrate Comms Proximity, Crew & Captains (Choice Option) - Not Started
-+ Reintegrate Ship Claiming - Not Started
-+ Crew Organised Player Display - Not Started
-
-Less Important:
- - Warp needs a check for warping without to a sector without a waypoint setup. // Needs a bit more refinement for manual warps
- - Every FleetMod gets skip warp option (Not all can trigger)
+- Fix Warp Bundling of ships? (Low Priority)
+- Fix "Random" Bans between games
+- Fix sensors so both ships detect the same ships / remove the detection of main host unidentified ships
+- Fix the High Rollers for non-main ship wins
+-* Link the Warp ranges to one ship (Host or Lowest Range?)
+- Somehow fix the mod for Linux
++* Add Ship Limit (Admiral Applied & Window request to admiral)
++ Allow ship status screens to scroll through ships
++ ? Allow Fuel transfer
++ Bind Shipwide talents to specified players (Probably first of said class)
+Currently : Talents apply to last scientist joined & visually host sees talents apply to all yet people see it if ?their scientist have it?
++ Rewrite Crew Activity Alerts to be clearer
++ Talking GUI Merge (Sort by ship occupied & Disable actual plugin)
++ Integrate max players as an option for more non-mod players
++ Add GUI for component movement between ships
++* Restore Automated Plotting
++ Restore Captain Orders?
++ Reintegrate Comms Proximity, Crew & Captains (Choice Option)
++ Reintegrate Ship Claiming
+Maybe a bit of a rewrite to get it to perform smoother
