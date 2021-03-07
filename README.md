@@ -14,19 +14,27 @@ Current Test Feature Additions:
 
 
 Future Features:
+
 * * Mod Adaption * *
+  
 + Integrate max players as an option for more non-mod players
 + Bind Shipwide talents to specified players (Probably first of said class)
 + Talking GUI Merge (Sort by ship occupied & Disable actual plugin)
+
 * * Reimplementation * *
+
 - Fix Warp Bundling of ships? (Low Priority)
 + Restore Captain Orders?
 + Rewrite Crew Activity Alerts to be clearer
+
 * * Bug Patches * *
+
 - Somehow fix the mod for Linux
 - Fix sensors so both ships detect the same ships 
 - Fix nonfleetmod initialise (Fairly sure its Tab menu negative on server close)
+
 * * Difficult * *
+
 -* Link the Warp ranges to one ship (Host or Lowest Range?) - Needs reworking (Disabled)
 + Reintegrate Comms Proximity, Crew & Captains (Choice Option)
 - Add ship saving / loading
@@ -34,7 +42,9 @@ Future Features:
 - Fix "Random" Bans between games
 - Fix the High Rollers for non-main ship wins
 + Allow ship status screens to scroll through ships
+
 * * Needs GUI * *
+
 + Ship Spawn Request For Admiral
 + Add GUI for component movement between ships
 + Reintegrate Ship Claiming
