@@ -11,22 +11,19 @@ namespace FLEETMOD
 		// Token: 0x0600000B RID: 11 RVA: 0x0000251C File Offset: 0x0000071C
 		public static void Postfix(ref ObscuredFloat ___m_WarpRange)
 		{
-			bool isrunningmod = MyVariables.isrunningmod;
-			if (isrunningmod)
+			if (MyVariables.isrunningmod)
 			{
-				bool flag = PLServer.Instance != null;
-				if (flag)
+				if (PLServer.Instance != null)
 				{
 					foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 					{
-						bool flag2 = plshipInfoBase != null && plshipInfoBase.TagID == -23;
-						if (flag2)
+						if (plshipInfoBase != null && plshipInfoBase.TagID == -23)
 						{
 							___m_WarpRange = plshipInfoBase.MyStats.WarpRange;
 							break;
 						}
 					}
-				}/*
+				}/*    /// STARTED WORKING ON REWRITING WARP RANGE CALCULATION BUT NOT MUCH LUCK. PROBS LOOK INTO THE GAMES IMPLEMENTATION
                 bool flag = PLServer.Instance != null;
                 if (flag)
                 {
