@@ -5,19 +5,15 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000003 RID: 3
 	[HarmonyPatch(typeof(PLNetworkManager), "Update")]
 	internal class SetupTips
 	{
-		// Token: 0x06000001 RID: 1 RVA: 0x000020CC File Offset: 0x000002CC
 		public static bool Prefix(ref int ___TipNumber, ref List<string> ___TipStrings)
 		{
 			Debug.unityLogger.logEnabled = false;
-			bool flag = ___TipStrings.Count > 20;
-			if (flag)
+			if (___TipStrings.Count > 20)
 			{
-				bool flag2 = PLXMLOptionsIO.Instance.CurrentOptions.HasStringValue("TipNumber");
-				if (flag2)
+				if (PLXMLOptionsIO.Instance.CurrentOptions.HasStringValue("TipNumber"))
 				{
 					___TipNumber = PLXMLOptionsIO.Instance.CurrentOptions.GetStringValueAsInt("TipNumber");
 				}

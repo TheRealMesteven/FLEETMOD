@@ -10,18 +10,15 @@ namespace FLEETMOD
 		// Token: 0x0600006E RID: 110 RVA: 0x00009460 File Offset: 0x00007660
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				bool flag2 = inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip());
-				result = !flag2;
+				return !(inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip()));
 			}
-			return result;
 		}
 	}
 }

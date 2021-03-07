@@ -3,24 +3,20 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000033 RID: 51
 	[HarmonyPatch(typeof(PLServer), "SetPlayerAsClassID")]
 	internal class SetPlayerAsClassID
 	{
-		// Token: 0x06000064 RID: 100 RVA: 0x00008F90 File Offset: 0x00007190
 		public static bool Prefix(int playerID, int classID)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(playerID);
-				bool flag2 = playerFromPlayerID != null;
-				if (flag2)
+				if (playerFromPlayerID != null)
 				{
 					bool flag3 = false;
 					foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
