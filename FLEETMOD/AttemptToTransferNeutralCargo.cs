@@ -12,20 +12,17 @@ namespace FLEETMOD
 		// Token: 0x06000046 RID: 70 RVA: 0x00006684 File Offset: 0x00004884
 		public static bool Prefix(int inCurrentShipID, int inNetID, PLPlayer __instance)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
 				result = true;
 			}
 			else
 			{
-				bool flag2 = PLEncounterManager.Instance != null;
-				if (flag2)
+				if (PLEncounterManager.Instance != null)
 				{
 					PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(inCurrentShipID) as PLShipInfo; // ? Gets current ship player is on
-					bool flag3 = plshipInfo != null;
-					if (flag3)
+					if (plshipInfo != null)
 					{
                         int inID = 1;
                         bool Check = false;
