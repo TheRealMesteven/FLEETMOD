@@ -13,9 +13,8 @@ namespace FLEETMOD
 		public static bool Prefix(PLUICreateGameMenu __instance, ref int ___CurrentSelectedShipIndex)
 		{
 			Debug.unityLogger.logEnabled = false;
-			bool flag = PLServer.Instance != null && PLServer.Instance.GameHasStarted;
 			bool result;
-			if (flag)
+			if (PLServer.Instance != null && PLServer.Instance.GameHasStarted)
 			{
 				PLMusic.PostEvent("play_sx_playermenu_click_major", PLGlobal.Instance.gameObject);
 				switch (___CurrentSelectedShipIndex)
