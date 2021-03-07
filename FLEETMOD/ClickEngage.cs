@@ -5,17 +5,14 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000012 RID: 18
 	[HarmonyPatch(typeof(PLUICreateGameMenu), "ClickEngage")]
 	internal class ClickEngage
 	{
-		// Token: 0x0600001F RID: 31 RVA: 0x00004844 File Offset: 0x00002A44
 		public static bool Prefix(PLUICreateGameMenu __instance, ref int ___CurrentSelectedShipIndex)
 		{
 			Debug.unityLogger.logEnabled = false;
-			bool flag = PLServer.Instance != null && PLServer.Instance.GameHasStarted;
 			bool result;
-			if (flag)
+			if (PLServer.Instance != null && PLServer.Instance.GameHasStarted)
 			{
 				PLMusic.PostEvent("play_sx_playermenu_click_major", PLGlobal.Instance.gameObject);
 				switch (___CurrentSelectedShipIndex)
@@ -51,13 +48,11 @@ namespace FLEETMOD
 					PLNetworkManager.Instance.SelectedShipTypeID = ___CurrentSelectedShipIndex;
 					break;
 				}
-				bool flag2 = PLNetworkManager.Instance.SelectedShipTypeID == 8;
-				if (flag2)
+				if (PLNetworkManager.Instance.SelectedShipTypeID == 8)
 				{
 					PLNetworkManager.Instance.SelectedShipTypeID = 3;
 				}
-				bool flag3 = PLNetworkManager.Instance.SelectedShipTypeID == 0;
-				if (flag3)
+				if (PLNetworkManager.Instance.SelectedShipTypeID == 0)
 				{
 					PLNetworkManager.Instance.SelectedShipTypeID = 62;
 				}

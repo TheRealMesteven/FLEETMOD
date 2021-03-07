@@ -5,11 +5,9 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000024 RID: 36
 	[HarmonyPatch(typeof(PLPlayer), "AttemptToTransferNeutralCargo")]
 	internal class AttemptToTransferNeutralCargo
 	{
-		// Token: 0x06000046 RID: 70 RVA: 0x00006684 File Offset: 0x00004884
 		public static bool Prefix(int inCurrentShipID, int inNetID, PLPlayer __instance)
 		{
 			bool result;

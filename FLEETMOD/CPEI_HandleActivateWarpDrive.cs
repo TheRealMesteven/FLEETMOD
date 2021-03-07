@@ -4,23 +4,19 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000031 RID: 49
 	[HarmonyPatch(typeof(PLServer), "CPEI_HandleActivateWarpDrive")]
 	internal class CPEI_HandleActivateWarpDrive
 	{
-		// Token: 0x06000060 RID: 96 RVA: 0x00008C2C File Offset: 0x00006E2C
 		public static bool Prefix(int shipID, int playerID)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
 				result = true;
 			}
 			else
 			{
-				bool flag2 = !PLServer.Instance.GetPlayerFromPlayerID(playerID).GetPlayerName(false).Contains("•");
-				if (flag2)
+				if (!PLServer.Instance.GetPlayerFromPlayerID(playerID).GetPlayerName(false).Contains("•"))
 				{
 					result = false;
 				}
@@ -34,27 +30,23 @@ namespace FLEETMOD
 						true
 					});
 					int num = UnityEngine.Random.Range(0, 10);
-					bool flag3 = num == 50 && PLNetworkManager.Instance.LocalPlayer != null;
-					if (flag3)
+					if (num == 50 && PLNetworkManager.Instance.LocalPlayer != null)
 					{
 						int num2 = -1;
 						for (int i = 0; i < PLGlobal.Instance.Galaxy.AllSectorInfos.Count * 8; i++)
 						{
 							int num3 = UnityEngine.Random.Range(0, PLGlobal.Instance.Galaxy.AllSectorInfos.Count * 2);
-							bool flag4 = PLGlobal.Instance.Galaxy.AllSectorInfos.ContainsKey(num3);
-							if (flag4)
+							if (PLGlobal.Instance.Galaxy.AllSectorInfos.ContainsKey(num3))
 							{
 								PLSectorInfo plsectorInfo = PLGlobal.Instance.Galaxy.AllSectorInfos[num3];
-								bool flag5 = plsectorInfo != null && plsectorInfo.ID != PLServer.Instance.GetCurrentHubID();
-								if (flag5)
+								if (plsectorInfo != null && plsectorInfo.ID != PLServer.Instance.GetCurrentHubID())
 								{
 									num2 = num3;
 									break;
 								}
 							}
 						}
-						bool flag6 = num2 != -1;
-						if (flag6)
+						if (num2 != -1)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{
@@ -67,8 +59,7 @@ namespace FLEETMOD
 					}
 					else
 					{
-						bool flag7 = PLNetworkManager.Instance.LocalPlayer != null;
-						if (flag7)
+						if (PLNetworkManager.Instance.LocalPlayer != null)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{

@@ -3,11 +3,9 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200001D RID: 29
 	[HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
 	internal class ActuallyJoinRoom
 	{
-		// Token: 0x06000038 RID: 56 RVA: 0x00005A60 File Offset: 0x00003C60
 		public static bool Prefix(RoomInfo room)
 		{
 			bool result;

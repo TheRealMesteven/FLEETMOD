@@ -3,16 +3,13 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200002E RID: 46
 	[HarmonyPatch(typeof(PLServer), "ClaimShip")]
 	internal class ClaimShip
 	{
-		// Token: 0x0600005A RID: 90 RVA: 0x000087E8 File Offset: 0x000069E8
 		public static bool Prefix(PLServer __instance, int inShipID)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
 				result = true;
 			}
@@ -20,26 +17,22 @@ namespace FLEETMOD
 			{
 				foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 				{
-					bool flag2 = plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID);
-					if (flag2)
+					if (plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
 					{
 						plplayer.StartingShip = null;
 					}
 				}
-				bool flag3 = !PhotonNetwork.isMasterClient;
-				if (flag3)
+				if (!PhotonNetwork.isMasterClient)
 				{
 					result = false;
 				}
 				else
 				{
-					bool flag4 = PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1;
-					if (flag4)
+					if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
 					{
 						foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
 						{
-							bool flag5 = plplayer2 != null && !plplayer2.IsBot;
-							if (flag5)
+							if (plplayer2 != null && !plplayer2.IsBot)
 							{
 								PLServer.Instance.photonView.RPC("AddNotification", plplayer2.GetPhotonPlayer(), new object[]
 								{
