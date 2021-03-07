@@ -1,31 +1,52 @@
+Fleetmod - Cover For Mikey - Inprogress
+
 Added Features:
 + All Updated & Functional
-
 Current Test Feature Additions:
 + Rewrite Cargo Transfer (Reidentify player ship as players custom ship) - Finished
 + f8 Only appears to captains - Finished
 + Sector Commander titles for fleets (Captain Names) - Finished
 + Added Invulnerability command (Effects all ships) - Finished
-+* Added a ship friendly fire command (Add ship targetting instead of tp) - Needs Serverwide Update
++ Added a ship friendly fire command (Add ship targetting instead of tp) - Finished
+
++ Restore Automated Plotting - Needs Test
++ Add Ship Limit - Needs Test
+
 
 Future Features:
-- Fix Warp Bundling of ships? (Low Priority)
-- Fix "Random" Bans between games
-- Fix sensors so both ships detect the same ships / remove the detection of main host unidentified ships
-- Fix the High Rollers for non-main ship wins
--* Link the Warp ranges to one ship (Host or Lowest Range?)
-- Somehow fix the mod for Linux
-+* Add Ship Limit (Admiral Applied & Window request to admiral)
-+ Allow ship status screens to scroll through ships
-+ ? Allow Fuel transfer
-+ Bind Shipwide talents to specified players (Probably first of said class)
-Currently : Talents apply to last scientist joined & visually host sees talents apply to all yet people see it if ?their scientist have it?
-+ Rewrite Crew Activity Alerts to be clearer
-+ Talking GUI Merge (Sort by ship occupied & Disable actual plugin)
+
+* * Mod Adaption * *
+  
 + Integrate max players as an option for more non-mod players
-+ Add GUI for component movement between ships
-+* Restore Automated Plotting
++ Bind Shipwide talents to specified players (Probably first of said class)
++ Talking GUI Merge (Sort by ship occupied & Disable actual plugin)
+
+* * Reimplementation * *
+
+- Fix Warp Bundling of ships? (Low Priority)
 + Restore Captain Orders?
++ Rewrite Crew Activity Alerts to be clearer
+
+* * Bug Patches * *
+
+- Somehow fix the mod for Linux
+- Fix sensors so both ships detect the same ships 
+- Fix nonfleetmod initialise (Fairly sure its Tab menu negative on server close)
+
+* * Difficult * *
+
+-* Link the Warp ranges to one ship (Host or Lowest Range?) - Needs reworking (Disabled)
 + Reintegrate Comms Proximity, Crew & Captains (Choice Option)
+- Add ship saving / loading
+- Test & Fix Sensor dish scrap collecting
+- Fix "Random" Bans between games
+- Fix the High Rollers for non-main ship wins
++ Allow ship status screens to scroll through ships
+
+* * Needs GUI * *
+
++ Ship Spawn Request For Admiral
++ Add GUI for component movement between ships
 + Reintegrate Ship Claiming
++ ? Allow Fuel transfer
 Maybe a bit of a rewrite to get it to perform smoother
