@@ -1,8 +1,10 @@
-# Fleetmod - Cover For Mikey - Inprogress
+# Fleetmod (In Progress)
+Originally designed by Mikey 
 
 ## Added Features:
 - [x] All Updated & Functional
-Current Test Feature Additions:
+
+### Current Test Feature Additions:
 - [x] Rewrite Cargo Transfer (Reidentify player ship as players custom ship) - Finished
 - [x] f8 Only appears to captains - Finished
 - [x] Sector Commander titles for fleets (Captain Names) - Finished
