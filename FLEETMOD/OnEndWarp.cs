@@ -11,7 +11,7 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -27,9 +27,8 @@ namespace FLEETMOD
                         }
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }
