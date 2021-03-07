@@ -77,12 +77,6 @@ namespace FLEETMOD
 					{
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;
 					}
-					bool flag9 = PLStarmap.Instance.CurrentShipPath.Count > 2;
-					if (flag9)
-					{
-						PLStarmap.Instance.CurrentShipPath.Clear();
-						PLServer.Instance.m_ShipCourseGoals.Clear();
-					}
 					bool flag10 = __instance != null && !PhotonNetwork.isMasterClient &&  PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null;
 					if (flag10)
 					{

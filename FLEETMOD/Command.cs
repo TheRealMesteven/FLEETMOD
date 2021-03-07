@@ -85,5 +85,42 @@ namespace FLEETMOD
                 return false;
             }
         }
+        private class FLEETMODShipLimit : IChatCommand
+        {
+            // Token: 0x0600000C RID: 12 RVA: 0x000029DC File Offset: 0x00000BDC
+            public string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "shiplimit"
+                };
+            }
+
+            // Token: 0x0600000D RID: 13 RVA: 0x000029FC File Offset: 0x00000BFC
+            public string Description()
+            {
+                return "Fleetmod Ship Friendlyfire limit";
+            }
+
+            // Token: 0x0600000E RID: 14 RVA: 0x00002A14 File Offset: 0x00000C14
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0];
+            }
+
+            // Token: 0x0600000F RID: 15 RVA: 0x00002A38 File Offset: 0x00000C38
+            public bool Execute(string arguments)
+            {
+                if (MyVariables.isrunningmod)
+                {
+                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                    {
+                        MyVariables.shipcount = arguments[0];
+                        PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Limit Set To:"+MyVariables.shipcount+"\nRemember -1 removes the limit");
+                    }
+                }
+                return false;
+            }
+        }
     }
 }
