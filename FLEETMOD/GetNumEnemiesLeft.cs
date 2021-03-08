@@ -8,10 +8,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref int __result)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -31,9 +30,8 @@ namespace FLEETMOD
 					}
 				}
 				__result = num;
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

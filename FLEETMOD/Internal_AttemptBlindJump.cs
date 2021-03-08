@@ -9,10 +9,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(int inShipID)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -25,14 +24,13 @@ namespace FLEETMOD
 					});
 					PLEncounterManager.Instance.GetShipFromID(inShipID).DestroySelf(PLEncounterManager.Instance.GetShipFromID(inShipID));
 					UnityEngine.Object.Destroy(PLEncounterManager.Instance.GetShipFromID(inShipID).gameObject);
-					result = false;
+					return false;
 				}
 				else
 				{
-					result = true;
+					return true;
 				}
 			}
-			return result;
 		}
 	}
 }

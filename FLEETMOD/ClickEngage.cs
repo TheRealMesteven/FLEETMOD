@@ -11,7 +11,6 @@ namespace FLEETMOD
 		public static bool Prefix(PLUICreateGameMenu __instance, ref int ___CurrentSelectedShipIndex)
 		{
 			Debug.unityLogger.logEnabled = false;
-			bool result;
 			if (PLServer.Instance != null && PLServer.Instance.GameHasStarted)
 			{
 				PLMusic.PostEvent("play_sx_playermenu_click_major", PLGlobal.Instance.gameObject);
@@ -72,14 +71,13 @@ namespace FLEETMOD
 					PLGlobal.Instance.ClassDesc[0],
 					"</color>"
 				})));
-				result = false;
+				return false;
 			}
 			else
 			{
 				MyVariables.isrunningmod = true;
-				result = true;
+				return true;
 			}
-			return result;
 		}
 	}
 }

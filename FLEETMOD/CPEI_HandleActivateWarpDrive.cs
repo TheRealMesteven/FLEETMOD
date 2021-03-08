@@ -12,13 +12,13 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				if (!PLServer.Instance.GetPlayerFromPlayerID(playerID).GetPlayerName(false).Contains("•"))
 				{
-					result = false;
+					return false;
 				}
 				else
 				{
@@ -70,10 +70,9 @@ namespace FLEETMOD
 							});
 						}
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }

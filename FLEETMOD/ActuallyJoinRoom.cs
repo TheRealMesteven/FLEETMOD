@@ -8,7 +8,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(RoomInfo room)
 		{
-			bool result;
 			if ((int)room.CustomProperties["CurrentPlayersPlusBots"] < (int)room.MaxPlayers)
 			{
 				if (room.CustomProperties.ContainsKey("SteamServerID"))
@@ -41,14 +40,13 @@ namespace FLEETMOD
 					MyVariables.isrunningmod = false;
 					PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("Sorry, This Server Is Running FleetMod Version " + (string)room.CustomProperties["Ship_Type"] + "\n You Have Version " + Plugin.myversion));
 				}
-				result = false;
+				return false;
 			}
 			else
 			{
 				PLTabMenu.Instance.TimedErrorMsg = "Couldn't join crew! It is full!";
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

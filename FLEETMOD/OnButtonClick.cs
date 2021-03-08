@@ -8,18 +8,14 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(UIWidget inButton)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
-				string name = inButton.name;
-				bool flag2 = !PhotonNetwork.isMasterClient && !(name == "Jump");
-				result = !flag2;
+				return !(!PhotonNetwork.isMasterClient && !(inButton.name == "Jump")); // Can probably be simplified but I don't want to mess it up without knowing logic
 			}
-			return result;
 		}
 	}
 }

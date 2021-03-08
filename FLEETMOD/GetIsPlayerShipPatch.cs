@@ -8,24 +8,22 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance, ref bool __result)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				if (__instance.TagID == -23)
 				{
 					__result = true;
-					result = false;
+					return false;
 				}
 				else
 				{
-					result = true;
+					return true;
 				}
 			}
-			return result;
 		}
 	}
 }

@@ -9,10 +9,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLSpaceScrap __instance, ref int ___m_EncounterNetID)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -71,9 +70,8 @@ namespace FLEETMOD
 						}
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

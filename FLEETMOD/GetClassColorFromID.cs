@@ -12,7 +12,7 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -40,9 +40,8 @@ namespace FLEETMOD
 					__result = new Color(0.4f, 0.4f, 0.4f, 1f);
 					break;
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

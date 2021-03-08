@@ -11,7 +11,7 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -24,7 +24,7 @@ namespace FLEETMOD
 				}
 				if (!PhotonNetwork.isMasterClient)
 				{
-					result = false;
+					return false;
 				}
 				else
 				{
@@ -44,11 +44,11 @@ namespace FLEETMOD
 							}
 						}
 						PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = -1;
-						result = false;
+						return false;
 					}
 					else
 					{
-						result = false;
+						return false;
 					}
 				}
 			}

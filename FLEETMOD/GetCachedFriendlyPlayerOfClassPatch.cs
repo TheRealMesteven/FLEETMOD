@@ -14,13 +14,13 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				if (inClass == 0)
 				{
-					result = PLServer.Instance.GetPlayerFromPlayerID(0);
+					return PLServer.Instance.GetPlayerFromPlayerID(0);
 				}
 				else
 				{
@@ -31,10 +31,9 @@ namespace FLEETMOD
 							return plplayer;
 						}
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace FLEETMOD
 			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -20,9 +20,8 @@ namespace FLEETMOD
 					__instance.HostileShips.Add(inShip.ShipID);
 					___HostileShipAdded_NeedsResetForTargeting = true;
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

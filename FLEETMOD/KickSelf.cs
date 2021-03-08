@@ -8,10 +8,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PhotonMessageInfo pmi)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -21,9 +20,8 @@ namespace FLEETMOD
 					PLLoader.Instance.IsWaitingOnNetwork = true;
 					PLNetworkManager.Instance.StartCoroutine("DelayedLeaveGame", 0.5f);
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

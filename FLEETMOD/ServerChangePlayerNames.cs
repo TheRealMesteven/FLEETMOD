@@ -9,8 +9,7 @@ namespace FLEETMOD
 		{
 			foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 			{
-				bool flag = plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetPhotonPlayer().GetScore() == (int)arguments[1];
-				if (flag)
+				if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetPhotonPlayer().GetScore() == (int)arguments[1])
 				{
 					int startIndex = plplayer.GetPlayerName(false).LastIndexOf("•");
 					plplayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]

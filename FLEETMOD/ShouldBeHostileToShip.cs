@@ -3,11 +3,9 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000038 RID: 56
 	[HarmonyPatch(typeof(PLShipInfoBase), "ShouldBeHostileToShip")]
 	internal class ShouldBeHostileToShip
 	{
-		// Token: 0x0600006E RID: 110 RVA: 0x00009460 File Offset: 0x00007660
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip)
 		{
 			if (!MyVariables.isrunningmod)

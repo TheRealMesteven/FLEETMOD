@@ -65,7 +65,6 @@ namespace FLEETMOD
 						{
 							plplayer2 = list2[num];
 						}
-						bool flag7 = ;
 						if (plplayer2 != null)
 						{
 							ploverviewPlayerInfoDisplay.ClassID = plplayer2.GetClassID();

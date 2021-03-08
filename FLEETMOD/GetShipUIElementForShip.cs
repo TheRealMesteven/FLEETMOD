@@ -9,10 +9,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref List<PLUIOutsideWorldUI.ShipUIElement> ___DisplayedShipUIElements)
 		{
-			bool result;
 			if (MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -30,9 +29,8 @@ namespace FLEETMOD
 						}
 					}
 				}
-				result = true;
+				return true;
 			}
-			return result;
 		}
 	}
 }

@@ -9,10 +9,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, int inShipID, int inWarpCharge, PhotonMessageInfo pmi)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -25,7 +24,7 @@ namespace FLEETMOD
 						PLServer.Instance.GetEstimatedServerMs() + 3000,
 						true
 					});
-					result = false;
+					return false;
 				}
 				else
 				{
@@ -72,10 +71,9 @@ namespace FLEETMOD
 						}
 						shipFromID.WarpChargeStage = (EWarpChargeStage)inWarpCharge;
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }

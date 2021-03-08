@@ -6,11 +6,9 @@ using UnityEngine.UI;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000016 RID: 22
 	[HarmonyPatch(typeof(PLInGameUI), "Update")]
 	internal class UpdatePLInGameUI
 	{
-		// Token: 0x06000028 RID: 40 RVA: 0x000050E8 File Offset: 0x000032E8
 		public static void Postfix(PLInGameUI __instance, ref List<PLPlayer> ___relevantPlayersForCrewStatus, ref PLCachedFormatString<string> ___cSkipWarpLabel, ref Text[] ___CrewStatusSlots_HPs, ref Text[] ___CrewStatusSlots_Names, ref Image[] ___CrewStatusSlots_BGs, ref Image[] ___CrewStatusSlots_Fills, ref Image[] ___CrewStatusSlots_TalkingImages, ref Image[] ___CrewStatusSlots_SlowFills)
 		{
 			if (MyVariables.isrunningmod)

@@ -9,7 +9,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref DBM_InputField ___ShipNameInput, ref string ___CachedShipName)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;

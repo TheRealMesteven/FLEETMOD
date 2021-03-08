@@ -8,7 +8,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, int playerID, string message)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;
@@ -31,7 +30,7 @@ namespace FLEETMOD
 						text
 					}));
 					PLInGameUI.Instance.ForceChatTextAsDirty = true;
-					result = false;
+					return false;
 				}
 				else
 				{
@@ -58,10 +57,9 @@ namespace FLEETMOD
 							PLInGameUI.Instance.ForceChatTextAsDirty = true;
 						}
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }

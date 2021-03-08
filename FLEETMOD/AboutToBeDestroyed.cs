@@ -9,10 +9,9 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -55,9 +54,8 @@ namespace FLEETMOD
 					}
 					__instance.TagID = -1;
 				}
-				result = true;
+				return true;
 			}
-			return result;
 		}
 	}
 }
