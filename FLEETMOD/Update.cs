@@ -149,6 +149,7 @@ namespace FLEETMOD
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(1.2f, -386f, 18.4f);
 							}
+							bool flag28 =;
 							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_SYLVASSI)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-16.1f, -397.5f, -15.5f);
@@ -289,19 +290,23 @@ namespace FLEETMOD
 							}
 							hashtable.Add("PlayerSteamIDs", text);
 						}
-						if (!(hashtable.Count != PhotonNetwork.room.CustomProperties.Count)) // Can probably be simplified more just don't want to mess it up
+						bool flag46 = hashtable.Count != PhotonNetwork.room.CustomProperties.Count;
+						bool flag47 = !flag46;
+						if (flag47)
 						{
 							foreach (object obj in hashtable.Keys)
 							{
 								string text2 = (string)obj;
-								if (PhotonNetwork.room.CustomProperties[text2].ToString() != hashtable[text2].ToString())
+								bool flag48 = PhotonNetwork.room.CustomProperties[text2].ToString() != hashtable[text2].ToString();
+								if (flag48)
 								{
 									flag46 = true;
 									break;
 								}
 							}
 						}
-						if (hashtable.Count != PhotonNetwork.room.CustomProperties.Count)
+						bool flag49 = flag46;
+						if (flag49)
 						{
 							PhotonNetwork.room.SetCustomProperties(hashtable, null, false);
 						}
