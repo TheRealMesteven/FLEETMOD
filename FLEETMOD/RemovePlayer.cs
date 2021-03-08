@@ -9,7 +9,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, ref PLPlayer inPlayer)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;

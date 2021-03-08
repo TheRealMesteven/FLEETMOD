@@ -11,7 +11,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, ref int inClass)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;

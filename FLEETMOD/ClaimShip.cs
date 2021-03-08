@@ -52,7 +52,6 @@ namespace FLEETMOD
 					}
 				}
 			}
-			return result;
 		}
 	}
 }

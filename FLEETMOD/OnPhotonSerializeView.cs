@@ -8,7 +8,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServerClassInfo __instance, ref int ___m_ClassID)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;

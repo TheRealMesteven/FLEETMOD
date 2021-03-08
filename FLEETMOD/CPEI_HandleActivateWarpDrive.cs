@@ -9,7 +9,6 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(int shipID, int playerID)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				return true;
