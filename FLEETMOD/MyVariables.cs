@@ -8,5 +8,6 @@ namespace FLEETMOD
         public static bool shipfriendlyfire = true;
         public static bool shipgodmode = false;
         //public static float warprange = -1;
+        public static int shipcount = -1;
     }
 }
