@@ -15,14 +15,17 @@ namespace FLEETMOD
                     "godmode"
                 };
             }
+            
             public string Description()
             {
                 return "Fleetmod Godmode";
             }
+            
             public string UsageExample()
             {
                 return "/" + this.CommandAliases()[0];
             }
+            
             public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
@@ -46,14 +49,17 @@ namespace FLEETMOD
                     "friendlyfire"
                 };
             }
+            
             public string Description()
             {
                 return "Fleetmod ship friendly fire";
             }
+            
             public string UsageExample()
             {
                 return "/" + this.CommandAliases()[0];
             }
+            
             public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
@@ -64,6 +70,39 @@ namespace FLEETMOD
                         PulsarPluginLoader.ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[]{});
                         if (MyVariables.shipfriendlyfire) { PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE DISABLED", Color.white, 2, "" }); }
                         else { PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" }); }
+                    }
+                }
+                return false;
+            }
+        }
+        private class FLEETMODShipLimit : IChatCommand
+        {
+            public string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "shiplimit"
+                };
+            }
+            
+            public string Description()
+            {
+                return "Fleetmod Ship Friendlyfire limit";
+            }
+            
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0];
+            }
+            
+            public bool Execute(string arguments)
+            {
+                if (MyVariables.isrunningmod)
+                {
+                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                    {
+                        MyVariables.shipcount = arguments[0];
+                        PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Limit Set To:"+MyVariables.shipcount+"\nRemember -1 removes the limit");
                     }
                 }
                 return false;
