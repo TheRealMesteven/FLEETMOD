@@ -99,7 +99,7 @@ namespace FLEETMOD
             // Token: 0x0600000D RID: 13 RVA: 0x000029FC File Offset: 0x00000BFC
             public string Description()
             {
-                return "Fleetmod Ship Friendlyfire limit";
+                return "Fleetmod Ship limit";
             }
 
             // Token: 0x0600000E RID: 14 RVA: 0x00002A14 File Offset: 0x00000C14
@@ -115,7 +115,8 @@ namespace FLEETMOD
                 {
                     if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
                     {
-                        MyVariables.shipcount = arguments[0];
+                        MyVariables.shipcount = Int32.Parse(arguments);
+                        PLNetworkManager.Instance.ConsoleText.Insert(0, "Ship Limit Set To " + MyVariables.shipcount);
                         PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Limit Set To:"+MyVariables.shipcount+"\nRemember -1 removes the limit");
                     }
                 }
