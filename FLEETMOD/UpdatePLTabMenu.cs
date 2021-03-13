@@ -5,36 +5,29 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000013 RID: 19
 	[HarmonyPatch(typeof(PLTabMenu), "Update")]
 	internal class UpdatePLTabMenu
 	{
-		// Token: 0x06000021 RID: 33 RVA: 0x00004A6C File Offset: 0x00002C6C
 		public static void Postfix(PLTabMenu __instance)
 		{
-			bool isrunningmod = MyVariables.isrunningmod;
-			if (isrunningmod)
+			if (MyVariables.isrunningmod)
 			{
-                bool flag = __instance != null && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 3f;
-				if (flag)
+				if (__instance != null && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 3f)
 				{
                     List<PLShipInfoBase> list = new List<PLShipInfoBase>();
 					foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 					{
-						bool flag2 = plshipInfoBase.TagID == -23 && plshipInfoBase != null;
-						if (flag2)
+						if (plshipInfoBase.TagID == -23 && plshipInfoBase != null)
 						{
 							list.Add(plshipInfoBase);
                         }
 					}
-					bool flag3 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.Comma) && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp > 0 && __instance.TabMenuActive;
-					if (flag3)
+					if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.Comma) && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp > 0 && __instance.TabMenuActive)
 					{
 						PLMusic.PostEvent("play_titlemenu_ui_click", __instance.gameObject);
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp - 1;
 					}
-                    bool flag4 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.Period) && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp < list.Count - 1 && __instance.TabMenuActive;
-					if (flag4)
+					if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.Period) && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp < list.Count - 1 && __instance.TabMenuActive)
 					{
 						PLMusic.PostEvent("play_titlemenu_ui_click", __instance.gameObject);
 						PLPlayer localPlayer = PLNetworkManager.Instance.LocalPlayer;
@@ -44,8 +37,7 @@ namespace FLEETMOD
                     for (int i = 0; i < PLServer.Instance.AllPlayers.Count; i++)
 					{
                         PLPlayer plplayer = PLServer.Instance.AllPlayers[i];
-                        bool flag5 = plplayer != null && plplayer.TeamID == 0 && plplayer.StartingShip != null && plplayer.StartingShip == list[PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp];
-                        if (flag5)
+                        if (plplayer != null && plplayer.TeamID == 0 && plplayer.StartingShip != null && plplayer.StartingShip == list[PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp])
 						{
                             list2.Add(plplayer);
                         }
@@ -54,13 +46,11 @@ namespace FLEETMOD
 					{
 						int num2 = p1.GetClassID();
 						int num3 = p2.GetClassID();
-						bool flag8 = num2 == -1;
-						if (flag8)
+						if (num2 == -1)
 						{
 							num2 = 6 + p1.GetPlayerID();
 						}
-						bool flag9 = num3 == -1;
-						if (flag9)
+						if (num3 == -1)
 						{
 							num3 = 6 + p2.GetPlayerID();
 						}
@@ -71,13 +61,11 @@ namespace FLEETMOD
 					{
 						PLOverviewPlayerInfoDisplay ploverviewPlayerInfoDisplay = __instance.PlayerInfoDisplays[j];
 						PLPlayer plplayer2 = null;
-						bool flag6 = list2.Count > num;
-						if (flag6)
+						if (list2.Count > num)
 						{
 							plplayer2 = list2[num];
 						}
-						bool flag7 = plplayer2 != null;
-						if (flag7)
+						if (plplayer2 != null)
 						{
 							ploverviewPlayerInfoDisplay.ClassID = plplayer2.GetClassID();
 						}

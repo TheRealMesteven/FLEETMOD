@@ -5,23 +5,20 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000024 RID: 36
 	[HarmonyPatch(typeof(PLPlayer), "AttemptToTransferNeutralCargo")]
 	internal class AttemptToTransferNeutralCargo
 	{
-		// Token: 0x06000046 RID: 70 RVA: 0x00006684 File Offset: 0x00004884
 		public static bool Prefix(int inCurrentShipID, int inNetID, PLPlayer __instance)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				if (PLEncounterManager.Instance != null)
 				{
-					PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(inCurrentShipID) as PLShipInfo; // Gets current ship player is on
+					PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(inCurrentShipID) as PLShipInfo; // ? Gets current ship player is on
 					if (plshipInfo != null)
 					{
                         int inID = 1;
@@ -51,9 +48,8 @@ namespace FLEETMOD
                         }
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

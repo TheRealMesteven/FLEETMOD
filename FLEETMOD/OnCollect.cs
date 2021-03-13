@@ -4,44 +4,35 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200001E RID: 30
 	[HarmonyPatch(typeof(PLSpaceScrap), "OnCollect")]
 	internal class OnCollect
 	{
-		// Token: 0x0600003A RID: 58 RVA: 0x00005C60 File Offset: 0x00003E60
 		public static bool Prefix(PLSpaceScrap __instance, ref int ___m_EncounterNetID)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
-				bool flag2 = !__instance.Collected;
-				if (flag2)
+				if (!__instance.Collected)
 				{
 					PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(PLNetworkManager.Instance.LocalPlayer.FBSellAttemptsLeft) as PLShipInfo;
-					bool flag3 = PLAcademyShipInfo.Instance != null;
-					if (flag3)
+					if (PLAcademyShipInfo.Instance != null)
 					{
 						plshipInfo = PLAcademyShipInfo.Instance;
 					}
-					bool flag4 = PhotonNetwork.isMasterClient && plshipInfo != null && PLServer.Instance != null;
-					if (flag4)
+					if (PhotonNetwork.isMasterClient && plshipInfo != null && PLServer.Instance != null)
 					{
 						PLSlot slot = plshipInfo.MyStats.GetSlot(ESlotType.E_COMP_CARGO);
-						bool flag5 = slot != null && (slot.Count < slot.MaxItems || plshipInfo.ShipTypeID == EShipType.E_ACADEMY);
-						if (flag5)
+						if (slot != null && (slot.Count < slot.MaxItems || plshipInfo.ShipTypeID == EShipType.E_ACADEMY))
 						{
 							__instance.Collected = true;
 							PLServer.Instance.photonView.RPC("ScrapCollectedEffect", PhotonTargets.All, new object[]
 							{
 								__instance.transform.position
 							});
-							bool flag6 = plshipInfo.ShipTypeID == EShipType.E_ACADEMY;
-							if (flag6)
+							if (plshipInfo.ShipTypeID == EShipType.E_ACADEMY)
 							{
 								return false;
 							}
@@ -49,31 +40,26 @@ namespace FLEETMOD
 							{
 								__instance.EncounterNetID
 							});
-							bool isSpecificComponentScrap = __instance.IsSpecificComponentScrap;
-							if (isSpecificComponentScrap)
+							if (__instance.IsSpecificComponentScrap)
 							{
 								plshipInfo.MyStats.AddShipComponent(PLWare.CreateFromHash(1, __instance.SpecificComponent_CompHash) as PLShipComponent, -1, ESlotType.E_COMP_CARGO);
 								return false;
 							}
-							bool canGiveComponent = __instance.CanGiveComponent;
-							if (canGiveComponent)
+							if (__instance.CanGiveComponent)
 							{
 								PLRand plrand = new PLRand(PLServer.Instance.GalaxySeed + PLServer.Instance.GetCurrentHubID() + ___m_EncounterNetID);
 								int num = plrand.Next(0, 200);
-								bool flag7 = PLEncounterManager.Instance.PlayerShip.ShipTypeID == EShipType.E_CARRIER;
-								if (flag7)
+								if (PLEncounterManager.Instance.PlayerShip.ShipTypeID == EShipType.E_CARRIER)
 								{
 									num = plrand.Next(0, 75);
 								}
 								Mathf.RoundToInt(Mathf.Pow(plrand.Next(0f, 1f), 4f) * PLServer.Instance.ChaosLevel);
 								PLShipComponent plshipComponent = null;
-								bool flag8 = num < 50 && __instance.SpecificComponent_CompHash != -1;
-								if (flag8)
+								if (num < 50 && __instance.SpecificComponent_CompHash != -1)
 								{
 									plshipComponent = PLShipComponent.CreateShipComponentFromHash(__instance.SpecificComponent_CompHash, null);
 								}
-								bool flag9 = plshipComponent == null;
-								if (flag9)
+								if (plshipComponent == null)
 								{
 									plshipComponent = new PLScrapCargo(0);
 								}
@@ -84,9 +70,8 @@ namespace FLEETMOD
 						}
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

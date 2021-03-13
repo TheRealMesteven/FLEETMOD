@@ -3,31 +3,27 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200002E RID: 46
 	[HarmonyPatch(typeof(PLServer), "ClaimShip")]
 	internal class ClaimShip
 	{
-		// Token: 0x0600005A RID: 90 RVA: 0x000087E8 File Offset: 0x000069E8
 		public static bool Prefix(PLServer __instance, int inShipID)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 				{
-					bool flag2 = plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID);
-					if (flag2)
+					if (plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
 					{
 						plplayer.StartingShip = null;
 					}
 				}
 				if (!PhotonNetwork.isMasterClient)
 				{
-					result = false;
+					return false;
 				}
 				else
 				{
@@ -47,15 +43,14 @@ namespace FLEETMOD
 							}
 						}
 						PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = -1;
-						result = false;
+						return false;
 					}
 					else
 					{
-						result = false;
+						return false;
 					}
 				}
 			}
-			return result;
 		}
 	}
 }

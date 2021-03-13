@@ -3,28 +3,22 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200000A RID: 10
 	[HarmonyPatch(typeof(PLServerClassInfo), "OnPhotonSerializeView")]
 	internal class OnPhotonSerializeView
 	{
-		// Token: 0x0600000F RID: 15 RVA: 0x000025F0 File Offset: 0x000007F0
 		public static bool Prefix(PLServerClassInfo __instance, ref int ___m_ClassID)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
-				bool flag2 = PhotonNetwork.isMasterClient && ___m_ClassID != -1 && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null && __instance.ClassLockerInventory.AllItems.Count <= 1;
-				if (flag2)
+				if (PhotonNetwork.isMasterClient && ___m_ClassID != -1 && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null && __instance.ClassLockerInventory.AllItems.Count <= 1)
 				{
 					int num = (PLEncounterManager.Instance.PlayerShip.FactionID == 1) ? 1 : 0;
-					bool flag3 = ___m_ClassID == 3;
 					int pawnInvItemIDCounter;
-					if (flag3)
+					if ( ___m_ClassID == 3)
 					{
 						PLPawnInventoryBase classLockerInventory = __instance.ClassLockerInventory;
 						PLServer instance = PLServer.Instance;
@@ -34,8 +28,7 @@ namespace FLEETMOD
 					}
 					else
 					{
-						bool flag4 = ___m_ClassID == 2;
-						if (flag4)
+						if (___m_ClassID == 2)
 						{
 							PLPawnInventoryBase classLockerInventory2 = __instance.ClassLockerInventory;
 							PLServer instance2 = PLServer.Instance;
@@ -52,11 +45,9 @@ namespace FLEETMOD
 							classLockerInventory3.UpdateItem(pawnInvItemIDCounter, 2, 0, num, -1);
 						}
 					}
-					bool flag5 = PLEncounterManager.Instance.PlayerShip.FactionID == 3;
-					if (flag5)
+					if (PLEncounterManager.Instance.PlayerShip.FactionID == 3)
 					{
-						bool flag6 = ___m_ClassID == 4;
-						if (flag6)
+						if (___m_ClassID == 4)
 						{
 							PLPawnInventoryBase classLockerInventory4 = __instance.ClassLockerInventory;
 							PLServer instance4 = PLServer.Instance;
@@ -75,8 +66,7 @@ namespace FLEETMOD
 					}
 					else
 					{
-						bool flag7 = ___m_ClassID == 4;
-						if (flag7)
+						if (___m_ClassID == 4)
 						{
 							PLPawnInventoryBase classLockerInventory6 = __instance.ClassLockerInventory;
 							PLServer instance6 = PLServer.Instance;
@@ -98,8 +88,7 @@ namespace FLEETMOD
 					pawnInvItemIDCounter = instance8.PawnInvItemIDCounter;
 					instance8.PawnInvItemIDCounter = pawnInvItemIDCounter + 1;
 					classLockerInventory8.UpdateItem(pawnInvItemIDCounter, 4, 0, 0, -1);
-					bool flag8 = ___m_ClassID == 2;
-					if (flag8)
+					if (___m_ClassID == 2)
 					{
 						PLPawnInventoryBase classLockerInventory9 = __instance.ClassLockerInventory;
 						PLServer instance9 = PLServer.Instance;
@@ -109,9 +98,8 @@ namespace FLEETMOD
 					}
 					PLTabMenu.Instance.ShouldRecreateLocalInventory = true;
 				}
-				result = true;
+				return true;
 			}
-			return result;
 		}
 	}
 }

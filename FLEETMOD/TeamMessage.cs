@@ -3,24 +3,19 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200002D RID: 45
 	[HarmonyPatch(typeof(PLServer), "TeamMessage")]
 	internal class TeamMessage
 	{
-		// Token: 0x06000058 RID: 88 RVA: 0x00008618 File Offset: 0x00006818
 		public static bool Prefix(PLServer __instance, int playerID, string message)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
 				PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(playerID);
-				bool flag2 = playerID == 0 && playerFromPlayerID != null;
-				if (flag2)
+				if (playerID == 0 && playerFromPlayerID != null)
 				{
 					string text = message.Replace("[&%~[C", "").Replace(" ]&%~]", "");
 					PLNetworkManager.Instance.ConsoleText.Insert(0, string.Concat(new object[]
@@ -35,19 +30,16 @@ namespace FLEETMOD
 						text
 					}));
 					PLInGameUI.Instance.ForceChatTextAsDirty = true;
-					result = false;
+					return false;
 				}
 				else
 				{
-					bool flag3 = playerFromPlayerID != null && playerFromPlayerID.TeamID == 0 && playerID != 0;
-					if (flag3)
+					if (playerFromPlayerID != null && playerFromPlayerID.TeamID == 0 && playerID != 0)
 					{
 						string text2 = message.Replace("[&%~[C", "").Replace(" ]&%~]", "");
-						bool flag4 = text2.Length > 0;
-						if (flag4)
+						if (text2.Length > 0)
 						{
-							bool flag5 = text2.Length > 500;
-							if (flag5)
+							if (text2.Length > 500)
 							{
 								text2 = text2.Substring(0, 500) + " ...";
 							}
@@ -65,10 +57,9 @@ namespace FLEETMOD
 							PLInGameUI.Instance.ForceChatTextAsDirty = true;
 						}
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }
