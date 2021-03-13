@@ -12,6 +12,7 @@ namespace FLEETMOD
 		{
 			bool flag = !MyVariables.isrunningmod;
 			bool result;
+            PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
 			if (flag)
 			{
 				result = true;
@@ -26,7 +27,7 @@ namespace FLEETMOD
 					bool flag2 = plshipInfoBase.TagID < -3 && plshipInfoBase != null;
 					if (flag2)
 					{
-						bool flag3 = PLServer.Instance.m_ShipCourseGoals.Count > 0 && plshipInfoBase.WarpTargetID != PLServer.Instance.m_ShipCourseGoals[0];
+						bool flag3 = PLServer.Instance.m_ShipCourseGoals.Count > 0 && plshipInfoBase.WarpTargetID != map.ID;
 						if (flag3)
 						{
 							num++;

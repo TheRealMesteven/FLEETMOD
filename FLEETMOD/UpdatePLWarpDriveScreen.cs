@@ -20,12 +20,13 @@ namespace FLEETMOD
 				string text = "";
 				string str = "";
 				string str2 = "";
-				foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
+                PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
+                foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
 					bool flag = plshipInfoBase.TagID < -3 && plshipInfoBase != null && PLServer.Instance.m_ShipCourseGoals.Count > 0;
 					if (flag)
 					{
-						bool flag2 = plshipInfoBase.WarpTargetID != PLServer.Instance.m_ShipCourseGoals[0];
+						bool flag2 = plshipInfoBase.WarpTargetID != map.ID;
 						if (flag2)
 						{
 							num++;
@@ -116,7 +117,7 @@ namespace FLEETMOD
 									bool flag12 = PLServer.Instance.m_ShipCourseGoals.Count > 0;
 									if (flag12)
 									{
-										___BlindJumpBtnLabel.text = PLServer.Instance.m_ShipCourseGoals[0].ToString();
+										___BlindJumpBtnLabel.text = map.ID.ToString();
 									}
 									else
 									{
@@ -197,15 +198,15 @@ namespace FLEETMOD
 												"Align ",
 												text,
 												"to ",
-												PLServer.Instance.m_ShipCourseGoals[0]
+												map.ID
 											});
 											___m_JumpButtonLabelTop.text = string.Concat(new object[]
 											{
 												"Align ",
 												text,
 												" to ",
-												PLServer.Instance.m_ShipCourseGoals[0]
-											});
+                                                map.ID
+                                            });
 										}
 									}
 								}

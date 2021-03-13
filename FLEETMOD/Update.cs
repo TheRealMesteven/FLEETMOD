@@ -59,17 +59,17 @@ namespace FLEETMOD
 					{
 						str = "<color=#FF6600>";
 					}
-					PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
-					{
-						"Server : " + PhotonNetwork.room.Name + "\n \n",
-						str + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(true) + "\n \n </color>",
-						string.Concat(new object[]
-						{
-							"Players : ",
-							PhotonNetwork.room.PlayerCount,
-							" / ",
-							PhotonNetwork.room.MaxPlayers,
-							"\n\n"
+                    PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
+                    {
+                        "Server : " + PhotonNetwork.room.Name + "\n \n",
+                        str + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(true) + "\n \n </color>",
+                        string.Concat(new object[]
+                        {
+                            "Players : ",
+                            PhotonNetwork.room.PlayerCount,
+                            " / ",
+                            PhotonNetwork.room.MaxPlayers,
+                            "\n\n"
 						})
 					});
 					bool flag8 = PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0;
@@ -77,14 +77,14 @@ namespace FLEETMOD
 					{
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;
 					}
-					bool flag10 = __instance != null && !PhotonNetwork.isMasterClient &&  PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null;
+					bool flag10 = __instance != null && !PhotonNetwork.isMasterClient &&  PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null; // This is where warp range bindings occur
 					if (flag10)
 					{
 						bool flag11 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist != PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						if (flag11)
 						{
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
-						}
+						} // This is end of warp range bindings
 						PLNetworkManager.Instance.LocalPlayer.StartingShip.LastBeginWarpServerTime = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.LastBeginWarpServerTime;
                         bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
                         if (flag12)

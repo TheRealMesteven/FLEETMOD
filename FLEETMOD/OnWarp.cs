@@ -40,7 +40,7 @@ namespace FLEETMOD
 								PLNetworkManager.Instance.LocalPlayer.StartingShip.MyTLI.SubHubID,
 								0
 							});
-							plshipInfoBase.WarpTravelDist = 1f;
+                            plshipInfoBase.WarpTravelDist = 1f;
 							plshipInfoBase.WarpTargetID = PLEncounterManager.Instance.PlayerShip.WarpTargetID;
 							plshipInfoBase.WarpTravelPercent = 0f;
 							plshipInfoBase.InWarp = true;
