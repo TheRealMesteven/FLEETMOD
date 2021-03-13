@@ -4,15 +4,12 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200000F RID: 15
 	[HarmonyPatch(typeof(PLWarpDriveScreen), "Update")]
 	internal class UpdatePLWarpDriveScreen
 	{
-		// Token: 0x06000019 RID: 25 RVA: 0x00003B00 File Offset: 0x00001D00
 		public static void Postfix(PLWarpDriveScreen __instance, ref UISprite ___JumpComputerPanel, ref UISprite ___WarpDrivePanel, ref UISprite ___m_BlockingTargetOnboardPanel, ref UILabel ___m_JumpButtonLabel, ref UILabel ___BlindJumpBtnLabel, ref UILabel ___BlindJumpWarning, ref UISprite ___BlindJumpBtn, ref float ___TargetAlpha_WarpPanel, ref UILabel ___m_JumpButtonLabelTop, ref UILabel ___m_BlockingTargetOnboardPanelTitle, ref UIPanel ___m_JumpButtonMask, ref UIPanel[] ___ChargeStage_BarMask, ref UILabel[] ___ChargeStage_Label, string[] ___ChargeStage_Name)
 		{
-			bool isrunningmod = MyVariables.isrunningmod;
-			if (isrunningmod)
+			if (MyVariables.isrunningmod)
 			{
 				int num = 0;
 				int num2 = 0;
