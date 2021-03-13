@@ -4,23 +4,18 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000030 RID: 48
 	[HarmonyPatch(typeof(PLServer), "NetworkToggleWarpCharge")]
 	internal class NetworkToggleWarpCharge
 	{
-		// Token: 0x0600005E RID: 94 RVA: 0x000089C8 File Offset: 0x00006BC8
 		public static bool Prefix(PLServer __instance, int inShipID, int inWarpCharge, PhotonMessageInfo pmi)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
-				bool flag2 = !PLServer.GetPlayerForPhotonPlayer(pmi.sender).GetPlayerName(false).Contains("•");
-				if (flag2)
+				if (!PLServer.GetPlayerForPhotonPlayer(pmi.sender).GetPlayerName(false).Contains("•"))
 				{
 					PLServer.Instance.photonView.RPC("AddNotification", pmi.sender, new object[]
 					{
@@ -29,35 +24,28 @@ namespace FLEETMOD
 						PLServer.Instance.GetEstimatedServerMs() + 3000,
 						true
 					});
-					result = false;
+					return false;
 				}
 				else
 				{
-					bool isDebugBuild = Debug.isDebugBuild;
-					if (isDebugBuild)
+					if (Debug.isDebugBuild)
 					{
 						Debug.Log("QDB: ------------------------------------------------------------------------------------------------");
 					}
 					PLShipInfoBase shipFromID = PLEncounterManager.Instance.GetShipFromID(inShipID);
-					bool flag3 = shipFromID != null;
-					if (flag3)
+					if (shipFromID != null)
 					{
-						bool flag4 = PhotonNetwork.isMasterClient && pmi.sender != null && shipFromID.WarpChargeStage != (EWarpChargeStage)inWarpCharge && shipFromID != null && shipFromID.GetIsPlayerShip();
-						if (flag4)
+						if (PhotonNetwork.isMasterClient && pmi.sender != null && shipFromID.WarpChargeStage != (EWarpChargeStage)inWarpCharge && shipFromID != null && shipFromID.GetIsPlayerShip())
 						{
 							PLPlayer playerForPhotonPlayer = PLServer.GetPlayerForPhotonPlayer(pmi.sender);
-							bool flag5 = playerForPhotonPlayer != null && playerForPhotonPlayer.TeamID == 0 && !playerForPhotonPlayer.IsBot;
-							if (flag5)
+							if (playerForPhotonPlayer != null && playerForPhotonPlayer.TeamID == 0 && !playerForPhotonPlayer.IsBot)
 							{
 								PLPlayer cachedFriendlyPlayerOfClass = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
-								bool flag6 = cachedFriendlyPlayerOfClass != null && playerForPhotonPlayer != cachedFriendlyPlayerOfClass;
-								if (flag6)
+								if (cachedFriendlyPlayerOfClass != null && playerForPhotonPlayer != cachedFriendlyPlayerOfClass)
 								{
-									bool flag7 = inWarpCharge != 1;
-									if (flag7)
+									if (inWarpCharge != 1)
 									{
-										bool flag8 = inWarpCharge == 2;
-										if (flag8)
+										if (inWarpCharge == 2)
 										{
 											PLServer.Instance.photonView.RPC("AddNotification", cachedFriendlyPlayerOfClass.GetPhotonPlayer(), new object[]
 											{
@@ -83,10 +71,9 @@ namespace FLEETMOD
 						}
 						shipFromID.WarpChargeStage = (EWarpChargeStage)inWarpCharge;
 					}
-					result = false;
+					return false;
 				}
 			}
-			return result;
 		}
 	}
 }

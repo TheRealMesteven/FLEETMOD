@@ -4,17 +4,14 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000039 RID: 57
 	[HarmonyPatch(typeof(PLShipInfoBase), "OnWarp")]
 	internal class OnWarp
 	{
-		// Token: 0x06000070 RID: 112 RVA: 0x000094AC File Offset: 0x000076AC
 		public static bool Prefix(PLShipInfoBase __instance)
 		{
-			bool result;
 			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -64,9 +61,8 @@ namespace FLEETMOD
 						}
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

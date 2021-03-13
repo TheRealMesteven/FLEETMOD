@@ -5,37 +5,30 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200000E RID: 14
 	[HarmonyPatch(typeof(PLOverviewPlayerInfoDisplay), "OnButtonPress")]
 	internal class OnButtonPress
 	{
-		// Token: 0x06000017 RID: 23 RVA: 0x000031D4 File Offset: 0x000013D4
 		public static bool Prefix(PLOverviewPlayerInfoDisplay __instance, ref PLTabMenuPlayerInfoButton inButton, ref float ___LastButtonPressProcessTime, ref float ___cached_LastUpdatedPlayerInfoTime)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
 				result = true;
 			}
 			else
 			{
-				bool flag2 = Time.time - ___LastButtonPressProcessTime < 0.1f;
-				if (flag2)
+				if (Time.time - ___LastButtonPressProcessTime < 0.1f)
 				{
 					result = false;
 				}
 				else
 				{
 					___LastButtonPressProcessTime = Time.time;
-					bool flag3 = !PLNetworkManager.IsActiveMenuOpen() && PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked";
-					if (flag3)
+					if (!PLNetworkManager.IsActiveMenuOpen() && PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked")
 					{
-						bool flag4 = __instance.MyPlayer == null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer() != null && PLNetworkManager.Instance.LocalPlayer.ArenaScore > 0 && PLServer.Instance != null;
-						if (flag4)
+						if (__instance.MyPlayer == null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer() != null && PLNetworkManager.Instance.LocalPlayer.ArenaScore > 0 && PLServer.Instance != null)
 						{
-							bool flag5 = inButton.m_Label.text == "Pilot";
-							if (flag5)
+							if (inButton.m_Label.text == "Pilot")
 							{
 								PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
 								{
@@ -54,8 +47,7 @@ namespace FLEETMOD
 									"</color>"
 								})));
 							}
-							bool flag6 = inButton.m_Label.text == "Science";
-							if (flag6)
+							if (inButton.m_Label.text == "Science")
 							{
 								PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
 								{
@@ -74,8 +66,7 @@ namespace FLEETMOD
 									"</color>"
 								})));
 							}
-							bool flag7 = inButton.m_Label.text == "Weapons";
-							if (flag7)
+							if (inButton.m_Label.text == "Weapons")
 							{
 								PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
 								{
@@ -94,8 +85,7 @@ namespace FLEETMOD
 									"</color>"
 								})));
 							}
-							bool flag8 = inButton.m_Label.text == "Engineer";
-							if (flag8)
+							if (inButton.m_Label.text == "Engineer")
 							{
 								PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
 								{
@@ -118,59 +108,50 @@ namespace FLEETMOD
 						}
 						else
 						{
-							bool flag9 = inButton.m_Label.text == "Remove Bot";
-							if (flag9)
+							if (inButton.m_Label.text == "Remove Bot")
 							{
 								PLServer.Instance.photonView.RPC("ServerRemoveCrewBotPlayer", PhotonTargets.MasterClient, new object[]
 								{
 									__instance.MyPlayer.GetPlayerID()
 								});
 							}
-							bool flag10 = inButton.m_Label.text == "Kick";
-							if (flag10)
+							if (inButton.m_Label.text == "Kick")
 							{
 								PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLKickPlayerMenu(__instance.MyPlayer));
 							}
-							bool flag11 = __instance.MyPlayer.GetPhotonPlayer() != null && __instance.MyPlayer.GetPhotonPlayer().SteamID != CSteamID.Nil;
-							if (flag11)
+							if (__instance.MyPlayer.GetPhotonPlayer() != null && __instance.MyPlayer.GetPhotonPlayer().SteamID != CSteamID.Nil)
 							{
-								bool flag12 = inButton.m_Label.text == "Add Friend";
-								if (flag12)
+								if (inButton.m_Label.text == "Add Friend")
 								{
 									SteamFriends.ActivateGameOverlayToUser("friendadd", __instance.MyPlayer.GetPhotonPlayer().SteamID);
 								}
 								else
 								{
-									bool flag13 = inButton.m_Label.text == "View Profile";
-									if (flag13)
+									if (inButton.m_Label.text == "View Profile")
 									{
 										SteamFriends.ActivateGameOverlayToUser("steamid", __instance.MyPlayer.GetPhotonPlayer().SteamID);
 									}
 								}
 							}
-							bool isDebugBuild = Debug.isDebugBuild;
-							if (isDebugBuild)
+							if (Debug.isDebugBuild)
 							{
 								Debug.Log("-------------- QDB: CHANGING MUTE FUNCTION FOR MC ---------------");
 							}
-							bool isMasterClient = PhotonNetwork.isMasterClient;
-							if (isMasterClient)
+							if (PhotonNetwork.isMasterClient)
 							{
-								bool flag14 = inButton.m_Label.text == "To Brig";
-								if (flag14)
+								if (inButton.m_Label.text == "To Brig")
 								{
-									int num = __instance.MyPlayer.GetPlayerName(false).LastIndexOf("•");
 									___cached_LastUpdatedPlayerInfoTime = 0f;
 									__instance.MyPlayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
 									__instance.MyPlayer.GetPhotonPlayer().SetScore(PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID);
 									PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
 									{
-										__instance.MyPlayer.GetPlayerName(false).Substring(num + 2) + " Has Been Sent To The Brig By The Admiral.",
+										__instance.MyPlayer.GetPlayerName(false).Substring(__instance.MyPlayer.GetPlayerName(false).LastIndexOf("•") + 2) + " Has Been Sent To The Brig By The Admiral.",
 										Color.green,
 										0,
 										"SHIP"
 									});
-									PLNetworkManager.Instance.ConsoleText.Insert(0, "You Have Sent " + __instance.MyPlayer.GetPlayerName(false).Substring(num + 2) + " To The Brig");
+									PLNetworkManager.Instance.ConsoleText.Insert(0, "You Have Sent " + __instance.MyPlayer.GetPlayerName(false).Substring(__instance.MyPlayer.GetPlayerName(false).LastIndexOf("•") + 2) + " To The Brig");
 									__instance.MyPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
 									{
 										PLNetworkManager.Instance.LocalPlayer.StartingShip.MyTLI.SubHubID,
@@ -178,30 +159,26 @@ namespace FLEETMOD
 									});
 									__instance.MyPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 									{
-										"BRIG " + __instance.MyPlayer.GetPlayerName(false).Substring(num)
+										"BRIG " + __instance.MyPlayer.GetPlayerName(false).Substring(__instance.MyPlayer.GetPlayerName(false).LastIndexOf("•"))
 									});
 								}
-								bool flag15 = inButton.m_Label.text == "Release";
-								if (flag15)
+								if (inButton.m_Label.text == "Release")
 								{
-									int num2 = __instance.MyPlayer.GetPlayerName(false).LastIndexOf("•");
 									__instance.MyPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 									{
-										"FREE " + __instance.MyPlayer.GetPlayerName(false).Substring(num2)
+										"FREE " + __instance.MyPlayer.GetPlayerName(false).Substring(__instance.MyPlayer.GetPlayerName(false).LastIndexOf("•"))
 									});
 									___cached_LastUpdatedPlayerInfoTime = 0f;
-									PLNetworkManager.Instance.ConsoleText.Insert(0, "You Have Released " + __instance.MyPlayer.GetPlayerName(false).Substring(num2 + 2) + " From The Brig");
+									PLNetworkManager.Instance.ConsoleText.Insert(0, "You Have Released " + __instance.MyPlayer.GetPlayerName(false).Substring(__instance.MyPlayer.GetPlayerName(false).LastIndexOf("•") + 2) + " From The Brig");
 								}
 							}
-							bool flag16 = inButton.m_Label.text == "Mute";
-							if (flag16)
+							if (inButton.m_Label.text == "Mute")
 							{
 								__instance.MyPlayer.TS_IsMuted = true;
 								___cached_LastUpdatedPlayerInfoTime = 0f;
 								PLVoiceChatManager.Instance.MuteClient(__instance.MyPlayer.TS_ClientID);
 							}
-							bool flag17 = inButton.m_Label.text == "Unmute";
-							if (flag17)
+							if (inButton.m_Label.text == "Unmute")
 							{
 								__instance.MyPlayer.TS_IsMuted = false;
 								___cached_LastUpdatedPlayerInfoTime = 0f;

@@ -4,27 +4,21 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000015 RID: 21
 	[HarmonyPatch(typeof(PLInGameUI), "SetShipAsTarget")]
 	internal class SetShipAsTarget
 	{
-		// Token: 0x06000026 RID: 38 RVA: 0x00004E10 File Offset: 0x00003010
 		public static bool Prefix(PLSpaceTarget target)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
-				bool flag2 = PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp;
-				if (flag2)
+				if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
 				{
 					int captainTargetedSpaceTargetID = PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID;
-					bool flag3 = PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).TagID != -23 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0;
-					if (flag3)
+					if (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).TagID != -23 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
 					{
 						PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID = target.SpaceTargetID; // Target Non Friendly as Captain
 					}
@@ -32,8 +26,7 @@ namespace FLEETMOD
                     {
                         PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID = target.SpaceTargetID; // Target Friendly as Captain WITH Friendly Fire
                     }
-                    bool flag4 = (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).TagID == -23 && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && MyVariables.shipfriendlyfire;
-					if (flag4)
+					if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).TagID == -23 && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && MyVariables.shipfriendlyfire)
 					{
 						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport To Friendly IF NO Friendly Fire
 						{
@@ -49,24 +42,21 @@ namespace FLEETMOD
 						});
 						PLTabMenu.Instance.OnClick_ClearTarget();
 					}
-					bool flag5 = captainTargetedSpaceTargetID != PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID;
-					if (flag5)
+					if (captainTargetedSpaceTargetID != PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID)
 					{
 						PLEncounterManager.Instance.PlayerShip.LastCaptainTargetedShipIDLocallyChangedTime = Time.time;
 						PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", PhotonTargets.MasterClient, new object[] // Apply Targetting
 						{
 							PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID
 						});
-						bool flag6 = PLNetworkManager.Instance.LocalPlayer.StartingShip.TargetShip.TagID < -3 && MyVariables.shipfriendlyfire; // Clear Targetting If Target = Friendly
-						if (flag6)
+						if (PLNetworkManager.Instance.LocalPlayer.StartingShip.TargetShip.TagID < -3 && MyVariables.shipfriendlyfire) // Clear Targetting If Target = Friendly
 						{
 							PLTabMenu.Instance.OnClick_ClearTarget();
 						}
 					}
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

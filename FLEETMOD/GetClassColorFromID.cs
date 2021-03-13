@@ -4,18 +4,14 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000022 RID: 34
 	[HarmonyPatch(typeof(PLPlayer), "GetClassColorFromID")]
 	internal class GetClassColorFromID
 	{
-		// Token: 0x06000042 RID: 66 RVA: 0x000064C8 File Offset: 0x000046C8
 		public static bool Prefix(int inID, ref Color __result)
 		{
-			bool flag = !MyVariables.isrunningmod;
-			bool result;
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
-				result = true;
+				return true;
 			}
 			else
 			{
@@ -43,9 +39,8 @@ namespace FLEETMOD
 					__result = new Color(0.4f, 0.4f, 0.4f, 1f);
 					break;
 				}
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }

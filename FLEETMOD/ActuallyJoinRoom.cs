@@ -3,22 +3,16 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x0200001D RID: 29
 	[HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
 	internal class ActuallyJoinRoom
 	{
-		// Token: 0x06000038 RID: 56 RVA: 0x00005A60 File Offset: 0x00003C60
 		public static bool Prefix(RoomInfo room)
 		{
-			bool flag = (int)room.CustomProperties["CurrentPlayersPlusBots"] < (int)room.MaxPlayers;
-			bool result;
-			if (flag)
+			if ((int)room.CustomProperties["CurrentPlayersPlusBots"] < (int)room.MaxPlayers)
 			{
-				bool flag2 = room.CustomProperties.ContainsKey("SteamServerID");
-				if (flag2)
+				if (room.CustomProperties.ContainsKey("SteamServerID"))
 				{
-					bool flag3 = !SteamManager.Initialized;
-					if (flag3)
+					if (!SteamManager.Initialized)
 					{
 						PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("Failed to join crew! Can't join Secured game when not logged in to Steam!"));
 						return false;
@@ -27,36 +21,32 @@ namespace FLEETMOD
 					PLNetworkManager.Instance.ClearSteamAuthSession(num);
 					PLNetworkManager.Instance.SetSteamAuthTicket(num);
 				}
-				bool flag4 = (string)room.CustomProperties["Ship_Type"] == Plugin.myversion;
-				if (flag4)
+				if ((string)room.CustomProperties["Ship_Type"] == Plugin.myversion)
 				{
 					MyVariables.isrunningmod = true;
 					PLNetworkManager.Instance.JoinRoom(room);
 					PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
 					PLLoader.Instance.IsWaitingOnNetwork = true;
 				}
-				bool flag5 = !room.CustomProperties["Ship_Type"].ToString().Contains("FLEETMOD");
-				if (flag5)
+				if (!room.CustomProperties["Ship_Type"].ToString().Contains("FLEETMOD"))
 				{
 					MyVariables.isrunningmod = false;
 					PLNetworkManager.Instance.JoinRoom(room);
 					PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
 					PLLoader.Instance.IsWaitingOnNetwork = true;
 				}
-				bool flag6 = (string)room.CustomProperties["Ship_Type"] != Plugin.myversion && room.CustomProperties["Ship_Type"].ToString().Contains(".");
-				if (flag6)
+				if ((string)room.CustomProperties["Ship_Type"] != Plugin.myversion && room.CustomProperties["Ship_Type"].ToString().Contains("."))
 				{
 					MyVariables.isrunningmod = false;
 					PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("Sorry, This Server Is Running FleetMod Version " + (string)room.CustomProperties["Ship_Type"] + "\n You Have Version " + Plugin.myversion));
 				}
-				result = false;
+				return false;
 			}
 			else
 			{
 				PLTabMenu.Instance.TimedErrorMsg = "Couldn't join crew! It is full!";
-				result = false;
+				return false;
 			}
-			return result;
 		}
 	}
 }
