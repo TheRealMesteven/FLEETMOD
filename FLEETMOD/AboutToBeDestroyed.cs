@@ -36,8 +36,7 @@ namespace FLEETMOD
 					{
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							bool flag6 = plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot;
-							if (flag6)
+							if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
 							{
 								plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
 								plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
