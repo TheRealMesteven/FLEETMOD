@@ -149,7 +149,6 @@ namespace FLEETMOD
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(1.2f, -386f, 18.4f);
 							}
-							bool flag28 =;
 							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_SYLVASSI)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-16.1f, -397.5f, -15.5f);
