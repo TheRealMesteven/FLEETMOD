@@ -260,7 +260,7 @@ namespace FLEETMOD
 								});
 							}
 						}
-						bool flag38 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus);
+						bool flag38 = !PLNetworkManager.Instance.IsTyping && Command.Debug && Input.GetKeyDown(KeyCode.KeypadMinus);
 						if (flag38)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
