@@ -3,17 +3,14 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000010 RID: 16
 	[HarmonyPatch(typeof(PLWarpDriveScreen), "JumpBtnClick")]
 	internal class JumpBtnClick
 	{
-		// Token: 0x0600001B RID: 27 RVA: 0x000044B4 File Offset: 0x000026B4
 		public static bool Prefix(PLWarpDriveScreen __instance)
 		{
-			bool flag = !MyVariables.isrunningmod;
 			bool result;
             PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
-			if (flag)
+			if (!MyVariables.isrunningmod)
 			{
 				result = true;
 			}
@@ -24,29 +21,24 @@ namespace FLEETMOD
 				int num3 = 0;
 				foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
-					bool flag2 = plshipInfoBase.TagID < -3 && plshipInfoBase != null;
-					if (flag2)
+					if (plshipInfoBase.TagID < -3 && plshipInfoBase != null)
 					{
-						bool flag3 = PLServer.Instance.m_ShipCourseGoals.Count > 0 && plshipInfoBase.WarpTargetID != map.ID;
-						if (flag3)
+						if (PLServer.Instance.m_ShipCourseGoals.Count > 0 && plshipInfoBase.WarpTargetID != map.ID)
 						{
 							num++;
 						}
-						bool flag4 = plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY;
-						if (flag4)
+						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{
 							num2++;
 						}
-						bool flag5 = plshipInfoBase.NumberOfFuelCapsules < 1;
-						if (flag5)
+						if (plshipInfoBase.NumberOfFuelCapsules < 1)
 						{
 							num3++;
 						}
 					}
 				}
 				bool flag6 = num == 0 && num2 == 0 && num3 == 0 && __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && __instance.MyScreenHubBase.OptionalShipInfo.NumberOfFuelCapsules > 0 && PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) < 0.5f;
-				bool flag7 = __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip() && !__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard;
-				if (flag7)
+				if (__instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip() && !__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard)
 				{
 					bool flag8 = false;
 					EWarpChargeStage ewarpChargeStage = EWarpChargeStage.E_WCS_COLD_START;
@@ -62,12 +54,10 @@ namespace FLEETMOD
 						break;
 					case EWarpChargeStage.E_WCS_READY:
 					{
-						bool flag9 = flag6 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0;
-						if (flag9)
+						if (flag6 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
 						{
 							flag8 = true;
-							bool flag10 = PLNetworkManager.Instance.LocalPlayer != null;
-							if (flag10)
+							if (PLNetworkManager.Instance.LocalPlayer != null)
 							{
 								PLServer.Instance.photonView.RPC("CPEI_HandleActivateWarpDrive", PhotonTargets.MasterClient, new object[]
 								{
@@ -82,8 +72,7 @@ namespace FLEETMOD
 					}
 					case EWarpChargeStage.E_WCS_ACTIVE:
 					{
-						bool flag11 = PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0;
-						if (flag11)
+						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
 						{
 							PLInGameUI.Instance.WarpSkipButtonClicked();
 						}
@@ -94,11 +83,9 @@ namespace FLEETMOD
 						flag8 = true;
 						break;
 					}
-					bool flag12 = flag8;
-					if (flag12)
+					if (flag8)
 					{
-						bool flag13 = !PhotonNetwork.isMasterClient;
-						if (flag13)
+						if (!PhotonNetwork.isMasterClient)
 						{
 							__instance.MyScreenHubBase.OptionalShipInfo.WarpChargeStage = ewarpChargeStage;
 						}
