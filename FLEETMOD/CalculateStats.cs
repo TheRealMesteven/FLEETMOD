@@ -21,7 +21,7 @@ namespace FLEETMOD
 							break;
 						}
 					}
-				}/*
+				}/*    /// STARTED WORKING ON REWRITING WARP RANGE CALCULATION BUT NOT MUCH LUCK. PROBS LOOK INTO THE GAMES IMPLEMENTATION
                 bool flag = PLServer.Instance != null;
                 if (flag)
                 {
