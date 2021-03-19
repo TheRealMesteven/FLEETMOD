@@ -18,3 +18,19 @@ namespace FLEETMOD
 		}
 	}
 }
+
+/* Notes:
+ * 
+ *   Lockers: - 2 locker types - Share locker, accessed from captain's locker. - Private locker, player specific, access from any locker other than captain.
+ *   All items should be saved to share locker.
+ * 
+ *   Equipment: each player spawns with client side equipment. give default name
+ * 
+ *   On Ship destroyed: distribute players from destroyed ship to smallest crews. Captain gets demoted to weapons
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
