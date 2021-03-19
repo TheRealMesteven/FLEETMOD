@@ -9,6 +9,7 @@ namespace FLEETMOD
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
         {
             MyVariables.shipfriendlyfire = (bool)arguments[0];
+            MyVariables.recentfriendlyfire = (bool)arguments[1];
             //MyVariables.warprange = (float)arguments[1];
         }
     }
