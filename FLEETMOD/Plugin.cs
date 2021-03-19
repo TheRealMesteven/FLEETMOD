@@ -16,7 +16,5 @@ namespace FLEETMOD
 		{
 			return "Dragon+Mest.Fleetmod";
 		}
-        
-		//public static string myversion = "FLEETMOD v2.00";
 	}
 }
