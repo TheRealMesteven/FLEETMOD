@@ -28,7 +28,7 @@ namespace FLEETMOD
  * 
  *   On Ship destroyed: distribute players from destroyed ship to smallest crews. Captain gets demoted to weapons
  * 
- * 
+ *   Team ID: -1 unclaimed, 0 Player team, 1 enemy team
  * 
  * 
  * 
