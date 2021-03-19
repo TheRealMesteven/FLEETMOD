@@ -8,8 +8,11 @@ namespace FLEETMOD
 {
     internal class Global
     {
-        public static bool isrunningmod;
-        public static int shiplimit = 1;
         // Boolean check if the mod is running
+        public static bool isrunningmod;
+        //Dictionary linking Crew IDs and Ship IDs owned by the fleet.
+        public static Dictionary<int, int> Fleet;
+        // Shiplimit for playership spawning.
+        public static int shiplimit = 1;
     }
 }
