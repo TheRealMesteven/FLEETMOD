@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FLEETMOD
 {
-    internal class _Variables
+    internal class Global
     {
         public static bool isrunningmod;
         // Boolean check if the mod is running

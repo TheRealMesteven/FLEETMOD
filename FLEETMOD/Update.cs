@@ -11,7 +11,7 @@ namespace FLEETMOD
     {
         public static void Postfix(PLServer __instance)
         {
-            if (_Variables.isrunningmod)
+            if (Global.isrunningmod)
             { // If running FLEETMOD
                 if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
                 { // If In-game

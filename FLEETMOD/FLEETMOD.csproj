@@ -70,7 +70,7 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Update.cs" />
-    <Compile Include="_Variables.cs" />
+    <Compile Include="Global.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\0Harmony.dll" />
