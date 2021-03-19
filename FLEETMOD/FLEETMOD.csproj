@@ -68,11 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModMessages\SyncFleetIDs.cs" />
+    <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModMessages\ServerCreateShip.cs" />
     <Compile Include="SpawnShipMenu.cs" />
-    <Compile Include="Update.cs" />
+    <Compile Include="PLServerPatches.cs" />
     <Compile Include="Global.cs" />
   </ItemGroup>
   <ItemGroup>

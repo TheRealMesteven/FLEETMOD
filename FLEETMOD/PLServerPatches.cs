@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLServer), "Update")]
-    internal class Update
+    internal class UpdatePatch
     {
         static Dictionary<int, int> CachedFleet = Global.Fleet;
         public static void Postfix(PLServer __instance)
@@ -43,7 +43,7 @@ namespace FLEETMOD
     }
 
     [HarmonyPatch(typeof(PLServer), "LoginMessage")] //Initial Sync. If multiple messages exist consider making new Modmessage for initial sync
-    class FleetSyncPatches
+    class LoginMessagePatch
     {
         static void Postfix(PhotonPlayer newPhotonPlayer)
         {
