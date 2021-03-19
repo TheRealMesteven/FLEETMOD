@@ -7,7 +7,8 @@ namespace FLEETMOD
 	{
 		public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
 		{
-			foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+            return ; // *Broken Original disable
+            foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 			{
 				if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetPhotonPlayer().GetScore() == (int)arguments[1])
 				{

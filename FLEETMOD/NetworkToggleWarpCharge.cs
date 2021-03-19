@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, int inShipID, int inWarpCharge, PhotonMessageInfo pmi)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

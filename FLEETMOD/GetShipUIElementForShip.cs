@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref List<PLUIOutsideWorldUI.ShipUIElement> ___DisplayedShipUIElements)
 		{
-			if (MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (MyVariables.isrunningmod)
 			{
 				return true;
 			}

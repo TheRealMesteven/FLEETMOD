@@ -7,7 +7,7 @@ namespace FLEETMOD
 	internal class ActuallyJoinRoom
 	{
 		public static bool Prefix(RoomInfo room)
-		{
+		{ // *Rewrite Functional
 			if ((int)room.CustomProperties["CurrentPlayersPlusBots"] < (int)room.MaxPlayers)
 			{
 				if (room.CustomProperties.ContainsKey("SteamServerID"))

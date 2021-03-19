@@ -8,6 +8,7 @@ namespace FLEETMOD
 	{
 		public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
 		{
+            return; // *Broken Original disable
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
             {
                 if (MyVariables.shipcount != 0 && (MyVariables.shipcount * 5) != PhotonNetwork.room.MaxPlayers && (MyVariables.shipcount * 5) > PhotonNetwork.room.MaxPlayers) // if limit != 0 & limit != count & limit > count

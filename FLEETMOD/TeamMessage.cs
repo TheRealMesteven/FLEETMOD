@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLServer __instance, int playerID, string message)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

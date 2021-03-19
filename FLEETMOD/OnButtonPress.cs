@@ -10,7 +10,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLOverviewPlayerInfoDisplay __instance, ref PLTabMenuPlayerInfoButton inButton, ref float ___LastButtonPressProcessTime, ref float ___cached_LastUpdatedPlayerInfoTime)
 		{
-			bool result;
+            return true; // *Broken Original disable
+            bool result;
 			if (!MyVariables.isrunningmod)
 			{
 				result = true;

@@ -42,6 +42,6 @@ namespace FLEETMOD
 			return "Michael+Mest.Fleetmod";
 		}
         
-		public static string myversion = "FLEETMOD v1.48";
+		public static string myversion = "FLEETMOD v2.00";
 	}
 }

@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLWarpDriveScreen __instance)
 		{
-			bool result;
+            return true; // *Broken Original disable
+            bool result;
             PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
 			if (!MyVariables.isrunningmod)
 			{

@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip, ref bool ___HostileShipAdded_NeedsResetForTargeting)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

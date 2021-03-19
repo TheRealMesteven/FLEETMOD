@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLRepairDepot __instance, ref PLSensorObjectString[] ___SensorStrings)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

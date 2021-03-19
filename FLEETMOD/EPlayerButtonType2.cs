@@ -1,7 +1,7 @@
 ﻿using System;
 public enum EPlayerButtonType2
-{
-	E_VIEW_TALENTS,
+{ // *Rewrite Functional
+    E_VIEW_TALENTS,
 	E_VIEW_ITEMS,
 	E_ADD_BOT_PILOT,
 	E_ADD_BOT_SCI,

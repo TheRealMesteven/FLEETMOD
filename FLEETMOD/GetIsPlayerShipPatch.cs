@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance, ref bool __result)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

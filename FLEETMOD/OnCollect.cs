@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLSpaceScrap __instance, ref int ___m_EncounterNetID)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

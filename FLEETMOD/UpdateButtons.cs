@@ -10,8 +10,8 @@ namespace FLEETMOD
 	internal class UpdateButtons
 	{
 		public static bool Prefix(PLOverviewPlayerInfoDisplay __instance, ref List<EPlayerButtonType2> ___ButtonsActiveTypes)
-		{
-			if (!MyVariables.isrunningmod)
+        { // *Rewrite Functional
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

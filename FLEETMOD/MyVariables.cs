@@ -3,7 +3,7 @@
 namespace FLEETMOD
 {
     internal class MyVariables
-    {
+    { // *Rewrite Functional
         public static bool isrunningmod = false;
         public static bool shipfriendlyfire = true;
         public static bool shipgodmode = false;

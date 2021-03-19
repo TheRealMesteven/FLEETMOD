@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FLEETMOD
 {
     internal class Command
-    {
+    { // *Rewrite Functional
         private class FLEETMODGodmode : IChatCommand
         {
             public string[] CommandAliases()

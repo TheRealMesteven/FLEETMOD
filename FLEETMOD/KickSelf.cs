@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PhotonMessageInfo pmi)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

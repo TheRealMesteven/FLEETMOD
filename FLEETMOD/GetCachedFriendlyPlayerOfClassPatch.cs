@@ -10,8 +10,8 @@ namespace FLEETMOD
 	internal class GetCachedFriendlyPlayerOfClassPatch
 	{
 		public static bool Prefix(PLServer __instance, ref int inClass)
-		{
-			if (!MyVariables.isrunningmod)
+        { // *Rewrite Functional
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

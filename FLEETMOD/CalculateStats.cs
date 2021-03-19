@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static void Postfix(ref ObscuredFloat ___m_WarpRange)
 		{
-			if (MyVariables.isrunningmod)
+            return; // *Broken Original disable
+            if (MyVariables.isrunningmod)
 			{
 				if (PLServer.Instance != null)
 				{

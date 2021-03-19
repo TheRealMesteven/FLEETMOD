@@ -10,7 +10,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(int inCurrentShipID, int inNetID, PLPlayer __instance)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

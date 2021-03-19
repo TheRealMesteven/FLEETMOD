@@ -13,7 +13,8 @@ namespace FLEETMOD
 		// Token: 0x06000050 RID: 80 RVA: 0x00006C74 File Offset: 0x00004E74
 		public static void Postfix(PLServer __instance)
 		{
-			bool isrunningmod = MyVariables.isrunningmod;
+            return; // *Broken Original disable
+            bool isrunningmod = MyVariables.isrunningmod;
             if (isrunningmod)
 			{
 				bool flag = __instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null;

@@ -13,7 +13,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref Text go, ref string text)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix()
 		{
-			return !MyVariables.isrunningmod;
+            return true; // *Broken Original disable
+            return !MyVariables.isrunningmod;
 		}
 	}
 }

@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref float ___m_Lifetime, ref bool ___HasDoneSetup)
 		{
-			if (!MyVariables.isrunningmod)
+            return true; // *Broken Original disable
+            if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}

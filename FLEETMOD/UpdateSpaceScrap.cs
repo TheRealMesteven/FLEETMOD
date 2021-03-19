@@ -8,7 +8,8 @@ namespace FLEETMOD
 	{
 		public static void Postfix(PLSpaceScrap __instance)
 		{
-			if (MyVariables.isrunningmod)
+            return; // *Broken Original disable
+            if (MyVariables.isrunningmod)
 			{
 				foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{

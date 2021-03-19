@@ -9,8 +9,8 @@ namespace FLEETMOD
 	internal class GetJoinGameElementFromRoomInfo
 	{
 		public static bool Prefix(RoomInfo roomInfo, ref List<PLUIPlayMenu.UIJoinGameElement> ___m_JoinGameElements, ref PLUIPlayMenu.UIJoinGameElement __result)
-		{
-			if (PhotonNetwork.player.GetScore() > 0)
+        { // *Rewrite Functional
+            if (PhotonNetwork.player.GetScore() > 0)
 			{
 				PhotonNetwork.player.SetScore(0);
 			}

@@ -9,7 +9,8 @@ namespace FLEETMOD
 	{
 		public static void Postfix(PLOverviewPlayerInfoDisplay __instance, ref float ___cached_LastUpdatedPlayerInfoTime, ref PLPlayer ___cached_DisplayedPlayer, ref int ___cached_DisplayedPlayerClass, ref float ___cached_DisplayedPlayerHealth, ref bool ___cached_DisplayedPlayerIsTalking)
 		{
-			if (MyVariables.isrunningmod)
+            return; // *Broken Original disable
+            if (MyVariables.isrunningmod)
 			{
 				if (__instance.MyPlayer != null && __instance.MyPlayer.GetPhotonPlayer().IsMasterClient && __instance.MyPlayer.GetClassID() == 0)
 				{

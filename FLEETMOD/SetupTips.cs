@@ -9,8 +9,8 @@ namespace FLEETMOD
 	internal class SetupTips
 	{
 		public static bool Prefix(ref int ___TipNumber, ref List<string> ___TipStrings)
-		{
-			Debug.unityLogger.logEnabled = false;
+        { // *Rewrite Functional
+            Debug.unityLogger.logEnabled = false;
 			if (___TipStrings.Count > 20)
 			{
 				if (PLXMLOptionsIO.Instance.CurrentOptions.HasStringValue("TipNumber"))
