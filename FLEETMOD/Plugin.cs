@@ -1,47 +1,22 @@
-﻿using System;
-using PulsarPluginLoader;
+﻿using PulsarPluginLoader;
 
 namespace FLEETMOD
 {
-	public class Plugin : PulsarPlugin
+    public class Plugin : PulsarPlugin
 	{
-		public override string Version
-		{
-			get
-			{
-				return Plugin.myversion;
-			}
-		}
+		public override string Version => "2.0";
 
-		public override string Author
-		{
-			get
-			{
-				return "Dragon + Mest";
-			}
-		}
+		public override string Author => "Dragon + Mest";
 
-		public override string Name
-		{
-			get
-			{
-				return "FleetMod";
-			}
-		}
+		public override string Name => "FleetMod";
         
-		public override int MPFunctionality
-		{
-			get
-			{
-				return 0;
-			}
-		}
+		public override int MPFunctionality => (int)MPFunction.All;
         
 		public override string HarmonyIdentifier()
 		{
 			return "Dragon+Mest.Fleetmod";
 		}
         
-		public static string myversion = "FLEETMOD v2.00";
+		//public static string myversion = "FLEETMOD v2.00";
 	}
 }
