@@ -12,6 +12,8 @@ namespace FLEETMOD
         public static bool isrunningmod;
         // Dictionary linking Crew IDs and Ship IDs owned by the fleet.
         public static Dictionary<int, int> Fleet;
+        // Dictionary Linking crew IDs and Player IDs
+        public static Dictionary<int, int> CrewPlayerList;
         // Shiplimit for playership spawning.
         public static int shiplimit = 1;
 
