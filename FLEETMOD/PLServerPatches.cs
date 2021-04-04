@@ -13,9 +13,9 @@ namespace FLEETMOD
             if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
             { // If In-game
                 PLInGameUI.Instance.CurrentVersionLabel.text = "<color=ffff00>Fleetmod V2.0</color>" + PLNetworkManager.Instance.VersionString;
-                if (!PhotonNetwork.isMasterClient)
+                if (!PhotonNetwork.isMasterClient || Global.devmode)
                 { // If Crew
-                    if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0)
+                    if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 || Global.devmode))
                     { // Spawn Ship Keybind
                         PLMusic.PostEvent("play_sx_playermenu_click_major", PLServer.Instance.gameObject);
                         PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
