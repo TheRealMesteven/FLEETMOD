@@ -13,9 +13,9 @@ namespace FLEETMOD
             if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
             { // If In-game
                 PLInGameUI.Instance.CurrentVersionLabel.text = "<color=ffff00>Fleetmod V2.0</color>" + PLNetworkManager.Instance.VersionString;
-                if (!PhotonNetwork.isMasterClient)
+                if (!PhotonNetwork.isMasterClient || Global.devmode)
                 { // If Crew
-                    if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0)
+                    if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 || Global.devmode))
                     { // Spawn Ship Keybind
                         PLMusic.PostEvent("play_sx_playermenu_click_major", PLServer.Instance.gameObject);
                         PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
@@ -34,7 +34,7 @@ namespace FLEETMOD
                         PhotonPlayer photonplayer = player.GetPhotonPlayer();
                         if (!player.IsBot && photonplayer != PhotonNetwork.player)
                         {
-                            PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", photonplayer, new object[] { Global.Fleet, Global.PlayerCrewList });
+                            PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncFleetIDs", photonplayer, new object[] { Global.Fleet });
                         }
                     }
                 }
@@ -49,9 +49,8 @@ namespace FLEETMOD
         {
             if (PhotonNetwork.isMasterClient)
             {
-                PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", newPhotonPlayer, new object[] {
-                    Global.Fleet,
-                    Global.PlayerCrewList
+                PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncFleetIDs", newPhotonPlayer, new object[] {
+                    Global.Fleet
                 });
             }
         }

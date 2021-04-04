@@ -23,7 +23,7 @@ namespace FLEETMOD
                         PLNetworkManager.Instance.SelectedShipTypeID = 5;
                         break;
                     case 5:
-                        PLNetworkManager.Instance.SelectedShipTypeID = 6;
+                        PLNetworkManager.Instance.SelectedShipTypeID = 6; 
                         break;
                     case 6:
                         PLNetworkManager.Instance.SelectedShipTypeID = 7;

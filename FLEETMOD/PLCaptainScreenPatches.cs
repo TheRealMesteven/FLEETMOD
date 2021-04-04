@@ -8,7 +8,7 @@ namespace FLEETMOD
     {
         static bool Prefix(PLCaptainScreen __instance, ref bool __result)
         {
-            if (Global.GetIsFleetShip(__instance.MyScreenHubBase.OptionalShipInfo.ShipID))
+            if (Global.GetIsFriendlyShip(__instance.MyScreenHubBase.OptionalShipInfo.ShipID))
             {
                 __result = false;
             }

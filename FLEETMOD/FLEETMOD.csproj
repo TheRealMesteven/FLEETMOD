@@ -44,7 +44,10 @@
       <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
     <Reference Include="PulsarPluginLoader" />
-    <Reference Include="PulsarPluginLoader" />
+    <Reference Include="PulsarPluginLoader, Version=0.9.3.85, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\PulsarPluginLoader.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\UnityEngine.dll</HintPath>
@@ -67,7 +70,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModMessages\SyncCrewIDs.cs" />
+    <Compile Include="Commands.cs" />
+    <Compile Include="ModMessages\SyncFleetIDs.cs" />
+    <Compile Include="ModMessages\SyncFleetIDs.cs" />
     <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
