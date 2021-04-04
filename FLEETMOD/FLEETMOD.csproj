@@ -71,8 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="ModMessages\SyncFleetIDs.cs" />
-    <Compile Include="ModMessages\SyncFleetIDs.cs" />
+    <Compile Include="ModMessages\SyncCrewIDs.cs" />
     <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
