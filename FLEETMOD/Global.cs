@@ -10,23 +10,23 @@ namespace FLEETMOD
     {
         // Boolean check if the mod is running
         public static bool isrunningmod;
-        // Dictionary linking Crew IDs and Ship IDs owned by the fleet.
+        // Dictionary linking Ship IDs and Crew IDs owned by the fleet.
         public static Dictionary<int, int> Fleet;
-        // Dictionary Linking crew IDs and Player IDs
-        public static Dictionary<int, int> CrewPlayerList;
+        // Dictionary Linking Player IDs and Crew IDs
+        public static Dictionary<int, int> PlayerCrewList;
         // Shiplimit for playership spawning.
         public static int shiplimit = 1;
         // Developer mode Check
         public static bool devmode = true;
 
         /// <summary>
-        /// 
+        /// Checks if ship at ship id is in the fleet dictionary.
         /// </summary>
-        /// <param name="inShipID">ShipID from ship</param>
-        /// <returns></returns>
-        public static bool GetIsFriendlyShip(int inShipID)
+        /// <param name="inShipID">ShipID of ship</param>
+        /// <returns>returns true if ship is in the fleet</returns>
+        public static bool GetIsFleetShip(int inShipID)
         {
-            foreach (int shipID in Fleet.Values)
+            foreach (int shipID in Fleet.Keys)
             {
                 if (inShipID == shipID)
                 {
@@ -35,5 +35,6 @@ namespace FLEETMOD
             }
             return false;
         }
+
     }
 }
