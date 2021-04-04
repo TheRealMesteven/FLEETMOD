@@ -32,5 +32,5 @@ namespace FLEETMOD
  * 
  *   Crew ID: created in this mod, meant to organize which players are part of which crew
  * 
- * 
+ *   Tag ID: -1 not listed, ID is used for display on right side of screen and deciding if ship is detected.
  */

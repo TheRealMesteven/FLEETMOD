@@ -33,6 +33,17 @@ namespace FLEETMOD
             }
             return false;
         }
-
+        public static int GetLowestUncrewedID()
+        {
+            //limit set to 1000, should never reach that
+            for (int i = 1; i < 1000; i++)
+            {
+                if(!Fleet.ContainsKey(i))
+                {
+                    return i;
+                }
+            }
+            throw new Exception("Something broke at FleetMod.Global.GetLowestUncrewedID");
+        }
     }
 }

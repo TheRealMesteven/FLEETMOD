@@ -13,16 +13,19 @@ namespace FLEETMOD.ModMessages
                 if (Global.shiplimit != 0 && (Global.shiplimit * 5) != PhotonNetwork.room.MaxPlayers && (Global.shiplimit * 5) > PhotonNetwork.room.MaxPlayers) // if limit != 0 & limit != count & limit > count
                 {
                     PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID((int)arguments[1]);
+                    int CrewID = Global.GetLowestUncrewedID();
                     GameObject gameObject = PhotonNetwork.Instantiate("NetworkPrefabs/" + PLGlobal.Instance.PlayerShipNetworkPrefabNames[(int)arguments[0]], new Vector3(50f, 50f, 50f), Quaternion.identity, 0, null);
-                    gameObject.GetComponent<PLShipInfo>().SetShipID(PLServer.ServerSpaceTargetIDCounter++);
-                    gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
-                    gameObject.GetComponent<PLShipInfo>().TagID = -23;
-                    gameObject.GetComponent<PLShipInfo>().TeamID = 1;
-                    gameObject.GetComponent<PLShipInfo>().OnIsNewStartingShip();
-                    gameObject.GetComponent<PLShipInfo>().ShipNameValue = (string)arguments[2];
-                    gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
-                    gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
-                    playerFromPlayerID.GetPhotonPlayer().SetScore(gameObject.GetComponent<PLShipInfo>().ShipID);
+                    PLShipInfo shipinfo = gameObject.GetComponent<PLShipInfo>();
+                    shipinfo.SetShipID(PLServer.ServerSpaceTargetIDCounter++);
+                    shipinfo.AutoTarget = false;
+                    shipinfo.TagID = -23;
+                    shipinfo.TeamID = 1;
+                    shipinfo.OnIsNewStartingShip();
+                    shipinfo.ShipNameValue = (string)arguments[2];
+                    shipinfo.LastAIAutoYellowAlertSetupTime = Time.time;
+                    shipinfo.SetupShipStats(false, true);
+                    Global.PlayerCrewList.Add((int)arguments[1], CrewID); //Adds ship and player to Global.PlayerCrewList and Global.Fleet as part of crew with CrewID
+                    Global.Fleet.Add(shipinfo.ShipID, CrewID);
                     playerFromPlayerID.SetClassID(0);
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                     {
