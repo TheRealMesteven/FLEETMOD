@@ -30,7 +30,7 @@ namespace FLEETMOD
  * 
  *   Team ID: -1 unclaimed, 0 Player team, 1 enemy team
  * 
- * 
+ *   Crew ID: created in this mod, meant to organize which players are part of which crew
  * 
  * 
  */
