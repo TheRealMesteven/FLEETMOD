@@ -43,7 +43,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
-    <Reference Include="PulsarPluginLoader" />
     <Reference Include="PulsarPluginLoader, Version=0.9.3.85, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\PulsarPluginLoader.dll</HintPath>
