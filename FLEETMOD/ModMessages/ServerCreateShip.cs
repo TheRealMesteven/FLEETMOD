@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FLEETMOD.ModMessages
 {
-    internal class ServerCreateShip : ModMessage
+    class ServerCreateShip : ModMessage
     {
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
         {
@@ -14,6 +14,7 @@ namespace FLEETMOD.ModMessages
                 {
                     PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID((int)arguments[1]);
                     int CrewID = Global.GetLowestUncrewedID();
+                    //int CrewID = 1; //Required to force spawning with CrewID erroring.
                     GameObject gameObject = PhotonNetwork.Instantiate("NetworkPrefabs/" + PLGlobal.Instance.PlayerShipNetworkPrefabNames[(int)arguments[0]], new Vector3(50f, 50f, 50f), Quaternion.identity, 0, null);
                     PLShipInfo shipinfo = gameObject.GetComponent<PLShipInfo>();
                     shipinfo.SetShipID(PLServer.ServerSpaceTargetIDCounter++);
@@ -24,8 +25,10 @@ namespace FLEETMOD.ModMessages
                     shipinfo.ShipNameValue = (string)arguments[2];
                     shipinfo.LastAIAutoYellowAlertSetupTime = Time.time;
                     shipinfo.SetupShipStats(false, true);
+                    //Between these 2 lines, code errors and stops continuation
                     Global.PlayerCrewList.Add((int)arguments[1], CrewID); //Adds ship and player to Global.PlayerCrewList and Global.Fleet as part of crew with CrewID
                     Global.Fleet.Add(shipinfo.ShipID, CrewID);
+                    //end of 2 lines
                     playerFromPlayerID.SetClassID(0);
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                     {
@@ -50,3 +53,7 @@ namespace FLEETMOD.ModMessages
         }
     }
 }
+/* Notes:
+ * <> WITH DEFAULT CREWID 1 <>
+ * Ship spawns with bot crew, friendly and with shields up
+*/

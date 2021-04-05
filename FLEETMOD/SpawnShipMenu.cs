@@ -81,3 +81,12 @@ namespace FLEETMOD
         }
     }
 }
+/* Future Changes :
+ * 
+ * Disable Reflect Galaxy & Ironman Options
+ *      Unsure if they have any real effect
+ *      
+ * Potentially add in custom settings for only-faction ships
+ * 
+ * Potentially add a load ship feature
+*/

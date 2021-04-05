@@ -15,7 +15,8 @@ namespace FLEETMOD
         // Dictionary Linking Player IDs and Crew IDs
         public static Dictionary<int, int> PlayerCrewList;
         // Shiplimit for playership spawning.
-        public static int shiplimit = 1;
+        public static int shiplimit = 5; 
+        // Set to 5 for default testing, in release should be 1
         // Developer mode Check
         public static bool devmode = true;
 
