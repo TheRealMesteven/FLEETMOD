@@ -18,12 +18,6 @@ namespace FLEETMOD
         public static int shiplimit = 1;
         // Developer mode Check
         public static bool devmode = true;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inShipID">ShipID from ship</param>
-        /// <returns></returns>
         public static bool GetIsFriendlyShip(int inShipID)
         {
             foreach (int shipID in Fleet.Values)
