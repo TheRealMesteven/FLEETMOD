@@ -34,7 +34,7 @@ namespace FLEETMOD
                         PhotonPlayer photonplayer = player.GetPhotonPlayer();
                         if (!player.IsBot && photonplayer != PhotonNetwork.player)
                         {
-                            PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", photonplayer, new object[] { Global.Fleet });
+                            PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", photonplayer, new object[] { Global.Fleet, Global.PlayerCrewList });
                         }
                     }
                 }
@@ -50,7 +50,8 @@ namespace FLEETMOD
             if (PhotonNetwork.isMasterClient)
             {
                 PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", newPhotonPlayer, new object[] {
-                    Global.Fleet
+                    Global.Fleet,
+                    Global.PlayerCrewList
                 });
             }
         }
