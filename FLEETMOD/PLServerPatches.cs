@@ -56,4 +56,13 @@ namespace FLEETMOD
             }
         }
     }
+    [HarmonyPatch(typeof(PLServer), "Start")]
+    class StartPatch
+    {
+        static void Postfix()
+        {
+            Global.Fleet = new Dictionary<int, int>();
+            Global.PlayerCrewList = new Dictionary<int, int>();
+        }
+    }
 }
