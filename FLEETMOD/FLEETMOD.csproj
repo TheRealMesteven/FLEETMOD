@@ -43,6 +43,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
+    <Reference Include="PulsarPluginLoader" />
     <Reference Include="PulsarPluginLoader, Version=0.9.3.85, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\PulsarPluginLoader.dll</HintPath>
@@ -70,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="ModMessages\SyncFleetIDs.cs" />
+    <Compile Include="ModMessages\SyncCrewIDs.cs" />
     <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
