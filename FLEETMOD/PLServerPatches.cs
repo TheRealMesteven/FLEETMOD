@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace FLEETMOD
                     }
                 }
             }
-            if(PhotonNetwork.isMasterClient) //MasterClient Check for all masterclient code
+            if (PhotonNetwork.isMasterClient) //MasterClient Check for all masterclient code
             {
                 if (CachedFleet != Global.Fleet)
                 {
@@ -65,4 +66,111 @@ namespace FLEETMOD
             Global.PlayerCrewList = new Dictionary<int, int>();
         }
     }
+    [HarmonyPatch(typeof(PLServer), "ClaimShip")]
+    class ClaimPatch
+    {
+        static void Prefix(PLServer __instance, ref int ___inShipID)
+        {
+            PLShipInfo plshipInfo = null;
+            plshipInfo = (PLEncounterManager.Instance.GetShipFromID(___inShipID) as PLShipInfo);
+            if (plshipInfo != null && plshipInfo != PLEncounterManager.Instance.PlayerShip)
+            {
+                foreach (PLPlayer plplayer in __instance.AllPlayers)
+                {//Enemy unclaims player ship
+                    if (plplayer != null && plplayer.StartingShip == plshipInfo)
+                    {
+                        plplayer.StartingShip = null;
+                    }
+                }
+                if (plshipInfo.TeamID == 1)
+                {//Player unclaims enemy ship
+                    plshipInfo.TeamID = -1;
+                    plshipInfo.photonView.RPC("DoClaimRemovedVisuals", PhotonTargets.All, Array.Empty<object>());
+                    if (PhotonNetwork.isMasterClient)
+                    {
+                        PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                        {
+                        "ENEMY SHIP CLAIM REMOVED!",
+                        Color.white,
+                        0,
+                        "SHIP"
+                        });
+                        return;
+                    }
+                }
+                else if (plshipInfo.TeamID != 0)
+                {//Player claims unclaimed ship
+                    if (PLServer.Instance.GetPlayerFromPlayerID(PLNetworkManager.Instance.LocalPlayerID).GetClassID() != 0)
+                    {//Insert code here where non-captains claiming the ship will become captain of new ship
+                        int CrewID = Global.GetLowestUncrewedID();
+                        plshipInfo.CaptainTargetedSpaceTargetID = -1;
+                        plshipInfo.TeamID = 0;
+                        plshipInfo.AutoTarget = false;
+                        Global.PlayerCrewList.Add(PLNetworkManager.Instance.LocalPlayerID, CrewID); //Adds ship and player to Global.PlayerCrewList and Global.Fleet as part of crew with CrewID
+                        Global.Fleet.Add(plshipInfo.ShipID, CrewID);
+                        plshipInfo.SelectedActorID = "";
+                        plshipInfo.IsRelicHunter = false;
+                        plshipInfo.IsBountyHunter = false;
+                        PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                            {
+                        PLNetworkManager.Instance.LocalPlayerID,
+                        Color.blue,
+                        0,
+                        "SHIP"
+                            });
+                        if (PhotonNetwork.isMasterClient)
+                        {
+                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                            {
+                        "SHIP CLAIMED!",
+                        Color.blue,
+                        0,
+                        "SHIP"
+                            });
+                            if (plshipInfo.PersistantShipInfo != null)
+                            {//Persistant ship infos are ships that are bound to the sector (If left there, they'll remain there)*
+                                if (PLServer.Instance.AllPSIs.Contains(plshipInfo.PersistantShipInfo))
+                                {
+                                    PLServer.Instance.AllPSIs.Remove(plshipInfo.PersistantShipInfo);
+                                }
+                                plshipInfo.PersistantShipInfo = null;
+                            }
+                        }
+                        if (!__instance.LongRangeCommsDisabled && PLEncounterManager.Instance.PlayerShip_WhenEnteredSector != plshipInfo)
+                        {
+                            plshipInfo.IsFlagged = true;
+                        }
+                        foreach (PLUIScreen pluiscreen in PLEncounterManager.Instance.PlayerShip.MyScreenBase.AllScreens)
+                        {
+                            if (pluiscreen != null)
+                            {
+                                pluiscreen.PlayerControlAlpha = 1f;
+                            }
+                        }
+                        if (PhotonNetwork.isMasterClient)
+                        {
+                            __instance.photonView.RPC("ClaimShip", PhotonTargets.Others, new object[]
+                            {
+                        ___inShipID
+                            });
+                        }
+                    }
+                    else
+                    {
+                        PulsarPluginLoader.Utilities.Messaging.Echo(PLServer.Instance.GetPlayerFromPlayerID(PLNetworkManager.Instance.LocalPlayerID), "You're a captain!");
+                    }
+                }
+            }
+        }
+    }
 }
+/* Notes:
+ * If we implement player-ship unclaiming we can use: 
+ * PLEncounterManager.Instance.PlayerShip.PersistantShipInfo = new PLPersistantShipInfo(PLEncounterManager.Instance.PlayerShip.ShipTypeID, PLEncounterManager.Instance.PlayerShip.FactionID, PLServer.GetCurrentSector(), 0, false, PLEncounterManager.Instance.PlayerShip.IsFlagged, false, -1, -1);
+   PLEncounterManager.Instance.PlayerShip.PersistantShipInfo.EnsureNoCrew = true;
+   PLEncounterManager.Instance.PlayerShip.PersistantShipInfo.ShipName = PLEncounterManager.Instance.PlayerShip.ShipNameValue;
+   PLServer.Instance.AllPSIs.Add(PLEncounterManager.Instance.PlayerShip.PersistantShipInfo);
+ * To ensure it remains in the sector after unclaimed
+ *
+ * Add in a captaining feature if they click claim on the unclaimed ship
+*/
