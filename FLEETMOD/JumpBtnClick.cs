@@ -9,6 +9,7 @@ namespace FLEETMOD
 		public static bool Prefix(PLWarpDriveScreen __instance)
 		{
 			bool result;
+            PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
 			if (!MyVariables.isrunningmod)
 			{
 				result = true;
@@ -22,13 +23,9 @@ namespace FLEETMOD
 				{
 					if (plshipInfoBase.TagID < -3 && plshipInfoBase != null)
 					{
-						if (PLServer.Instance.m_ShipCourseGoals.Count > 0)
+						if (PLServer.Instance.m_ShipCourseGoals.Count > 0 && plshipInfoBase.WarpTargetID != map.ID)
 						{
-                            PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
-                            if (plshipInfoBase.WarpTargetID != map.ID)
-                            {
-                                num++;
-                            }
+							num++;
 						}
 						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{

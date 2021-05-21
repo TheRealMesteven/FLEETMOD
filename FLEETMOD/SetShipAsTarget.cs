@@ -17,7 +17,7 @@ namespace FLEETMOD
 			{
 				if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
 				{
-                    int captainTargetedSpaceTargetID = PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID;
+					int captainTargetedSpaceTargetID = PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID;
 					if (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).TagID != -23 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
 					{
 						PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID = target.SpaceTargetID; // Target Non Friendly as Captain
@@ -53,12 +53,7 @@ namespace FLEETMOD
 						{
 							PLTabMenu.Instance.OnClick_ClearTarget();
 						}
-                        if (MyVariables.recentfriendlyfire)
-                        {
-                            PLTabMenu.Instance.OnClick_ClearTarget();
-                            MyVariables.recentfriendlyfire = false;
-                        }
-                    }
+					}
 				}
 				return false;
 			}

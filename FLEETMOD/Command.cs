@@ -5,8 +5,8 @@ using UnityEngine;
 namespace FLEETMOD
 {
     internal class Command
-    {/*
-        public class FLEETMODGodmode : IChatCommand
+    {
+        private class FLEETMODGodmode : IChatCommand
         {
             public string[] CommandAliases()
             {
@@ -26,12 +26,7 @@ namespace FLEETMOD
                 return "/" + this.CommandAliases()[0];
             }
 
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
+            public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -44,8 +39,8 @@ namespace FLEETMOD
                 }
                 return false;
             }
-        }*/
-        public class FLEETMODFriendlyFire : IChatCommand
+        }
+        private class FLEETMODFriendlyFire : IChatCommand
         {
             public string[] CommandAliases()
             {
@@ -65,34 +60,30 @@ namespace FLEETMOD
                 return "/" + this.CommandAliases()[0];
             }
 
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
+            public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
                     if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
                     {
                         MyVariables.shipfriendlyfire = !MyVariables.shipfriendlyfire;
+                        PulsarPluginLoader.ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[]{});
                         if (MyVariables.shipfriendlyfire) {
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] {
                                 "SHIP FRIENDLYFIRE DISABLED", Color.white, 2, ""
                             });
+                            PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", PhotonTargets.All, new object[] // Apply Targetting
+						    {
+                                PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID
+                            });
                         }
-                        else {
-                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
-                            MyVariables.recentfriendlyfire = true;
-                        }
-                        PulsarPluginLoader.ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[] { });
+                        else { PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" }); }
                     }
                 }
                 return false;
             }
         }
-        public class FLEETMODShipLimit : IChatCommand
+        private class FLEETMODShipLimit : IChatCommand
         {
             public string[] CommandAliases()
             {
@@ -101,7 +92,7 @@ namespace FLEETMOD
                     "shiplimit"
                 };
             }
-            
+
             public string Description()
             {
                 return "Fleetmod Ship limit";
@@ -111,13 +102,8 @@ namespace FLEETMOD
             {
                 return "/" + this.CommandAliases()[0];
             }
-            
-            public bool PublicCommand()
-            {
-                return false;
-            }
 
-            public bool Execute(string arguments, int SenderID)
+            public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -130,82 +116,8 @@ namespace FLEETMOD
                 }
                 return false;
             }
-        }/*
-        public class FLEETMODShipDetect : IChatCommand
-        {
-            public string[] CommandAliases()
-            {
-                return new string[]
-                {
-                    "shipdetection"
-                };
-            }
-
-            public string Description()
-            {
-                return "Fleetmod ship detection";
-            }
-
-            public string UsageExample()
-            {
-                return "/" + this.CommandAliases()[0];
-            }
-
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
-            {
-                if (MyVariables.isrunningmod)
-                {
-                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
-                    {
-                        foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
-                        {
-                            if (plshipInfoBase == PLEncounterManager.Instance.PlayerShip)
-                            {
-                                int __target = -1;
-                                try
-                                {
-                                    __target = plshipInfoBase.TargetSpaceTarget.SpaceTargetID;
-                                }
-                                catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Player Ship\n");
-                                bool __detect = false;
-                                try
-                                {
-                                    __detect = plshipInfoBase.MySensorObjectShip.IsDetectedBy(PLEncounterManager.Instance.PlayerShip);
-                                }
-                                catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : "+__detect);
-                            }
-                            else
-                            {
-                                int __target = -1;
-                                try
-                                {
-                                    __target = plshipInfoBase.TargetSpaceTarget.SpaceTargetID;
-                                }
-                                catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Hostile Ship\n");
-                                bool __detect = false;
-                                try
-                                {
-                                    __detect = PLEncounterManager.Instance.PlayerShip.MySensorObjectShip.IsDetectedBy(plshipInfoBase);
-                                }
-                                catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : " + __detect);
-                            }
-
-                        }
-                    }
-                }
-                return false;
-            }
         }
-        public class FLEETMODlog : IChatCommand
+        private class FLEETMODlog : IChatCommand
         {
             public string[] CommandAliases()
             {
@@ -225,12 +137,7 @@ namespace FLEETMOD
                 return "/" + this.CommandAliases()[0];
             }
 
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
+            public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -266,7 +173,7 @@ namespace FLEETMOD
                 return false;
             }
         }
-        public class FLEETMODCommandsEnable : IChatCommand
+        private class FLEETMODCommandsEnable : IChatCommand
         {
             public string[] CommandAliases()
             {
@@ -286,12 +193,7 @@ namespace FLEETMOD
                 return "/" + this.CommandAliases()[0];
             }
 
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
+            public bool Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -305,7 +207,7 @@ namespace FLEETMOD
                 }
                 return false;
             }
-        }*/
+        }
         public static bool Debug = false;
     }
 }

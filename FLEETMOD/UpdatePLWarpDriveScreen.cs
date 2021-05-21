@@ -16,21 +16,13 @@ namespace FLEETMOD
 				int num3 = 0;
 				string text = "";
 				string str = "";
-                string str2 = "";
-                PLSectorInfo map = null;
-                try
-                {
-                    map = PLStarmap.Instance.CurrentShipPath[1];
-                }
-                catch
-                {
-
-                }
+				string str2 = "";
+                PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
                 foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
-                    if (plshipInfoBase != null && plshipInfoBase.TagID < -3 && PLServer.Instance.m_ShipCourseGoals.Count > 0)
+					if (plshipInfoBase.TagID < -3 && plshipInfoBase != null && PLServer.Instance.m_ShipCourseGoals.Count > 0)
 					{
-                        if (map != null && plshipInfoBase.WarpTargetID != map.ID)
+						if (plshipInfoBase.WarpTargetID != map.ID)
 						{
 							num++;
 							text = plshipInfoBase.ShipNameValue;
@@ -107,9 +99,10 @@ namespace FLEETMOD
 								if (!PhotonNetwork.isMasterClient)
 								{
 									___BlindJumpWarning.text = "Target Sector";
-									if (map != null && PLServer.Instance.m_ShipCourseGoals.Count > 0)
+									bool flag12 = PLServer.Instance.m_ShipCourseGoals.Count > 0;
+									if (flag12)
 									{
-                                        ___BlindJumpBtnLabel.text = map.ID.ToString();
+										___BlindJumpBtnLabel.text = map.ID.ToString();
 									}
 									else
 									{
@@ -172,14 +165,14 @@ namespace FLEETMOD
 									}
 									else
 									{
-										if (map == null ||PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) > 0.5f)
+										if (PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) > 0.5f)
 										{
 											___m_JumpButtonLabel.text = "Not Responding";
 											___m_JumpButtonLabelTop.text = "Not Responding";
 										}
 										else
 										{
-                                                    ___m_JumpButtonLabel.text = string.Concat(new object[]
+											___m_JumpButtonLabel.text = string.Concat(new object[]
 											{
 												"Align ",
 												text,
@@ -222,9 +215,9 @@ namespace FLEETMOD
 					___m_JumpButtonLabelTop.text = "Initiate Jump Prep";
 					break;
 				}
-                for (int i = 0; i < PLGlobal.NumWarpChargeStages; i++)
+				for (int i = 0; i < PLGlobal.NumWarpChargeStages; i++)
 				{
-                    ___ChargeStage_Label[i].text = ___ChargeStage_Name[i];
+					___ChargeStage_Label[i].text = ___ChargeStage_Name[i];
 					___ChargeStage_BarMask[i].clipOffset = new Vector2((__instance.MyScreenHubBase.OptionalShipInfo.WarpChargeState_Levels[i] - 1f) * ___ChargeStage_BarMask[i].width, 0f);
 				}
 			}

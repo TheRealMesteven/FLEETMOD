@@ -43,10 +43,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
-    <Reference Include="PulsarPluginLoader, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\PulsarPluginLoader.dll</HintPath>
-    </Reference>
+    <Reference Include="PulsarPluginLoader" />
+    <Reference Include="PulsarPluginLoader" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\UnityEngine.dll</HintPath>

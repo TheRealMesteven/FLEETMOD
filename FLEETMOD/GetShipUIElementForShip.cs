@@ -9,7 +9,7 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(ref List<PLUIOutsideWorldUI.ShipUIElement> ___DisplayedShipUIElements)
 		{
-			if (!MyVariables.isrunningmod)
+			if (MyVariables.isrunningmod)
 			{
 				return true;
 			}
@@ -17,16 +17,16 @@ namespace FLEETMOD
 			{
 				foreach (PLUIOutsideWorldUI.ShipUIElement shipUIElement in ___DisplayedShipUIElements)
 				{
-                    if (PLEncounterManager.Instance.GetShipFromID(PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore()).ShipID == shipUIElement.Ship.ShipID && shipUIElement.Ship.GetIsPlayerShip())
+					if (PLEncounterManager.Instance.GetShipFromID(PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore()).ShipID == shipUIElement.Ship.ShipID && shipUIElement.Ship.GetIsPlayerShip())
 					{
-                        shipUIElement.ShipName.text = "<color=yellow>" + shipUIElement.Ship.ShipNameValue + "</color>";
-                    }
+						shipUIElement.ShipName.text = "<color=yellow>" + shipUIElement.Ship.ShipNameValue + "</color>";
+					}
 					else
 					{
-                        if (shipUIElement.Ship.GetIsPlayerShip())
+						if (shipUIElement.Ship.GetIsPlayerShip())
 						{
-                            shipUIElement.ShipName.text = "<color=lime>" + shipUIElement.Ship.ShipNameValue + "</color>";
-                        }
+							shipUIElement.ShipName.text = "<color=lime>" + shipUIElement.Ship.ShipNameValue + "</color>";
+						}
 					}
 				}
 				return true;
