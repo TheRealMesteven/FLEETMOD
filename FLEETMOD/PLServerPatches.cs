@@ -14,6 +14,7 @@ namespace FLEETMOD
             if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
             { // If In-game
                 PLInGameUI.Instance.CurrentVersionLabel.text = "<color=ffff00>Fleetmod V2.0</color>" + PLNetworkManager.Instance.VersionString;
+                //PLEncounterManager.Instance.PlayerShip.TagID = -23;
                 if (!PhotonNetwork.isMasterClient || Global.devmode)
                 { // If Crew
                     if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 || Global.devmode))
@@ -69,10 +70,10 @@ namespace FLEETMOD
     [HarmonyPatch(typeof(PLServer), "ClaimShip")]
     class ClaimPatch
     {
-        static void Prefix(PLServer __instance, ref int ___inShipID)
+        static void Prefix(PLServer __instance, ref int inShipID)
         {
             PLShipInfo plshipInfo = null;
-            plshipInfo = (PLEncounterManager.Instance.GetShipFromID(___inShipID) as PLShipInfo);
+            plshipInfo = (PLEncounterManager.Instance.GetShipFromID(inShipID) as PLShipInfo);
             if (plshipInfo != null && plshipInfo != PLEncounterManager.Instance.PlayerShip)
             {
                 foreach (PLPlayer plplayer in __instance.AllPlayers)
@@ -151,7 +152,7 @@ namespace FLEETMOD
                         {
                             __instance.photonView.RPC("ClaimShip", PhotonTargets.Others, new object[]
                             {
-                        ___inShipID
+                        inShipID
                             });
                         }
                     }

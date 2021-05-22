@@ -72,8 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="GUI\Dialogs\ShipSpawnRequest.cs" />
-    <Compile Include="GUI\IMGUI\ShipSpawnGUI.cs" />
     <Compile Include="ModMessages\SyncCrewIDs.cs" />
     <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="PLShipPatches.cs" />

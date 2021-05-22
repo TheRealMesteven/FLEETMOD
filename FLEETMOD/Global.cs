@@ -11,6 +11,7 @@ namespace FLEETMOD
         // Boolean check if the mod is running
         public static bool isrunningmod;
         // Dictionary linking Ship IDs and Crew IDs owned by the fleet.
+        // (EXCLUDING ADMIRAL SHIP)
         public static Dictionary<int, int> Fleet;
         // Dictionary Linking Player IDs and Crew IDs
         public static Dictionary<int, int> PlayerCrewList;
@@ -35,6 +36,15 @@ namespace FLEETMOD
                 }
             }
             return false;
+        }
+        public static int GetFleetShipCount()
+        {
+            int num = 0;
+            foreach (int shipID in Fleet.Keys)
+            {
+                num++;
+            }
+            return num;
         }
         public static int GetLowestUncrewedID()
         {
