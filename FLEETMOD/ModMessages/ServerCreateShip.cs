@@ -27,7 +27,7 @@ namespace FLEETMOD.ModMessages
                     shipinfo.SetupShipStats(false, true);
                     //Between these 2 lines, code errors and stops continuation
                     Global.PlayerCrewList.Add((int)arguments[1], CrewID); //Adds ship and player to Global.PlayerCrewList and Global.Fleet as part of crew with CrewID
-                    Global.Fleet.Add(shipinfo.ShipID, CrewID);
+                    Global.Fleet.Add(CrewID,shipinfo);
                     //end of 2 lines
                     playerFromPlayerID.SetClassID(0);
                     //playerFromPlayerID.StartingShip = shipinfo;

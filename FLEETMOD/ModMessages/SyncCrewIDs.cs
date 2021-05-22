@@ -10,7 +10,7 @@ namespace FLEETMOD.ModMessages
         {
             if(sender.sender == PhotonNetwork.masterClient)
             {
-                Global.Fleet = (Dictionary<int, int>)arguments[0];
+                Global.Fleet = (Dictionary<int, PLShipInfo>)arguments[0];
                 Global.PlayerCrewList = (Dictionary<int, int>)arguments[1];
             }
         }

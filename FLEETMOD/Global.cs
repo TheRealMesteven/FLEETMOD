@@ -10,9 +10,8 @@ namespace FLEETMOD
     {
         // Boolean check if the mod is running
         public static bool isrunningmod;
-        // Dictionary linking Ship IDs and Crew IDs owned by the fleet.
-        // (EXCLUDING ADMIRAL SHIP)
-        public static Dictionary<int, int> Fleet;
+        // Dictionary linking Crew IDs to Ships owned by the fleet.
+        public static Dictionary<int, PLShipInfo> Fleet;
         // Dictionary Linking Player IDs and Crew IDs
         public static Dictionary<int, int> PlayerCrewList;
         // Shiplimit for playership spawning.
@@ -28,9 +27,9 @@ namespace FLEETMOD
         /// <returns>returns true if ship is in the fleet</returns>
         public static bool GetIsFleetShip(int inShipID)
         {
-            foreach (int shipID in Fleet.Keys)
+            foreach (PLShipInfo _ShipInfo in Fleet.Values)
             {
-                if (inShipID == shipID)
+                if (_ShipInfo == PLEncounterManager.Instance.GetShipFromID(inShipID))
                 {
                     return true;
                 }
@@ -40,7 +39,7 @@ namespace FLEETMOD
         public static int GetFleetShipCount()
         {
             int num = 0;
-            foreach (int shipID in Fleet.Keys)
+            foreach (int CrewID in Fleet.Keys)
             {
                 num++;
             }
@@ -56,7 +55,7 @@ namespace FLEETMOD
                     return i;
                 }
             }
-            throw new Exception("Something broke at FleetMod.Global.GetLowestUncrewedID");
+            throw new Exception("[FM] Something broke at FleetMod.Global.GetLowestUncrewedID");
         }
     }
 }
