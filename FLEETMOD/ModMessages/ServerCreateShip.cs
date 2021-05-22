@@ -19,7 +19,7 @@ namespace FLEETMOD.ModMessages
                     PLShipInfo shipinfo = gameObject.GetComponent<PLShipInfo>();
                     shipinfo.SetShipID(PLServer.ServerSpaceTargetIDCounter++);
                     shipinfo.AutoTarget = false;
-                    shipinfo.TagID = -23;
+                    shipinfo.TagID = -23; // Want to replace but is required for Hostile ship patch & Not Responding Check
                     shipinfo.TeamID = 1;
                     shipinfo.OnIsNewStartingShip();
                     shipinfo.ShipNameValue = (string)arguments[2];
@@ -38,7 +38,7 @@ namespace FLEETMOD.ModMessages
                         0,
                         "SHIP"
                     });
-                    if (Global.GetFleetShipCount() >= 1)
+                    if (Global.GetFleetShipCount() > 1)
                     {//Required to update all of the current players with the new ship
                         PulsarPluginLoader.Utilities.Logger.Info("UPDATING");
                         PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", PhotonTargets.Others, new object[] {

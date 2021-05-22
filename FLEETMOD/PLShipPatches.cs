@@ -23,7 +23,7 @@ namespace FLEETMOD
         public static bool Prefix(PLShipInfoBase __instance, ref bool __result)
         {
             bool result;
-            if (__instance.TagID == -23)
+            if (__instance.TagID < -3)
             ///PLEncounterManager.Instance.PlayerShip.ShipID == __instance.ShipID || Global.GetIsFleetShip(__instance.ShipID))
             /// Above if statement causes an error if refined to the above.
             {

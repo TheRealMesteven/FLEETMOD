@@ -72,7 +72,7 @@ namespace FLEETMOD
             int num3 = 0;
             foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
             {
-                if (plshipInfoBase.TagID < -3 && plshipInfoBase != null)
+                if (Global.GetIsFleetShip(plshipInfoBase.ShipID) && plshipInfoBase != null)
                 {
                     if (PLServer.Instance.m_ShipCourseGoals.Count > 0)
                     {
@@ -303,7 +303,7 @@ namespace FLEETMOD
             }
             foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
             {
-                if (plshipInfoBase != null && plshipInfoBase.TagID < -3 && PLServer.Instance.m_ShipCourseGoals.Count > 0)
+                if (plshipInfoBase != null && Global.GetIsFleetShip(plshipInfoBase.ShipID) && PLServer.Instance.m_ShipCourseGoals.Count > 0)
                 {
                     if (map != null && plshipInfoBase.WarpTargetID != map.ID)
                     {
@@ -412,7 +412,7 @@ namespace FLEETMOD
                 case EWarpChargeStage.E_WCS_READY:
                     {
                         ___TargetAlpha_WarpPanel = 0.3f;
-                        if (__instance.MyScreenHubBase.OptionalShipInfo.TagID > -3)
+                        if (__instance.MyScreenHubBase.OptionalShipInfo.TagID > -3) // Want to replace but is required
                         {
                             ___m_JumpButtonLabel.text = "Not Responding";
                             ___m_JumpButtonLabelTop.text = "Not Responding";

@@ -14,7 +14,7 @@ namespace FLEETMOD
             if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
             { // If In-game
                 PLInGameUI.Instance.CurrentVersionLabel.text = "<color=ffff00>Fleetmod V2.0</color>" + PLNetworkManager.Instance.VersionString;
-                PLEncounterManager.Instance.PlayerShip.TagID = -23;
+                PLEncounterManager.Instance.PlayerShip.TagID = -23; // Want to remove but is required for Hostile Ship Patch
                 if (!PhotonNetwork.isMasterClient || Global.devmode)
                 { // If Crew
                     if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 || Global.devmode))
@@ -65,6 +65,8 @@ namespace FLEETMOD
         {
             Global.Fleet = new Dictionary<int, PLShipInfo>();
             Global.PlayerCrewList = new Dictionary<int, int>();
+            int CrewID = Global.GetLowestUncrewedID();
+            Global.Fleet.Add(CrewID, PLEncounterManager.Instance.PlayerShip);
         }
     }
     [HarmonyPatch(typeof(PLServer), "ClaimShip")]
