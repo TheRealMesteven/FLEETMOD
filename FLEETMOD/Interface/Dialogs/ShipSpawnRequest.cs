@@ -72,7 +72,7 @@ namespace FLEETMOD.Interface.Dialogs
             {
                 IsSelectedCaptain = true;
                 this.DialogTextRight += $"\n{PLServer.Instance.GetPlayerFromPlayerID(indata).GetPlayerName()}";
-                NewCaptainID = 0;
+                NewCaptainID = indata;
                 NewShipChoice();
             }
         }

@@ -30,6 +30,7 @@ namespace FLEETMOD.ModMessages
                     Global.Fleet.Add(shipinfo.ShipID, CrewID);
                     //end of 2 lines
                     playerFromPlayerID.SetClassID(0);
+                    //playerFromPlayerID.StartingShip = shipinfo;
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                     {
                         "The " + (string)arguments[2] + " Has Joined!",
