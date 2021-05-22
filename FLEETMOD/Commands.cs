@@ -44,5 +44,42 @@ namespace FLEETMOD
                 return false;
             }
         }
+
+        public class FLEETMODShipRequest : IChatCommand
+        {
+            public string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "shipreq"
+                };
+            }
+            public string Description()
+            {
+                return "Fleetmod ship spawn request";
+            }
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0];
+            }
+            public bool PublicCommand()
+            {
+                return false;
+            }
+            public bool Execute(string arguments, int SenderID)
+            {
+                if (Global.isrunningmod)
+                {
+                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                    {
+                        var go = new UnityEngine.GameObject("dummy"); // TODO: Maybe create one BIG GameObject for all Dialogs?
+                        var a = go.AddComponent<Interface.Dialogs.ShipSpawnRequest>(); // Also TODO: Rename local vars...
+                        UnityEngine.GameObject.DontDestroyOnLoad(go);
+                        PulsarPluginLoader.Utilities.Messaging.Notification("Check your dialogue screen!");
+                    }
+                }
+                return false;
+            }
+        }
     }
 }
