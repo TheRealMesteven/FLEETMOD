@@ -37,6 +37,14 @@ namespace FLEETMOD.ModMessages
                         0,
                         "SHIP"
                     });
+                    if (Global.GetFleetShipCount() >= 1)
+                    {//Required to update all of the current players with the new ship
+                        PulsarPluginLoader.Utilities.Logger.Info("UPDATING");
+                        PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SyncCrewIDs", PhotonTargets.Others, new object[] {
+                        Global.Fleet,
+                        Global.PlayerCrewList
+                        });
+                    }//
                 }
                 else
                 {
