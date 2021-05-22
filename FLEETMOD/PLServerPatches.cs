@@ -69,10 +69,10 @@ namespace FLEETMOD
     [HarmonyPatch(typeof(PLServer), "ClaimShip")]
     class ClaimPatch
     {
-        static void Prefix(PLServer __instance, ref int ___inShipID)
+        static void Prefix(PLServer __instance, ref int inShipID)
         {
             PLShipInfo plshipInfo = null;
-            plshipInfo = (PLEncounterManager.Instance.GetShipFromID(___inShipID) as PLShipInfo);
+            plshipInfo = (PLEncounterManager.Instance.GetShipFromID(inShipID) as PLShipInfo);
             if (plshipInfo != null && plshipInfo != PLEncounterManager.Instance.PlayerShip)
             {
                 foreach (PLPlayer plplayer in __instance.AllPlayers)
@@ -151,7 +151,7 @@ namespace FLEETMOD
                         {
                             __instance.photonView.RPC("ClaimShip", PhotonTargets.Others, new object[]
                             {
-                        ___inShipID
+                        inShipID
                             });
                         }
                     }
