@@ -49,18 +49,12 @@ namespace FLEETMOD.Interface.Dialogs
         {
             this.DialogTextLeft += "\nAdmiral, select a new ship type!";
             this.m_AllChoices.Clear();
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Intrepid", new PLHailChoiceDelegateData(SpawnShip), 1));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("W.D. Cruisere", new PLHailChoiceDelegateData(SpawnShip), 2));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Stargazer", new PLHailChoiceDelegateData(SpawnShip), 3)); // Sector Commander ? +_+
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Rolands", new PLHailChoiceDelegateData(SpawnShip), 4)); // TODO: Fix ID's
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("W.D. Destroyer", new PLHailChoiceDelegateData(SpawnShip), 5));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Carrier", new PLHailChoiceDelegateData(SpawnShip), 6));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Fluffy One", new PLHailChoiceDelegateData(SpawnShip), 8));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("W.D. Annihilator", new PLHailChoiceDelegateData(SpawnShip), 9));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("SunCircler Nomad 5", new PLHailChoiceDelegateData(SpawnShip), 10));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Interceptor", new PLHailChoiceDelegateData(SpawnShip), 11));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Sylvassi Swordship", new PLHailChoiceDelegateData(SpawnShip), 12));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData("Paladin", new PLHailChoiceDelegateData(SpawnShip), 13));
+            int _Count = 0;
+            foreach (string i in PLGlobal.Instance.PlayerShipNetworkPrefabNames)
+            {
+                this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(PLGlobal.Instance.PlayerShipNetworkPrefabNames[_Count], new PLHailChoiceDelegateData(SpawnShip), _Count));
+                _Count++;
+            }
         }
 
         private void RequestShip(bool authority, bool local)
