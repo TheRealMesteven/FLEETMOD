@@ -20,6 +20,7 @@ namespace FLEETMOD
     [HarmonyPatch(typeof(PLShipInfoBase), "GetIsPlayerShip")]
     internal class GetIsPlayerShipPatch
     {// When a Crew ship spawns, it gets identified as a friendly rather than a hostile.
+    // (Allows boarding through shields, gives alerts on system damage and prevents AI spawn)
         public static bool Prefix(PLShipInfoBase __instance, ref bool __result)
         {
             bool result;

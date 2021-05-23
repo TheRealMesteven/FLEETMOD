@@ -10,8 +10,10 @@ namespace FLEETMOD
     {
         // Boolean check if the mod is running
         public static bool isrunningmod;
-        // Dictionary linking Crew IDs to Ships owned by the fleet.
-        public static Dictionary<int, PLShipInfo> Fleet;
+        // Boolean check if ship initialised as fleet ship
+        public static bool ishostshipsetup = false;
+        // Dictionary linking Crew IDs to ShipIDs owned by the fleet.
+        public static Dictionary<int, int> Fleet;
         // Dictionary Linking Player IDs and Crew IDs
         public static Dictionary<int, int> PlayerCrewList;
         // Shiplimit for playership spawning.
@@ -27,9 +29,9 @@ namespace FLEETMOD
         /// <returns>returns true if ship is in the fleet</returns>
         public static bool GetIsFleetShip(int inShipID)
         {
-            foreach (PLShipInfo _ShipInfo in Fleet.Values)
+            foreach (int _ShipID in Fleet.Values)
             {
-                if (_ShipInfo == PLEncounterManager.Instance.GetShipFromID(inShipID))
+                if (_ShipID == inShipID)
                 {
                     return true;
                 }

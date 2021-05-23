@@ -81,5 +81,39 @@ namespace FLEETMOD
                 return false;
             }
         }
+
+        public class FLEETMODFleetDisplay : IChatCommand
+        {
+            public string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "fleetreq"
+                };
+            }
+            public string Description()
+            {
+                return "Fleetmod ship list request";
+            }
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0];
+            }
+            public bool PublicCommand()
+            {
+                return false;
+            }
+            public bool Execute(string arguments, int SenderID)
+            {
+                if (Global.isrunningmod)
+                {
+                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                    {
+                        PulsarPluginLoader.Utilities.Messaging.Notification(Global.GetFleetShipCount().ToString());
+                    }
+                }
+                return false;
+            }
+        }
     }
 }

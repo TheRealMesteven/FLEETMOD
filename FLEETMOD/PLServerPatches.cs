@@ -8,13 +8,19 @@ namespace FLEETMOD
     [HarmonyPatch(typeof(PLServer), "Update")]
     internal class UpdatePatch
     {
-        static Dictionary<int, PLShipInfo> CachedFleet = Global.Fleet;
+        static Dictionary<int, int> CachedFleet = Global.Fleet;
         public static void Postfix(PLServer __instance)
         {
             if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
             { // If In-game
                 PLInGameUI.Instance.CurrentVersionLabel.text = "<color=ffff00>Fleetmod V2.0</color>" + PLNetworkManager.Instance.VersionString;
                 PLEncounterManager.Instance.PlayerShip.TagID = -23; // Want to remove but is required for Hostile Ship Patch
+                if (PhotonNetwork.isMasterClient && !Global.ishostshipsetup)
+                { // Adding host ship to the fleet dictionary.
+                    int CrewID = Global.GetLowestUncrewedID();
+                    Global.Fleet.Add(CrewID, PLEncounterManager.Instance.PlayerShip.ShipID);
+                    Global.ishostshipsetup = true;
+                }
                 if (!PhotonNetwork.isMasterClient || Global.devmode)
                 { // If Crew
                     if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0 || Global.devmode))
@@ -63,10 +69,8 @@ namespace FLEETMOD
     {
         static void Postfix()
         {
-            Global.Fleet = new Dictionary<int, PLShipInfo>();
+            Global.Fleet = new Dictionary<int, int>();
             Global.PlayerCrewList = new Dictionary<int, int>();
-            int CrewID = Global.GetLowestUncrewedID();
-            Global.Fleet.Add(CrewID, PLEncounterManager.Instance.PlayerShip);
         }
     }
     [HarmonyPatch(typeof(PLServer), "ClaimShip")]
@@ -110,7 +114,7 @@ namespace FLEETMOD
                         plshipInfo.TeamID = 0;
                         plshipInfo.AutoTarget = false;
                         Global.PlayerCrewList.Add(PLNetworkManager.Instance.LocalPlayerID, CrewID); //Adds ship and player to Global.PlayerCrewList and Global.Fleet as part of crew with CrewID
-                        Global.Fleet.Add(CrewID,plshipInfo);
+                        Global.Fleet.Add(CrewID,plshipInfo.ShipID);
                         plshipInfo.SelectedActorID = "";
                         plshipInfo.IsRelicHunter = false;
                         plshipInfo.IsBountyHunter = false;
