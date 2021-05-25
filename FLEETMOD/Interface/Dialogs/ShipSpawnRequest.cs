@@ -43,6 +43,7 @@ namespace FLEETMOD.Interface.Dialogs
                 if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0) 
                     this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(NewCaptain), possibleCaptain.GetPlayerID()));
             }
+            ExitButton();
         }
 
         private void NewShipChoice()
@@ -55,6 +56,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(PLGlobal.Instance.PlayerShipNetworkPrefabNames[_Count], new PLHailChoiceDelegateData(SpawnShip), _Count));
                 _Count++;
             }
+            ExitButton();
         }
 
         private void RequestShip(bool authority, bool local)
@@ -88,8 +90,8 @@ namespace FLEETMOD.Interface.Dialogs
                         NewCaptainID,
                         PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
                     });
-                GameObject.Destroy(this.gameObject);
             }
+            GameObject.Destroy(this.gameObject);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
