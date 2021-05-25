@@ -20,17 +20,18 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>preview</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -91,11 +92,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Interface\Dialogs\FuelTransfer.cs" />
     <Compile Include="Interface\Dialogs\ShipSpawnRequest.cs" />
+    <Compile Include="ModMessages\FuelTransfer.cs" />
+    <Compile Include="ModMessages\SensorDishCollectScrap.cs" />
     <Compile Include="ModMessages\SyncCrewIDs.cs" />
     <Compile Include="PLCaptainScreenPatches.cs" />
     <Compile Include="PLShipPatches.cs" />
+    <Compile Include="PLSpaceScrapPatches.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="PLUIScreenPatches.cs" />
     <Compile Include="PLWarpDrivePatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModMessages\ServerCreateShip.cs" />

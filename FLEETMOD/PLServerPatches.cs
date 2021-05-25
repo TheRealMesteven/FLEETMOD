@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
@@ -168,6 +169,16 @@ namespace FLEETMOD
                     }
                 }
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(PLServer), "ServerCaptainStartGame")]
+    class ServerCaptainStartGamePatch
+    {
+        static void Postfix()
+        {
+            // For some reason, the host id is not in the list. 
+            Global.PlayerCrewList.Add(0, 1);
         }
     }
 }
