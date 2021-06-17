@@ -173,7 +173,7 @@ namespace FLEETMOD
             }
             public bool Execute(string arguments, int SenderID)
             {
-                StringBuilder sb = new();
+                StringBuilder sb = new StringBuilder();
                 foreach (var fleet in Global.Fleet)
                 {
                     sb.AppendLine($"{fleet.Key} - {fleet.Value}");

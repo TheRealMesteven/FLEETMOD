@@ -10,6 +10,7 @@ using static HarmonyLib.AccessTools;
 using static PulsarPluginLoader.Utilities.Logger;
 using static PulsarPluginLoader.Patches.HarmonyHelpers;
 using static System.Reflection.Emit.OpCodes;
+using FLEETMOD;
 
 namespace FLEETMOD
 {
@@ -18,16 +19,16 @@ namespace FLEETMOD
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            List<CodeInstruction> target = new()
+            List<CodeInstruction> target = new List<CodeInstruction>()
             {
-                new(Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
-                new(Ldfld, Field(typeof(PLLevelSync), "PlayerShip"))
+                new CodeInstruction(Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
+                new CodeInstruction(Ldfld, Field(typeof(PLLevelSync), "PlayerShip"))
             }; // PLShipInfo plshipInfo = PLEncounterManager.Instance.PlayerShip;
 
-            List<CodeInstruction> patch = new()
+            List<CodeInstruction> patch = new List<CodeInstruction>()
             {
-                new(Ldarg_0), // this
-                new(Call, Method(typeof(PlayerShipReplace), "PatchShip"))
+                new CodeInstruction(Ldarg_0), // this
+                new CodeInstruction(Call, Method(typeof(PlayerShipReplace), "PatchShip")),
             }; // result: PLShipInfo plshipInfo = FLEETMOD.PlayerShipReplace.PatchShip(this);
 
             return PatchBySequence(instructions, target, patch, PatchMode.REPLACE, showDebugOutput: false);
@@ -42,15 +43,15 @@ namespace FLEETMOD
             return PatchBySequence(instructions,
                 new CodeInstruction[]
             {
-                new(Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
-                new(Ldfld, Field(typeof(PLLevelSync), "PlayerShip")),
-                new(Stloc_0)
+                new CodeInstruction(Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
+                new CodeInstruction(Ldfld, Field(typeof(PLLevelSync), "PlayerShip")),
+                new CodeInstruction(Stloc_0)
             }, 
                 new CodeInstruction[]
             {
-                new(Ldarg_0), // this
-                new(Call, Method(typeof(PlayerShipReplace), "PatchShip")),
-                new(Stloc_0) 
+                new CodeInstruction(Ldarg_0), // this
+                new CodeInstruction(Call, Method(typeof(PlayerShipReplace), "PatchShip")),
+                new CodeInstruction(Stloc_0) 
             }, PatchMode.AFTER, CheckMode.ALWAYS, false);
             /*
              * Before: PLShipInfo plshipInfo = PLEncounterManager.Instance.PlayerShip;
@@ -68,20 +69,20 @@ namespace FLEETMOD
             return PatchBySequence(instructions,
                 new CodeInstruction[]
                 {
-                    new(Ldarg_0),
-                    new(Call, Method(typeof(Photon.MonoBehaviour), "get_photonView")),
-                    new(Ldstr, "RequestScrapCollectFromSensorDish"),
-                    new(Ldc_I4_2),
-                    new(Ldc_I4_1),
-                    new(Newarr, typeof(System.Object)),
-                    new(Dup),
-                    new(Ldc_I4_0),
-                    new(Ldarg_0),
-                    new(Ldfld,Field(typeof(PLShipInfo), "SensorDishCurrentSecondaryTarget_Scrap")),
-                    new(Callvirt, Method(typeof(PLSpecialEncounterNetObject), "get_EncounterNetID")),
-                    new(Box, typeof(int)),
-                    new(Stelem_Ref),
-                    new(Callvirt, Method(typeof(PhotonView), "RPC", new []{ typeof(string), typeof(PhotonTargets), typeof(object[])}))
+                    new CodeInstruction(Ldarg_0),
+                    new CodeInstruction(Call, Method(typeof(Photon.MonoBehaviour), "get_photonView")),
+                    new CodeInstruction(Ldstr, "RequestScrapCollectFromSensorDish"),
+                    new CodeInstruction(Ldc_I4_2),
+                    new CodeInstruction(Ldc_I4_1),
+                    new CodeInstruction(Newarr, typeof(System.Object)),
+                    new CodeInstruction(Dup),
+                    new CodeInstruction(Ldc_I4_0),
+                    new CodeInstruction(Ldarg_0),
+                    new CodeInstruction(Ldfld,Field(typeof(PLShipInfo), "SensorDishCurrentSecondaryTarget_Scrap")),
+                    new CodeInstruction(Callvirt, Method(typeof(PLSpecialEncounterNetObject), "get_EncounterNetID")),
+                    new CodeInstruction(Box, typeof(int)),
+                    new CodeInstruction(Stelem_Ref),
+                    new CodeInstruction(Callvirt, Method(typeof(PhotonView), "RPC", new []{ typeof(string), typeof(PhotonTargets), typeof(object[])}))
                     /*
                      base.photonView.RPC("RequestScrapCollectFromSensorDish", PhotonTargets.MasterClient, new object[]
 				    {
@@ -91,10 +92,10 @@ namespace FLEETMOD
                 },
                 new CodeInstruction[]
                 {
-                    new(Ldarg_0),
-                    new(Ldfld,Field(typeof(PLShipInfo), "SensorDishCurrentSecondaryTarget_Scrap")),
-                    new(Callvirt, Method(typeof(PLSpecialEncounterNetObject), "get_EncounterNetID")),
-                    new(Call, Method(typeof(UpdateSensorDishPatch), "Fix"))
+                    new CodeInstruction(Ldarg_0),
+                    new CodeInstruction(Ldfld,Field(typeof(PLShipInfo), "SensorDishCurrentSecondaryTarget_Scrap")),
+                    new CodeInstruction(Callvirt, Method(typeof(PLSpecialEncounterNetObject), "get_EncounterNetID")),
+                    new CodeInstruction(Call, Method(typeof(UpdateSensorDishPatch), "Fix"))
                 }, PatchMode.REPLACE, CheckMode.ALWAYS, false);
         }
 
@@ -114,7 +115,7 @@ namespace FLEETMOD
         {
             if (scrap != null)
             {
-                List<PLShipInfo> allFleetShips = new();
+                List<PLShipInfo> allFleetShips = new List<PLShipInfo>();
                 foreach (var fleetship in Global.Fleet)
                 {
                     allFleetShips.Add((PLShipInfo)PLEncounterManager.Instance.GetShipFromID(fleetship.Value));

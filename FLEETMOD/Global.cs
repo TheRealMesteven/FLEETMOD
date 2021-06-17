@@ -38,6 +38,34 @@ namespace FLEETMOD
             }
             return false;
         }
+
+        /// <summary>
+        /// Gets Crew ID from Player ID
+        /// Could've used the return function. However, this makes the code more readable IMO
+        /// </summary>
+        /// <param name="inPlayerID">Player ID of player</param>
+        /// <returns>returns Players Crew ID</returns>
+        public static int GetCrewID(int inPlayerID)
+        {
+            return PlayerCrewList[inPlayerID];
+        }
+
+        /// <summary>
+        /// Gets Ship ID from Crew ID
+        /// Could've used the return function. However, this makes the code more readable IMO
+        /// </summary>
+        /// <param name="inCrewID">Crew ID of player</param>
+        /// <returns>returns Crews Ship ID</returns>
+        public static int GetShipID(int inCrewID)
+        {
+            return Fleet[inCrewID];
+        }
+
+        /// <summary>
+        /// Gets a count of all ships in the fleet
+        /// </summary>
+        /// <param name="num">Count of progress through fleet crew's</param>
+        /// <returns>returns count of all ships in fleet</returns>
         public static int GetFleetShipCount()
         {
             int num = 0;
@@ -47,6 +75,12 @@ namespace FLEETMOD
             }
             return num;
         }
+
+        /// <summary>
+        /// Gets the lowest available crew id of the fleet
+        /// </summary>
+        /// <param name="i">Count of progress through fleet check</param>
+        /// <returns>returns lowest Crew ID available</returns>
         public static int GetLowestUncrewedID()
         {
             //limit set to 1000, should never reach that

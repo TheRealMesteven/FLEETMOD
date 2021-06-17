@@ -32,6 +32,38 @@ namespace FLEETMOD
                         PLTabMenu.Instance.TabMenuActive = false;
                     }
                 }
+
+                /// <summary>
+                /// Main bulk of getting additional ships to behave as crew
+                /// </summary>
+                /// <param name="StartingShip">The ship which the player will respawn at</param>
+                /// <param name="PlayerShip">The ship which the player can interact with as their own (Lockers, Atomizer)</param>
+                /// <foreach name="StartingShip.TeamID">Used with the above PlayerShip Patch to get user to identify ship as their own</param>
+                /// <returns>returns count of all ships in fleet</returns>
+                if (PLEncounterManager.Instance.GetShipFromID(Global.GetShipID(Global.GetCrewID(PLNetworkManager.Instance.LocalPlayerID))) != PLNetworkManager.Instance.LocalPlayer.StartingShip)
+                {
+                    PLNetworkManager.Instance.LocalPlayer.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(Global.GetShipID(Global.GetCrewID(PLNetworkManager.Instance.LocalPlayerID)));
+                }
+                if (PLEncounterManager.Instance.GetShipFromID(Global.GetShipID(Global.GetCrewID(PLNetworkManager.Instance.LocalPlayerID))) != PLEncounterManager.Instance.PlayerShip)
+                {
+                    PLEncounterManager.Instance.PlayerShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(Global.GetShipID(Global.GetCrewID(PLNetworkManager.Instance.LocalPlayerID)));
+                }
+                foreach (int _ShipID in Global.Fleet.Values)
+                {
+                    if (PLEncounterManager.Instance.GetShipFromID(_ShipID).TeamID == 0)
+                    {
+                        if (PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID != _ShipID)
+                        {
+                            PLEncounterManager.Instance.GetShipFromID(_ShipID).TeamID = 1;
+                        }
+                        else
+                        {
+                            PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID = 0;
+                        }
+                    }
+                }
+                ///
+                ///
             }
             if (PhotonNetwork.isMasterClient) //MasterClient Check for all masterclient code
             {
