@@ -8,14 +8,13 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip)
 		{
-			if (!MyVariables.isrunningmod)
+			if (!MyVariables.isrunningmod) // Not causing the non-hostile bug
 			{
 				return true;
 			}
 			else
 			{
-				bool flag2 = inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip());
-				return !(inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip()));
+                return !(inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip()));
 			}
 		}
 	}

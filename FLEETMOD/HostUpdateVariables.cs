@@ -12,6 +12,7 @@ namespace FLEETMOD
             {
                 PulsarPluginLoader.ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.ServerUpdateVariables", PhotonTargets.All, new object[]{
                     MyVariables.shipfriendlyfire,
+                    MyVariables.recentfriendlyfire,
                     //MyVariables.warprange,
                 });
             }
