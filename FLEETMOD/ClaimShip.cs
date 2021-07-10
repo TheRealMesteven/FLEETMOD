@@ -3,54 +3,107 @@ using HarmonyLib;
 
 namespace FLEETMOD
 {
-	[HarmonyPatch(typeof(PLServer), "ClaimShip")]
-	internal class ClaimShip
-	{
-		public static bool Prefix(PLServer __instance, int inShipID)
-		{
-			if (!MyVariables.isrunningmod)
-			{
-				return true;
-			}
-			else
-			{
-				foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-				{
-					if (plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
-					{
-						plplayer.StartingShip = null;
-					}
-				}
-				if (!PhotonNetwork.isMasterClient)
-				{
-					return false;
-				}
-				else
-				{
-					if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
-					{
-						foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
-						{
-							if (plplayer2 != null && !plplayer2.IsBot)
-							{
-								PLServer.Instance.photonView.RPC("AddNotification", plplayer2.GetPhotonPlayer(), new object[]
-								{
-									PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
-									plplayer2.GetPlayerID(),
-									PLServer.Instance.GetEstimatedServerMs() + 3000,
-									true
-								});
-							}
-						}
-						PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = -1;
-						return false;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			}
-		}
-	}
+    [HarmonyPatch(typeof(PLServer), "ClaimShip")]
+    internal class ClaimShip
+    {
+        public static bool Prefix(PLServer __instance, int inShipID)
+        {
+            if (!MyVariables.isrunningmod)
+            {
+                return true;
+            }
+            else
+            {
+                foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                {
+                    if (plplayer != null && plplayer.IsBot && plplayer.StartingShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
+                    {
+                        plplayer.StartingShip = null;
+                    }
+                }
+                if (!PhotonNetwork.isMasterClient)
+                {/*
+                    bool ShipHasCaptain = false;
+                    if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID == -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
+                    {
+                        foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
+                        {
+                            if (plplayer2 != null && !plplayer2.IsBot && plplayer2.GetClassID() == 0)
+                            {
+                                if (plplayer2.GetPhotonPlayer().GetScore() == inShipID)
+                                {
+                                    ShipHasCaptain = true;
+                                }
+                            }
+                        }
+                        if (ShipHasCaptain == false)
+                        {
+                            if (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0)
+                            {
+                                PLNetworkManager.Instance.LocalPlayer.SetClassID(0);
+                                PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().SetScore(inShipID);
+                            }
+                        }
+                    }*/
+                    return false;
+                }
+                else
+                {
+                    if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
+                    {
+                        foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
+                        {
+                            if (plplayer2 != null && !plplayer2.IsBot)
+                            {
+                                PLServer.Instance.photonView.RPC("AddNotification", plplayer2.GetPhotonPlayer(), new object[]
+                                {
+                                    PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
+                                    plplayer2.GetPlayerID(),
+                                    PLServer.Instance.GetEstimatedServerMs() + 3000,
+                                    true
+                                });
+                            }
+                        }
+                        PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = -1;
+                    }
+                    else
+                    {
+                        if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
+                        {
+                            PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]
+                            {
+                                PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Claimed Ship.",
+                                0,
+                                PLServer.Instance.GetEstimatedServerMs() + 3000,
+                                true
+                            });
+                            PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = 1;
+                            PLEncounterManager.Instance.GetShipFromID(inShipID).TagID = -23;
+                            foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
+                            {
+                                try
+                                {
+                                    if (pLShipInfo.TagID == -23)
+                                    {
+                                        if (pLShipInfo.TargetShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
+                                        {
+                                            pLShipInfo.TargetShip = null;
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+    }
 }
