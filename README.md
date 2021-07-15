@@ -1,58 +1,23 @@
 # Fleetmod (In Progress)
-Originally designed by Mikey 
+Originally designed by Mikey, taken over by Mest with assistance from Dragon & Badryuiner
+
+This is a plugin for Pulsar Lost Colony, using the Pulsar Plugin Loader
+this plugin permits multiple crewed ships in one game, unfortunately without
+individual warping, creating Fleets of player controlled ships.
+
+Currently, the officially released varient is "FLEETMOD" in the main branch, version 1.50
+this copy of the plugin permits non-modded clients on the admiral ship to function as crew
+and modded-clients with the same copy of the FLEETMOD plugin to command and crew additional
+ships.
+
+The unofficially released varient is "FLEETMOD-REWRITE" in the secondary branch, version 0.0.1
+that copy of the plugin only permits modded clients to join and control ships, providing a
+more stable experience of the mod aswell as additional features permitted from having coding
+on both host and client of the server. 
+THE "FLEETMOD-REWRITE" IS NOT FULLY FUNCTIONAL AND SO IS UNADVISED FOR PLAYTHROUGHS EXCEPT IF
+EXPERIMENTING / TESTING FOR THE DEVELOPMENT TEAM.
 
 
+
+# Completed Goals 
 - [x] Completed Clean-up (13/03/21)
-
-=======
-## Added Features:
-- [x] All Updated & Functional
-
-### Current Test Feature Additions:
-- [x] Rewrite Cargo Transfer (Reidentify player ship as players custom ship) - Finished
-- [x] f8 Only appears to captains - Finished
-- [x] Sector Commander titles for fleets (Captain Names) - Finished
-- [x] Added Invulnerability command (Effects all ships) - Finished
-- [x] Added a ship friendly fire command (Add ship targetting instead of tp) - Finished
-
-- [ ] Restore Automated Plotting - Needs Test
-- [ ] Add Ship Limit - Needs Test
-
-
-## Future Features
-
-### Mod Adaption 
-  
-- [ ] Integrate max players as an option for more non-mod players
-- [ ] Bind Shipwide talents to specified players (Probably first of said class)
-- [ ] Talking GUI Merge (Sort by ship occupied & Disable actual plugin)
-
-### Reimplementation 
-
-- [ ] Fix Warp Bundling of ships? (Low Priority)
-- [ ] Restore Captain Orders?
-- [ ] Rewrite Crew Activity Alerts to be clearer
-
-### Bug Patches
-
-- [ ] Somehow fix the mod for Linux
-- [ ] Fix sensors so both ships detect the same ships 
-- [ ] Fix nonfleetmod initialise (Fairly sure its Tab menu negative on server close)
-
-### Difficult
-
-- [ ] Link the Warp ranges to one ship (Host or Lowest Range?) - Needs reworking (Disabled)
-- [ ] Reintegrate Comms Proximity, Crew & Captains (Choice Option)
-- [ ] Add ship saving / loading
-- [ ] Test & Fix Sensor dish scrap collecting
-- [ ] Fix "Random" Bans between games
-- [ ] Fix the High Rollers for non-main ship wins
-- [ ] Allow ship status screens to scroll through ships
-
-### Needs GUI 
-
-- [ ] Ship Spawn Request For Admiral
-- [ ] Add GUI for component movement between ships
-- [ ] Reintegrate Ship Claiming
-- [ ] ? Allow Fuel transfer
-Maybe a bit of a rewrite to get it to perform smoother
