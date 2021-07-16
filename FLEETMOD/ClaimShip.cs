@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using UnityEngine;
 
 namespace FLEETMOD
 {
@@ -68,37 +69,37 @@ namespace FLEETMOD
                     }
                     else
                     {
-                        if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
+                        if (MyVariables.shipcount != 0 && (MyVariables.shipcount * 5) != PhotonNetwork.room.MaxPlayers && (MyVariables.shipcount * 5) > PhotonNetwork.room.MaxPlayers) // if limit != 0 & limit != count & limit > count
                         {
-                            PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]
+                            if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
                             {
+                                PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]
+                                {
                                 PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Claimed Ship.",
                                 0,
                                 PLServer.Instance.GetEstimatedServerMs() + 3000,
                                 true
-                            });
-                            PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = 1;
-                            PLEncounterManager.Instance.GetShipFromID(inShipID).TagID = -23;
-                            foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
-                            {
-                                try
+                                });
+                                PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = 1;
+                                PLEncounterManager.Instance.GetShipFromID(inShipID).TagID = -23;
+                                foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
                                 {
-                                    if (pLShipInfo.TagID == -23)
+                                    try
                                     {
-                                        if (pLShipInfo.TargetShip == PLEncounterManager.Instance.GetShipFromID(inShipID))
+                                        if (pLShipInfo.TagID == -23)
                                         {
-                                            pLShipInfo.TargetShip = null;
+                                            if (pLShipInfo.CaptainTargetedSpaceTargetID == inShipID)
+                                            {
+                                                pLShipInfo.CaptainTargetedSpaceTargetID = pLShipInfo.ShipID;
+                                            }
                                         }
                                     }
-                                }
-                                catch
-                                {
+                                    catch
+                                    {
 
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
                         }
                     }
                 }

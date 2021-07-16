@@ -10,5 +10,6 @@ namespace FLEETMOD
         //public static float warprange = -1;
         public static int shipcount = -1;
         public static bool recentfriendlyfire = false;
+        public static bool DialogGenerated = false;
     }
 }

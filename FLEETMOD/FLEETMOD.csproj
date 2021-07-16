@@ -88,6 +88,7 @@
     <Compile Include="GetNumEnemiesLeft.cs" />
     <Compile Include="GetShipUIElementForShip.cs" />
     <Compile Include="GetTextOfCaptainOrderID.cs" />
+    <Compile Include="Interface\Dialogs\ShipCaptainRequest.cs" />
     <Compile Include="Internal_AttemptBlindJump.cs" />
     <Compile Include="JumpBtnClick.cs" />
     <Compile Include="KickSelf.cs" />

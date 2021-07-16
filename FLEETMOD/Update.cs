@@ -72,7 +72,29 @@ namespace FLEETMOD
                             "\n\n"
 						})
 					});
-					bool flag8 = PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0;
+                    ///<summary>
+                    /// Below code creates Outpost dialog for assigning captains to unmanned ships.
+                    ///</summary>
+                    if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate"))
+                    {
+                        if (MyVariables.DialogGenerated != true)
+                        {
+                            var go = new UnityEngine.GameObject("ShipCaptainRequest_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
+                            go.AddComponent<Interface.Dialogs.ShipCaptainRequest>(); // Also TODO: Rename local vars...
+                            UnityEngine.GameObject.DontDestroyOnLoad(go);
+                            PulsarPluginLoader.Utilities.Messaging.Notification("Check your dialogue screen!");
+                            MyVariables.DialogGenerated = true;
+                        }
+                    }
+                    else
+                    {
+                        if (MyVariables.DialogGenerated)
+                        {
+                            GameObject.Destroy(GameObject.Find("ShipCaptainRequest_GO"));
+                        }
+                    }
+                    ///
+                    bool flag8 = PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0;
 					if (flag8)
 					{
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;

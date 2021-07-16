@@ -60,6 +60,7 @@ namespace FLEETMOD
 							plshipInfoBase.AlertLevel = 0;
 						}
 					}
+                    MyVariables.DialogGenerated = false;
 				}
 				return false;
 			}
