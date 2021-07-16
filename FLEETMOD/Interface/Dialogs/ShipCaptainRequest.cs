@@ -19,23 +19,23 @@ namespace FLEETMOD.Interface.Dialogs
 
         public override string GetName() // Screen Name
         {
-            return "Assign Captain To Ship";
+            return "Faction Fleet Manager";
         }
 
         public override void Start() // MonoBehaviour::Start()
         {
             base.Start(); // base init
             currentdialog = 0;
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Promote a Captain for new ship", new PLHailChoiceDelegate(NewShipChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Faction Fleet Manager", new PLHailChoiceDelegate(NewShipChoice)));
             ExitButton();
         }
         private void NewShipChoice(bool authority, bool local)
         {
-            this.DialogTextLeft += "\nAdmiral, what ship requires a Captain?";
             this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
             {
                 currentdialog = 1;
+                this.DialogTextLeft += "\nAdmiral, what ship requires a Captain?";
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
                 {
                     if (possibleShip != null && possibleShip.TagID == -23 && PLServer.Instance.GetCachedFriendlyPlayerOfClass(0,possibleShip) == null)
@@ -58,11 +58,11 @@ namespace FLEETMOD.Interface.Dialogs
         }
         private void NewCaptainChoice()
         {
-            this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
             this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 3) // admiral check
             {
                 currentdialog = 3;
+                this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
                     if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0)
@@ -82,8 +82,10 @@ namespace FLEETMOD.Interface.Dialogs
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ExitButton() =>
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Cancel", new PLHailChoiceDelegate((authority, local) => { if (PhotonNetwork.isMasterClient) GameObject.Destroy(this.gameObject); })));
+        private void ExitButton()
+        {
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Cancel", new PLHailChoiceDelegate((authority, local) => { if (PhotonNetwork.isMasterClient) GameObject.Destroy(this.gameObject); MyVariables.DialogGenerated = false; })));
+        }
 
         private string DialogTextLeft = "Good evening Admiral, what can we do for you today?";
         private string DialogTextRight = string.Empty;
