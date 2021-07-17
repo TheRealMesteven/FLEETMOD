@@ -50,6 +50,7 @@ namespace FLEETMOD.Interface.Dialogs
                     }
                 }
             }
+            ExitButton();
         }
         private void RSCaptainProcessing(int indata, bool authority, bool local)
         {
@@ -133,7 +134,9 @@ namespace FLEETMOD.Interface.Dialogs
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
                     if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0)
+                    {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RCSCaptainDefine), possibleCaptain.GetPlayerID()));
+                    }
                 }
             }
             ExitButton();
