@@ -57,7 +57,7 @@ namespace FLEETMOD
 				}
 				PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
 				PLNetworkManager.Instance.LocalPlayer.SetClassID(0);
-				ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+				ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerCreateShip", PhotonTargets.MasterClient, new object[]
 				{
 					PLNetworkManager.Instance.SelectedShipTypeID,
 					PLNetworkManager.Instance.LocalPlayer.GetPlayerID(),

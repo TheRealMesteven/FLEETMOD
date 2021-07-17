@@ -26,11 +26,71 @@ namespace FLEETMOD.Interface.Dialogs
         {
             base.Start(); // base init
             currentdialog = 0;
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Requisition a new Ship", new PLHailChoiceDelegate(RSCaptainChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request Captain for Ship", new PLHailChoiceDelegate(RCSShipChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship in storage", new PLHailChoiceDelegate(SSShipChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(SSShipChoice)));
             ExitButton();
         }
+
+        ///<summary>
+        ///</summary>
+        private void RSCaptainChoice(bool authority, bool local)
+        {
+            if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
+            {
+                currentdialog = 1;
+                this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
+                this.m_AllChoices.Clear();
+                foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
+                {
+                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0)
+                        this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RSCaptainProcessing), possibleCaptain.GetPlayerID()));
+                }
+            }
+            ExitButton();
+        }
+        private void RSCaptainProcessing(int indata, bool authority, bool local)
+        {
+            if (PhotonNetwork.isMasterClient && currentdialog < 2) // admiral check
+            {
+                currentdialog = 2;
+                this.DialogTextRight += $"\n{PLServer.Instance.GetPlayerFromPlayerID(indata).GetPlayerName()}";
+                newCaptainID = indata;
+                RSShipChoice();
+            }
+        }
+        private void RSShipChoice()
+        {
+            if (PhotonNetwork.isMasterClient && currentdialog < 3)
+            {
+                currentdialog = 3;
+                this.DialogTextLeft += "\nAdmiral, select a new ship type!";
+                this.m_AllChoices.Clear();
+                int Count = 0;
+                foreach (string i in PLGlobal.Instance.PlayerShipNetworkPrefabNames)
+                {
+                    this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(PLGlobal.Instance.PlayerShipNetworkPrefabNames[Count], new PLHailChoiceDelegateData(SpawnShip), Count));
+                    Count++;
+                }
+            }
+            ExitButton();
+        }
+        private void SpawnShip(int indata, bool authority, bool local)
+        {
+            if (PhotonNetwork.isMasterClient && currentdialog < 4) // admiral check
+            {
+                currentdialog = 4;
+                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+                {
+                    indata,
+                    newCaptainID,
+                    PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
+                });
+            }
+            GameObject.Destroy(this.gameObject);
+        }
+        ///
         /// <summary>
         /// Below Lines are for Assigning Captain to Unmanned Ship
         /// </summary>
@@ -174,6 +234,7 @@ namespace FLEETMOD.Interface.Dialogs
         private string DialogTextRight = string.Empty;
         private int currentdialog = 0;
         private int newShipID = 0;
+        private int newCaptainID = 0;
     }
 }
 /// Notes:

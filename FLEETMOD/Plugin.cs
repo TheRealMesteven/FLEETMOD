@@ -17,7 +17,7 @@ namespace FLEETMOD
 		{
 			get
 			{
-				return "Micheal + Mest";
+				return "Dragon+Mest";
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace FLEETMOD
         
 		public override string HarmonyIdentifier()
 		{
-			return "Michael+Mest.Fleetmod";
+			return "Dragon+Mest.Fleetmod";
 		}
         
 		public static string myversion = "FLEETMOD v1.50";

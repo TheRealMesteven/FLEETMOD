@@ -19,7 +19,7 @@ namespace FLEETMOD
 				bool flag = __instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null;
 				if (flag)
 				{
-                    PulsarPluginLoader.ModMessage.SendRPC("Michael+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
+                    PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					string myversion = Plugin.myversion;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
@@ -100,6 +100,7 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						} // This is end of warp range bindings
 						PLNetworkManager.Instance.LocalPlayer.StartingShip.LastBeginWarpServerTime = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.LastBeginWarpServerTime;
+                        /*
                         bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
                         if (flag12)
 						{
@@ -108,6 +109,7 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLCreateGameMenu(true));
 							PLTabMenu.Instance.TabMenuActive = false;
 						}
+                        */
 						bool flag13 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID != 0;
 						if (flag13)
 						{
