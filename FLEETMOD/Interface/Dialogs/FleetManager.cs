@@ -127,8 +127,7 @@ namespace FLEETMOD.Interface.Dialogs
                         });
                     }
                 }
-                PLEncounterManager.Instance.GetShipFromID(indata).TagID = -1;
-                PLEncounterManager.Instance.GetShipFromID(indata).Ship_WarpOutNow();
+                ShipStorage.StoreShip(indata);
                 GameObject.Destroy(this.gameObject);
             }
         }

@@ -129,6 +129,8 @@ namespace FLEETMOD
                 {
                     streamWriter.WriteLine(stringBuilder.ToString());
                 }
+                PLEncounterManager.Instance.GetShipFromID(ShipID).TagID = -1;
+                PLEncounterManager.Instance.GetShipFromID(ShipID).Ship_WarpOutNow();
                 ///
             }
         }

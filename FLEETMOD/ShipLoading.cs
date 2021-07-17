@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace FLEETMOD
             /// Seed | FleetShip | Name | Ship Data
             if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
             {
+                ///<summary>
+                /// Below lines spawn ships from FleetConfig based on the line number
+                ///</summary>
                 string[] FileReadout = null;
                 try
                 {
@@ -83,10 +87,14 @@ namespace FLEETMOD
                         num++;
                     }
                 }
+                ///
             }
         }
         public static string[] GetShipList(bool Stored)
         {
+            ///<summary>
+            /// Below lines return the names of the saved ships, the boolean switches between stored or currently active.
+            ///</summary>
             if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
             {
                 string[] FileReadout = null;
@@ -110,6 +118,10 @@ namespace FLEETMOD
                         {
                             ShipNames.Append(FileSplit[2]);
                         }
+                        if (FileSplit != null && Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "StoredShip")
+                        {
+                            ShipNames.Append(FileSplit[2]);
+                        }
                     }
                 }
                 return ShipNames;
@@ -118,6 +130,29 @@ namespace FLEETMOD
             {
                 return null;
             }
+            ///
         }
     }
+    /// <summary>
+    /// Below lines spawn each additional ship after spawning the main ship
+    /// </summary>
+    [HarmonyPatch(typeof(PLServer), "SpawnPlayerShipFromSaveData")]
+    internal class FleetShipSpawning
+    {
+        public static bool Postfix()
+        {
+            if (MyVariables.isrunningmod)
+            {
+                string[] StoredShips = ShipLoading.GetShipList(false);
+                int Count = 0;
+                foreach (string Ship in StoredShips)
+                {
+                    ShipLoading.LoadShip(Count, false);
+                    Count++;
+                }
+            }
+            return true;
+        }
+    }
+    ///
 }
