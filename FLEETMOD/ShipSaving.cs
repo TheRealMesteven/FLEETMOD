@@ -56,7 +56,7 @@ namespace FLEETMOD
                 ///</summary>
                 foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (pLShipInfo != null && pLShipInfo.TagID == -23 && PLServer.Instance.GetCachedFriendlyPlayerOfClass(0,pLShipInfo) != PLServer.Instance.GetPlayerFromPlayerID(0))
+                    if (pLShipInfo != null && pLShipInfo.TagID == -23 && MyVariables.GetShipCaptain(pLShipInfo.ShipID) != 0)
                     {
                         stringBuilder.AppendLine(PLServer.Instance.GalaxySeed.ToString() + "|" + "FleetShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
                     }
@@ -113,7 +113,7 @@ namespace FLEETMOD
                 ///</summary>
                 foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (pLShipInfo != null && pLShipInfo.TagID == -23 && PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, pLShipInfo) != PLServer.Instance.GetPlayerFromPlayerID(0))
+                    if (pLShipInfo != null && pLShipInfo.TagID == -23 && MyVariables.GetShipCaptain(pLShipInfo.ShipID) != 0)
                     {
                         if (pLShipInfo.ShipID == ShipID)
                         {

@@ -106,7 +106,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.DialogTextLeft += "\nAdmiral, what ship requires a Captain?";
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (possibleShip != null && possibleShip.TagID == -23 && PLServer.Instance.GetCachedFriendlyPlayerOfClass(0,possibleShip) == null)
+                    if (possibleShip != null && possibleShip.TagID == -23 && !MyVariables.ShipHasCaptain(possibleShip.ShipID))
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(RCSShipDefine), possibleShip.ShipID));
                     }
@@ -165,7 +165,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.DialogTextLeft += "\nAdmiral, what ship do you want to store?";
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (possibleShip != null && possibleShip.TagID == -23 && PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, possibleShip) == PLServer.Instance.GetPlayerFromPlayerID(0))
+                    if (possibleShip != null && possibleShip.TagID == -23 && MyVariables.GetShipCaptain(possibleShip.ShipID) != 0)
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(SSCrewReassignment), possibleShip.ShipID));
                     }

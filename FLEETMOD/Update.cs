@@ -77,7 +77,7 @@ namespace FLEETMOD
                     ///</summary>
                     if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate"))
                     {
-                        if (MyVariables.DialogGenerated != true)
+                        if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
                             MyVariables.DialogGenerated = true;
                             var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
