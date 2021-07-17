@@ -29,10 +29,9 @@ namespace FLEETMOD
                     {
                         if (MyVariables.DialogGenerated != true)
                         {
-                            var go = new UnityEngine.GameObject("ShipCaptainRequest_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
-                            go.AddComponent<Interface.Dialogs.ShipCaptainRequest>(); // Also TODO: Rename local vars...
+                            var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
+                            go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
                             UnityEngine.GameObject.DontDestroyOnLoad(go);
-                            PulsarPluginLoader.Utilities.Messaging.Notification("Check your dialogue screen!");
                             MyVariables.DialogGenerated = true;
                         }
                     }

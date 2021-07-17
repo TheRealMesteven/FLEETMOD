@@ -88,7 +88,7 @@
     <Compile Include="GetNumEnemiesLeft.cs" />
     <Compile Include="GetShipUIElementForShip.cs" />
     <Compile Include="GetTextOfCaptainOrderID.cs" />
-    <Compile Include="Interface\Dialogs\ShipCaptainRequest.cs" />
+    <Compile Include="Interface\Dialogs\FleetManager.cs" />
     <Compile Include="Internal_AttemptBlindJump.cs" />
     <Compile Include="JumpBtnClick.cs" />
     <Compile Include="KickSelf.cs" />
@@ -112,6 +112,7 @@
     <Compile Include="SetPlayerAsClassID.cs" />
     <Compile Include="SetShipAsTarget.cs" />
     <Compile Include="SetupTips.cs" />
+    <Compile Include="ShipSaving.cs" />
     <Compile Include="ShouldBeHostileToShip.cs" />
     <Compile Include="ShouldShowClassSelectionScreen.cs" />
     <Compile Include="TakeDamage.cs" />

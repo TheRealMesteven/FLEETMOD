@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FLEETMOD.Interface.Dialogs
 {
-    class ShipCaptainRequest : PLHailTarget
+    class FleetManager : PLHailTarget
     {
         // TODO: Add sync?
         public override string GetCurrentDialogueLeft()
