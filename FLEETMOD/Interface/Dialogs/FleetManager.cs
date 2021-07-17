@@ -45,10 +45,11 @@ namespace FLEETMOD.Interface.Dialogs
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
                     if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0)
+                    {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RSCaptainProcessing), possibleCaptain.GetPlayerID()));
+                    }
                 }
             }
-            ExitButton();
         }
         private void RSCaptainProcessing(int indata, bool authority, bool local)
         {
@@ -89,6 +90,7 @@ namespace FLEETMOD.Interface.Dialogs
                 });
             }
             GameObject.Destroy(this.gameObject);
+            MyVariables.DialogGenerated = false;
         }
         ///
         /// <summary>
@@ -144,6 +146,7 @@ namespace FLEETMOD.Interface.Dialogs
                 PLServer.Instance.GetPlayerFromPlayerID(indata).SetClassID(0);
                 PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().SetScore(indata);
                 GameObject.Destroy(this.gameObject);
+                MyVariables.DialogGenerated = false;
             }
         }
         ///
@@ -189,6 +192,7 @@ namespace FLEETMOD.Interface.Dialogs
                 }
                 ShipStorage.StoreShip(indata);
                 GameObject.Destroy(this.gameObject);
+                MyVariables.DialogGenerated = false;
             }
         }
         /// 
@@ -220,6 +224,7 @@ namespace FLEETMOD.Interface.Dialogs
                 currentdialog = 2;
                 ShipLoading.LoadShip(indata, true);
                 GameObject.Destroy(this.gameObject);
+                MyVariables.DialogGenerated = false;
             }
         }
         /// 

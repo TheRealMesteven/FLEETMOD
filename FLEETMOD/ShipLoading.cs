@@ -139,7 +139,7 @@ namespace FLEETMOD
     [HarmonyPatch(typeof(PLServer), "SpawnPlayerShipFromSaveData")]
     internal class FleetShipSpawning
     {
-        public static bool Postfix()
+        public static void Postfix()
         {
             if (MyVariables.isrunningmod)
             {
@@ -151,7 +151,6 @@ namespace FLEETMOD
                     Count++;
                 }
             }
-            return true;
         }
     }
     ///
