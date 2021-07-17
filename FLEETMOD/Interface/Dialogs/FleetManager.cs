@@ -26,8 +26,9 @@ namespace FLEETMOD.Interface.Dialogs
         {
             base.Start(); // base init
             currentdialog = 0;
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request Captain For Ship", new PLHailChoiceDelegate(RCSShipChoice)));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship", new PLHailChoiceDelegate(SSShipChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request Captain for Ship", new PLHailChoiceDelegate(RCSShipChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship in storage", new PLHailChoiceDelegate(SSShipChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(SSShipChoice)));
             ExitButton();
         }
         /// <summary>
@@ -132,6 +133,38 @@ namespace FLEETMOD.Interface.Dialogs
             }
         }
         /// 
+        /// <summary>
+        /// Below lines are for spawning ships from storage
+        /// </summary>
+        private void LSShipChoice(bool authority, bool local)
+        {
+            this.m_AllChoices.Clear();
+            if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
+            {
+                currentdialog = 1;
+                this.DialogTextLeft += "\nAdmiral, what ship do you want to withdraw from storage?";
+                int Count = 0;
+                foreach (string possibleShip in ShipLoading.GetShipList(true))
+                {
+                    this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(Count + " " + possibleShip, new PLHailChoiceDelegateData(LSSpawnShip), Count));
+                    Count++;
+                }
+            }
+            ExitButton();
+        }
+        private void LSSpawnShip(int indata, bool authority, bool local)
+        {
+            this.m_AllChoices.Clear();
+            this.DialogTextLeft += "\nAlright Admiral, we are currently withdrawing the ship from your personal hanger.";
+            if (PhotonNetwork.isMasterClient && currentdialog < 2)
+            {
+                currentdialog = 2;
+                ShipLoading.LoadShip(indata, true);
+                GameObject.Destroy(this.gameObject);
+            }
+        }
+        /// 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ExitButton()
         {

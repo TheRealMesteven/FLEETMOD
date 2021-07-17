@@ -112,6 +112,7 @@
     <Compile Include="SetPlayerAsClassID.cs" />
     <Compile Include="SetShipAsTarget.cs" />
     <Compile Include="SetupTips.cs" />
+    <Compile Include="ShipLoading.cs" />
     <Compile Include="ShipSaving.cs" />
     <Compile Include="ShouldBeHostileToShip.cs" />
     <Compile Include="ShouldShowClassSelectionScreen.cs" />
