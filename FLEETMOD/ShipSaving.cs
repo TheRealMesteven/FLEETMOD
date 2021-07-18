@@ -41,12 +41,22 @@ namespace FLEETMOD
                 {
                     foreach (string FileLines in FileReadout)
                     {
-                        string[] FileSplit = null;
-                        try { FileSplit = FileLines.Split('|'); }
-                        catch { }
-                        if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] != "FleetShip")
+                        if (FileLines.Length > 4)
                         {
-                            stringBuilder.AppendLine(FileLines);
+                            string[] FileSplit = null;
+                            try { FileSplit = FileLines.Split('|');}
+                            catch {}
+                            if (FileSplit != null && FileSplit[1] != "FleetShip")
+                            {
+                                stringBuilder.AppendLine(FileLines);
+                            }
+                            else
+                            {
+                                if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString())
+                                {
+                                    stringBuilder.AppendLine(FileLines);
+                                }
+                            }
                         }
                     }
                 }
@@ -98,12 +108,22 @@ namespace FLEETMOD
                 {
                     foreach (string FileLines in FileReadout)
                     {
-                        string[] FileSplit = null;
-                        try { FileSplit = FileLines.Split('|'); }
-                        catch { }
-                        if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] != "FleetShip")
+                        if (FileLines.Length > 4)
                         {
-                            stringBuilder.AppendLine(FileLines);
+                            string[] FileSplit = null;
+                            try { FileSplit = FileLines.Split('|'); }
+                            catch { }
+                            if (FileSplit != null && FileSplit[1] == "StoredShip")
+                            {
+                                stringBuilder.AppendLine(FileLines);
+                            }
+                            else
+                            {
+                                if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString())
+                                {
+                                    stringBuilder.AppendLine(FileLines);
+                                }
+                            }
                         }
                     }
                 }

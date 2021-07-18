@@ -29,7 +29,7 @@ namespace FLEETMOD.Interface.Dialogs
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Requisition a new Ship", new PLHailChoiceDelegate(RSCaptainChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request Captain for Ship", new PLHailChoiceDelegate(RCSShipChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship in storage", new PLHailChoiceDelegate(SSShipChoice)));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(SSShipChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(LSShipChoice)));
             ExitButton();
         }
 
@@ -49,8 +49,8 @@ namespace FLEETMOD.Interface.Dialogs
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RSCaptainProcessing), possibleCaptain.GetPlayerID()));
                     }
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void RSCaptainProcessing(int indata, bool authority, bool local)
         {
@@ -75,8 +75,8 @@ namespace FLEETMOD.Interface.Dialogs
                     this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(PLGlobal.Instance.PlayerShipNetworkPrefabNames[Count], new PLHailChoiceDelegateData(SpawnShip), Count));
                     Count++;
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void SpawnShip(int indata, bool authority, bool local)
         {
@@ -89,9 +89,9 @@ namespace FLEETMOD.Interface.Dialogs
                     newCaptainID,
                     PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
                 });
+                GameObject.Destroy(this.gameObject);
+                MyVariables.DialogGenerated = false;
             }
-            GameObject.Destroy(this.gameObject);
-            MyVariables.DialogGenerated = false;
         }
         ///
         /// <summary>
@@ -99,9 +99,9 @@ namespace FLEETMOD.Interface.Dialogs
         /// </summary>
         private void RCSShipChoice(bool authority, bool local)
         {
-            this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
             {
+                this.m_AllChoices.Clear();
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, what ship requires a Captain?";
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
@@ -111,8 +111,8 @@ namespace FLEETMOD.Interface.Dialogs
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(RCSShipDefine), possibleShip.ShipID));
                     }
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void RCSShipDefine(int indata, bool authority, bool local)
         {
@@ -126,11 +126,11 @@ namespace FLEETMOD.Interface.Dialogs
         }
         private void RCSCaptainChoice()
         {
-            this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 3) // admiral check
             {
+                this.m_AllChoices.Clear();
                 currentdialog = 3;
-                this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
+                this.DialogTextLeft += "\nAdmiral, who will be the captain of the ship?";
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
                     if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0)
@@ -138,8 +138,8 @@ namespace FLEETMOD.Interface.Dialogs
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RCSCaptainDefine), possibleCaptain.GetPlayerID()));
                     }
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void RCSCaptainDefine(int indata, bool authority, bool local)
         {
@@ -147,7 +147,12 @@ namespace FLEETMOD.Interface.Dialogs
             {
                 currentdialog = 4;
                 PLServer.Instance.GetPlayerFromPlayerID(indata).SetClassID(0);
-                PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().SetScore(indata);
+                PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().SetScore(newShipID);
+                PLServer.Instance.GetPlayerFromPlayerID(indata).photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                {
+                    (PLEncounterManager.Instance.GetShipFromID(PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().GetScore()) as PLShipInfo).MyTLI.SubHubID,
+                    0
+                });
                 GameObject.Destroy(this.gameObject);
                 MyVariables.DialogGenerated = false;
             }
@@ -158,31 +163,34 @@ namespace FLEETMOD.Interface.Dialogs
         /// </summary>
         private void SSShipChoice(bool authority, bool local)
         {
-            this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
             {
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, what ship do you want to store?";
+                this.m_AllChoices.Clear();
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (possibleShip != null && possibleShip.TagID == -23 && MyVariables.GetShipCaptain(possibleShip.ShipID) != 0)
+                    if (possibleShip != null)
                     {
-                        this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(SSCrewReassignment), possibleShip.ShipID));
+                        if (possibleShip.TagID == -23 && MyVariables.GetShipCaptain(possibleShip.ShipID) != 0)
+                        {
+                            this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(SSCrewReassignment), possibleShip.ShipID));
+                        }
                     }
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void SSCrewReassignment(int indata, bool authority, bool local)
         {
-            this.m_AllChoices.Clear();
-            this.DialogTextLeft += "\nAlright Admiral, we are currently storing the ship for your future use.";
             if (PhotonNetwork.isMasterClient && currentdialog < 2)
             {
+                this.m_AllChoices.Clear();
+                this.DialogTextLeft += "\nAlright Admiral, we are currently storing the ship for your future use.";
                 currentdialog = 2;
                 foreach (PLPlayer pLPlayer in PLServer.Instance.AllPlayers)
                 {
-                    if (pLPlayer != null && pLPlayer.GetPhotonPlayer().GetScore() == indata)
+                    if (pLPlayer != null && pLPlayer.TeamID == 0 && pLPlayer.GetPhotonPlayer().GetScore() == indata)
                     {
                         pLPlayer.SetClassID(1);
                         pLPlayer.GetPhotonPlayer().SetScore(PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore());
@@ -204,9 +212,9 @@ namespace FLEETMOD.Interface.Dialogs
         /// </summary>
         private void LSShipChoice(bool authority, bool local)
         {
-            this.m_AllChoices.Clear();
             if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
             {
+                this.m_AllChoices.Clear();
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, what ship do you want to withdraw from storage?";
                 int Count = 0;
@@ -215,16 +223,16 @@ namespace FLEETMOD.Interface.Dialogs
                     this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(Count + " " + possibleShip, new PLHailChoiceDelegateData(LSSpawnShip), Count));
                     Count++;
                 }
+                ExitButton();
             }
-            ExitButton();
         }
         private void LSSpawnShip(int indata, bool authority, bool local)
         {
-            this.m_AllChoices.Clear();
-            this.DialogTextLeft += "\nAlright Admiral, we are currently withdrawing the ship from your personal hanger.";
             if (PhotonNetwork.isMasterClient && currentdialog < 2)
             {
                 currentdialog = 2;
+                this.m_AllChoices.Clear();
+                this.DialogTextLeft += "\nAlright Admiral, we are currently withdrawing the ship from your personal hanger.";
                 ShipLoading.LoadShip(indata, true);
                 GameObject.Destroy(this.gameObject);
                 MyVariables.DialogGenerated = false;
