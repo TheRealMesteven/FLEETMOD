@@ -42,6 +42,6 @@ namespace FLEETMOD
 			return "Dragon+Mest.Fleetmod";
 		}
         
-		public static string myversion = "FLEETMOD v1.50";
+		public static string myversion = "FLEETMOD v1.51";
 	}
 }

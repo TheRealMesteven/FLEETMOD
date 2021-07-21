@@ -27,23 +27,37 @@ namespace FLEETMOD
 							"SHIP"
 						});
 					}
-					if (!PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().GetScore() == __instance.ShipID)
-					{
-						PLUIEscapeMenu.Instance.OnClick_Disconnect();
-						return false;
-					}
-					if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
+                    ///<summary>
+                    /// The below lines of code sets each player of a destroyed ship as crew of the host ship.
+                    ///</summary>
+					if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
 					{
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
+							if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot && plplayer.StartingShip == __instance)
 							{
+                                plplayer.SetClassID(1);
 								plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
 								plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
 							}
 						}
 					}
-					if (PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == __instance && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
+                    ///<summary>
+                    /// Below lines of code sets each players ship as the host ship when the hosts ship is destroyed, causing the game to fail like normal.
+                    ///</summary>
+                    if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
+                    {
+                        foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                        {
+                            if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
+                            {
+                                plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
+                                plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
+                            }
+                        }
+                    }
+                    ///
+                    if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == __instance && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
 					{
 						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
 						{
@@ -58,3 +72,4 @@ namespace FLEETMOD
 		}
 	}
 }
+ 

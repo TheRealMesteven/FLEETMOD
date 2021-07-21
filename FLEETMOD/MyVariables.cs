@@ -4,7 +4,7 @@ namespace FLEETMOD
 {
     internal class MyVariables
     {
-        public static bool isrunningmod = false;
+        public static bool isrunningmod = true;
         public static bool shipfriendlyfire = true;
         public static bool shipgodmode = false;
         //public static float warprange = -1;
