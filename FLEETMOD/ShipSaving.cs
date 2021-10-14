@@ -52,7 +52,7 @@ namespace FLEETMOD
                             }
                             else
                             {
-                                if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString())
+                                if (FileSplit != null) // Galaxy Check
                                 {
                                     stringBuilder.AppendLine(FileLines);
                                 }
@@ -68,7 +68,7 @@ namespace FLEETMOD
                 {
                     if (pLShipInfo != null && pLShipInfo.TagID == -23 && MyVariables.GetShipCaptain(pLShipInfo.ShipID) != 0)
                     {
-                        stringBuilder.AppendLine(PLServer.Instance.GalaxySeed.ToString() + "|" + "FleetShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
+                        stringBuilder.AppendLine(" " + "|" + "FleetShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
                     }
                 }
                 using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "FleetConfig.txt")))
@@ -119,7 +119,7 @@ namespace FLEETMOD
                             }
                             else
                             {
-                                if (FileSplit != null && FileSplit[0] != PLServer.Instance.GalaxySeed.ToString())
+                                if (FileSplit != null) // Galaxy Check
                                 {
                                     stringBuilder.AppendLine(FileLines);
                                 }
@@ -137,11 +137,11 @@ namespace FLEETMOD
                     {
                         if (pLShipInfo.ShipID == ShipID)
                         {
-                            stringBuilder.AppendLine(PLServer.Instance.GalaxySeed.ToString() + "|" + "StoredShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
+                            stringBuilder.AppendLine(" " + "|" + "StoredShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
                         }
                         else
                         {
-                            stringBuilder.AppendLine(PLServer.Instance.GalaxySeed.ToString() + "|" + "FleetShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
+                            stringBuilder.AppendLine(" " + "|" + "FleetShip" + "|" + pLShipInfo.ShipNameValue + "|" + pLShipInfo.MyStats.CreateDataString());
                         }
                     }
                 }

@@ -41,7 +41,7 @@ namespace FLEETMOD
                             string[] FileSplit = null;
                             try { FileSplit = FileLines.Split('|'); }
                             catch { }
-                            if (FileSplit != null && !Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "FleetShip")
+                            if (FileSplit != null && !Stored && FileSplit[0] == " " && FileSplit[1] == "FleetShip")
                             {
                                 PulsarModLoader.Utilities.Logger.Info("[FM] " + CrewID + " " + num);
                                 if (CrewID == num)
@@ -67,7 +67,7 @@ namespace FLEETMOD
                                 num++;
 
                             }
-                            if (FileSplit != null && Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "StoredShip")
+                            if (FileSplit != null && Stored && FileSplit[0] == " " && FileSplit[1] == "StoredShip")
                             {
                                 if (CrewID == num)
                                 {
@@ -136,11 +136,11 @@ namespace FLEETMOD
                             string[] FileSplit = null;
                             try { FileSplit = FileLines.Split('|'); }
                             catch { }
-                            if (FileSplit != null && !Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "FleetShip")
+                            if (FileSplit != null && !Stored && FileSplit[0] == " " && FileSplit[1] == "FleetShip")
                             {
                                 ShipNames.Add(FileSplit[2]);
                             }
-                            if (FileSplit != null && Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "StoredShip")
+                            if (FileSplit != null && Stored && FileSplit[0] == " " && FileSplit[1] == "StoredShip")
                             {
                                 ShipNames.Add(FileSplit[2]);
                             }
