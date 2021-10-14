@@ -10,13 +10,13 @@ namespace FLEETMOD
     public class Plugin : PulsarMod
     {
         public override string Version => Plugin.myversion;
-        public override string Author => "Dragon+Mest";
+        public override string Author => "Mest, Dragon, Mikey, Badryuiner";
         public override string Name => "FleetMod";
         public override int MPFunctionality => 0;
         public override string HarmonyIdentifier() => "Dragon+Mest.Fleetmod";
-        public static string myversion = "FLEETMOD v1.51";
+        public static string myversion = "FLEETMOD v1.6.0";
         /*
-        public Plugin()
+        public Plugin()  *** PATCHING FOR FUTURE SAVEGAME SHIP STORAGE ***
         {
             if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient && PulsarModLoader.ModManager.Instance.IsModLoaded("CustomSave"))
             {
