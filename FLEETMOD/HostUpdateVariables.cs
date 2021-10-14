@@ -1,5 +1,5 @@
 ﻿using System;
-using PulsarPluginLoader;
+using PulsarModLoader;
 using UnityEngine;
 
 namespace FLEETMOD
@@ -10,7 +10,7 @@ namespace FLEETMOD
         {
             if (PhotonNetwork.isMasterClient && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
             {
-                PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerUpdateVariables", PhotonTargets.All, new object[]{
+                PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerUpdateVariables", PhotonTargets.All, new object[]{
                     MyVariables.shipfriendlyfire,
                     MyVariables.recentfriendlyfire,
                     //MyVariables.warprange,

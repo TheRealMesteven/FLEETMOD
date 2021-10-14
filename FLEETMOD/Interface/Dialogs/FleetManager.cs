@@ -1,4 +1,4 @@
-﻿using PulsarPluginLoader;
+﻿using PulsarModLoader;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 

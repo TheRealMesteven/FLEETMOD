@@ -19,7 +19,7 @@ namespace FLEETMOD
 				bool flag = __instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null;
 				if (flag)
 				{
-                    PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
+                    PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					string myversion = Plugin.myversion;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;

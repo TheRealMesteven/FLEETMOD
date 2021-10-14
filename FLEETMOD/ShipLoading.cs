@@ -28,7 +28,7 @@ namespace FLEETMOD
                 }
                 catch
                 {
-                    PulsarPluginLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
+                    PulsarModLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
                 }
                 if (FileReadout != null)
                 {
@@ -43,7 +43,7 @@ namespace FLEETMOD
                             catch { }
                             if (FileSplit != null && !Stored && FileSplit[0] == PLServer.Instance.GalaxySeed.ToString() && FileSplit[1] == "FleetShip")
                             {
-                                PulsarPluginLoader.Utilities.Logger.Info("[FM] " + CrewID + " " + num);
+                                PulsarModLoader.Utilities.Logger.Info("[FM] " + CrewID + " " + num);
                                 if (CrewID == num)
                                 {
                                     PLEncounterManager.ShipLayout shipLayout = new PLEncounterManager.ShipLayout(FileSplit[3] + "," + PLEncounterManager.Instance.PlayerShip.MyStats.CreateCrewString());
@@ -125,7 +125,7 @@ namespace FLEETMOD
                 }
                 catch
                 {
-                    PulsarPluginLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
+                    PulsarModLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
                 }
                 if (FileReadout != null)
                 {

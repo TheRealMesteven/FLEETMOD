@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using PulsarPluginLoader.Utilities;
+using PulsarModLoader.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +30,7 @@ namespace FLEETMOD
                 }
                 catch
                 {
-                    PulsarPluginLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
+                    PulsarModLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
                 }
                 ///
                 ///<summary>
@@ -97,7 +97,7 @@ namespace FLEETMOD
                 }
                 catch
                 {
-                    PulsarPluginLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
+                    PulsarModLoader.Utilities.Logger.Info("[FLEETMOD] UNABLE TO LOAD FLEETCONFIG");
                 }
                 ///
                 ///<summary>

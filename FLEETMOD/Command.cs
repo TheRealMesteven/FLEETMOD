@@ -1,5 +1,6 @@
 ﻿using System;
-using PulsarPluginLoader.Chat.Commands;
+using PulsarModLoader.Chat.Commands;
+using PulsarModLoader.Chat.Commands.CommandRouter;
 using UnityEngine;
 
 namespace FLEETMOD
@@ -45,9 +46,9 @@ namespace FLEETMOD
                 return false;
             }
         }*/
-        public class FLEETMODFriendlyFire : IChatCommand
+        public class FLEETMODFriendlyFire : ChatCommand
         {
-            public string[] CommandAliases()
+            public override string[] CommandAliases()
             {
                 return new string[]
                 {
@@ -55,7 +56,7 @@ namespace FLEETMOD
                 };
             }
 
-            public string Description()
+            public override string Description()
             {
                 return "Fleetmod ship friendly fire";
             }
@@ -65,12 +66,7 @@ namespace FLEETMOD
                 return "/" + this.CommandAliases()[0];
             }
 
-            public bool PublicCommand()
-            {
-                return false;
-            }
-
-            public bool Execute(string arguments, int SenderID)
+            public override void Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -86,15 +82,15 @@ namespace FLEETMOD
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
                             MyVariables.recentfriendlyfire = true;
                         }
-                        PulsarPluginLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[] { });
+                        PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[] { });
                     }
                 }
-                return false;
+                return;
             }
         }
-        public class FLEETMODShipLimit : IChatCommand
+        public class FLEETMODShipLimit : ChatCommand
         {
-            public string[] CommandAliases()
+            public override string[] CommandAliases()
             {
                 return new string[]
                 {
@@ -102,7 +98,7 @@ namespace FLEETMOD
                 };
             }
             
-            public string Description()
+            public override string Description()
             {
                 return "Fleetmod Ship limit";
             }
@@ -111,13 +107,8 @@ namespace FLEETMOD
             {
                 return "/" + this.CommandAliases()[0];
             }
-            
-            public bool PublicCommand()
-            {
-                return false;
-            }
 
-            public bool Execute(string arguments, int SenderID)
+            public override void Execute(string arguments)
             {
                 if (MyVariables.isrunningmod)
                 {
@@ -125,10 +116,10 @@ namespace FLEETMOD
                     {
                         MyVariables.shipcount = Int32.Parse(arguments);
                         PLNetworkManager.Instance.ConsoleText.Insert(0, "Ship Limit Set To " + MyVariables.shipcount);
-                        PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Limit Set To:"+MyVariables.shipcount+"\nRemember -1 removes the limit");
+                        PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Limit Set To:"+MyVariables.shipcount+"\nRemember -1 removes the limit");
                     }
                 }
-                return false;
+                return;
             }
         }/*
         public class FLEETMODShipDetect : IChatCommand
@@ -172,14 +163,14 @@ namespace FLEETMOD
                                     __target = plshipInfoBase.TargetSpaceTarget.SpaceTargetID;
                                 }
                                 catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Player Ship\n");
+                                PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Player Ship\n");
                                 bool __detect = false;
                                 try
                                 {
                                     __detect = plshipInfoBase.MySensorObjectShip.IsDetectedBy(PLEncounterManager.Instance.PlayerShip);
                                 }
                                 catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : "+__detect);
+                                PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : "+__detect);
                             }
                             else
                             {
@@ -189,14 +180,14 @@ namespace FLEETMOD
                                     __target = plshipInfoBase.TargetSpaceTarget.SpaceTargetID;
                                 }
                                 catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Hostile Ship\n");
+                                PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD | ID : " + __target + " | Name : " + plshipInfoBase.ShipName + " Is a Hostile Ship\n");
                                 bool __detect = false;
                                 try
                                 {
                                     __detect = PLEncounterManager.Instance.PlayerShip.MySensorObjectShip.IsDetectedBy(plshipInfoBase);
                                 }
                                 catch { }
-                                PulsarPluginLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : " + __detect);
+                                PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD | Ship Detected : " + __detect);
                             }
 
                         }

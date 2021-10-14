@@ -1,6 +1,6 @@
 ﻿using System;
 using HarmonyLib;
-using PulsarPluginLoader;
+using PulsarModLoader;
 
 namespace FLEETMOD
 {

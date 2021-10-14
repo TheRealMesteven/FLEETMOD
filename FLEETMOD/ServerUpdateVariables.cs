@@ -1,5 +1,5 @@
 ﻿using System;
-using PulsarPluginLoader;
+using PulsarModLoader;
 using UnityEngine;
 
 namespace FLEETMOD
