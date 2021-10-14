@@ -87,7 +87,7 @@ namespace FLEETMOD
                 }
                 return;
             }
-        }
+        }/*
         public class FLEETMODShipLimit : ChatCommand
         {
             public override string[] CommandAliases()
