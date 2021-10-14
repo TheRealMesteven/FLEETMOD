@@ -79,7 +79,7 @@ namespace FLEETMOD
 						{
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
 						});
-						PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome To </color><color=blue>" + PhotonNetwork.room.Name + "</color><color=white>\n \n  Press TAB Button During Game To Choose Your Class & Crew. \n\n Use < > Keys To Select The Ship You Would Like To Join. \n \n Press F1 Within 60 Seconds To Create A New Ship Of Your Choice.\n\n Hold Space And Click A Player Ship To Teleport.</color>"));
+						PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome To </color><color=blue>" + PhotonNetwork.room.Name + "</color><color=white>\n \n  Press TAB Button During Game To Choose Your Class & Crew. \n\n Use < > Keys To Select The Ship You Would Like To Join. \n \n Ask The Admiral To Create A New Ship Of Your Choice.\n\n Hold Space And Click A Player Ship To Teleport.</color>"));
 					}
 				}
 				return false;

@@ -42,22 +42,22 @@ namespace FLEETMOD
 						});
 						PLTabMenu.Instance.OnClick_ClearTarget();
 					}
-					if (captainTargetedSpaceTargetID != PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID)
+                    if (captainTargetedSpaceTargetID != PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID)
+                    {
+                        PLEncounterManager.Instance.PlayerShip.LastCaptainTargetedShipIDLocallyChangedTime = Time.time;
+                        PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", PhotonTargets.MasterClient, new object[] // Apply Targetting
+						{
+                            PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID
+                        });
+                    }
+					if ((PLNetworkManager.Instance.LocalPlayer.StartingShip.TargetShip.TagID < -3 && MyVariables.shipfriendlyfire) || (PLNetworkManager.Instance.LocalPlayer.StartingShip.TargetShip == PLNetworkManager.Instance.LocalPlayer.StartingShip)) // Clear Targetting If Target = Friendly
 					{
-						PLEncounterManager.Instance.PlayerShip.LastCaptainTargetedShipIDLocallyChangedTime = Time.time;
-						PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", PhotonTargets.MasterClient, new object[] // Apply Targetting
-						{
-							PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID
-						});
-						if (PLNetworkManager.Instance.LocalPlayer.StartingShip.TargetShip.TagID < -3 && MyVariables.shipfriendlyfire) // Clear Targetting If Target = Friendly
-						{
-							PLTabMenu.Instance.OnClick_ClearTarget();
-						}
-                        if (MyVariables.recentfriendlyfire)
-                        {
-                            PLTabMenu.Instance.OnClick_ClearTarget();
-                            MyVariables.recentfriendlyfire = false;
-                        }
+						PLTabMenu.Instance.OnClick_ClearTarget();
+					}
+                    if (MyVariables.recentfriendlyfire)
+                    {
+                        PLTabMenu.Instance.OnClick_ClearTarget();
+                        MyVariables.recentfriendlyfire = false;
                     }
 				}
 				return false;
