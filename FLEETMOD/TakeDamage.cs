@@ -20,7 +20,7 @@ namespace FLEETMOD
                 }
                 else
                 {
-                    if (attackingShip != null && MyVariables.shipfriendlyfire && __instance.TagID < -3 && attackingShip.TagID < -3 && attackingShip != __instance)
+                    if (attackingShip != null && !MyVariables.shipfriendlyfire && __instance.TagID < -3 && attackingShip.TagID < -3 && attackingShip != __instance)
                     {
                         return false;
                     }

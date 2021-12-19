@@ -72,16 +72,16 @@ namespace FLEETMOD
                 {
                     if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
                     {
-                        MyVariables.shipfriendlyfire = !MyVariables.shipfriendlyfire;
-                        if (MyVariables.shipfriendlyfire) {
-                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] {
-                                "SHIP FRIENDLYFIRE DISABLED", Color.white, 2, ""
-                            });
-                        }
-                        else {
-                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
+                        if (MyVariables.shipfriendlyfire)
+                        {
+                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE DISABLED", Color.white, 2, "" });
                             MyVariables.recentfriendlyfire = true;
                         }
+                        else
+                        {
+                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
+                        }
+                        MyVariables.shipfriendlyfire = !MyVariables.shipfriendlyfire;
                         PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.All, new object[] { });
                     }
                 }
