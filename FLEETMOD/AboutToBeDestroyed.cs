@@ -65,7 +65,7 @@ namespace FLEETMOD
 							0
 						});
 					}
-					__instance.TagID = -1;
+                    __instance.TagID = -1;
 				}
 				return true;
 			}

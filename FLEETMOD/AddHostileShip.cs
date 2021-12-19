@@ -14,8 +14,8 @@ namespace FLEETMOD
 			}
 			else
 			{
-				if (inShip != null && !__instance.HostileShips.Contains(inShip.ShipID) && inShip.TagID != -23)
-				{
+                if (inShip != null && __instance != null && inShip != __instance && !__instance.HostileShips.Contains(inShip.ShipID) && !(inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip()))
+                {
                     __instance.HostileShips.Add(inShip.ShipID);
                     ___HostileShipAdded_NeedsResetForTargeting = true;
                 }

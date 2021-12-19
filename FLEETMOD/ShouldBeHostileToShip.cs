@@ -8,7 +8,7 @@ namespace FLEETMOD
 	{
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip)
 		{
-			if (!MyVariables.isrunningmod) // Not causing the non-hostile bug
+			if (!MyVariables.isrunningmod)
 			{
 				return true;
 			}
