@@ -201,7 +201,7 @@ namespace FLEETMOD.Interface.Dialogs
                         });
                     }
                 }
-                ShipStorage.StoreShip(indata);
+                //ShipStorage.StoreShip(indata);
                 GameObject.Destroy(this.gameObject);
                 MyVariables.DialogGenerated = false;
             }
@@ -213,7 +213,7 @@ namespace FLEETMOD.Interface.Dialogs
         private void LSShipChoice(bool authority, bool local)
         {
             if (PhotonNetwork.isMasterClient && currentdialog < 1) // admiral check
-            {
+            {/*
                 this.m_AllChoices.Clear();
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, what ship do you want to withdraw from storage?";
@@ -223,7 +223,7 @@ namespace FLEETMOD.Interface.Dialogs
                     this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(Count + " " + possibleShip, new PLHailChoiceDelegateData(LSSpawnShip), Count));
                     Count++;
                 }
-                ExitButton();
+                ExitButton();*/
             }
         }
         private void LSSpawnShip(int indata, bool authority, bool local)
@@ -233,7 +233,7 @@ namespace FLEETMOD.Interface.Dialogs
                 currentdialog = 2;
                 this.m_AllChoices.Clear();
                 this.DialogTextLeft += "\nAlright Admiral, we are currently withdrawing the ship from your personal hanger.";
-                ShipLoading.LoadShip(indata, true);
+                //ShipLoading.LoadShip(indata, true);
                 GameObject.Destroy(this.gameObject);
                 MyVariables.DialogGenerated = false;
             }

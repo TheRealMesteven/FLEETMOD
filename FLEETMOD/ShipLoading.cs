@@ -11,7 +11,7 @@ using UnityEngine;
 namespace FLEETMOD
 {
     internal class ShipLoading
-    {
+    {/*
         public static void LoadShip(int CrewID, bool Stored)
         {
             /// File Intended Layout
@@ -174,7 +174,7 @@ namespace FLEETMOD
                     Count++;
                 }
             }
-        }
+        }*/
     }
     ///
 }

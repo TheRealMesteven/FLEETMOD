@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FLEETMOD
-{
+{/*
     [HarmonyPatch(typeof(PLSaveGameIO), "SaveToFile")]
     internal class FleetShipSaving
     {
@@ -79,9 +79,9 @@ namespace FLEETMOD
             }
             return true;
         }
-    }
+    }*/
     internal class ShipStorage
-    {
+    {/*
         public static void StoreShip(int ShipID)
         {
             if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
@@ -153,6 +153,6 @@ namespace FLEETMOD
                 PLEncounterManager.Instance.GetShipFromID(ShipID).Ship_WarpOutNow();
                 ///
             }
-        }
+        }*/
     }
 }

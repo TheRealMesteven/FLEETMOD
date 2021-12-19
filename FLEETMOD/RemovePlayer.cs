@@ -45,11 +45,11 @@ namespace FLEETMOD
 							}
 						}
 					}
-					if (PhotonNetwork.isMasterClient && num == 0 && inPlayer.StartingShip != PLNetworkManager.Instance.LocalPlayer.StartingShip && inPlayer.GetClassID() == 0)
+					/*if (PhotonNetwork.isMasterClient && num == 0 && inPlayer.StartingShip != PLNetworkManager.Instance.LocalPlayer.StartingShip && inPlayer.GetClassID() == 0)
 					{
 						inPlayer.StartingShip.DestroySelf(inPlayer.StartingShip);
 						UnityEngine.Object.Destroy(inPlayer.StartingShip.gameObject);
-					}
+					}*/
 					PLServer.Instance.ClearPlayerData(inPlayer);
 					PLServer.Instance.AllPlayers.Remove(inPlayer);
 					if (inPlayer.GetPawn() != null)
