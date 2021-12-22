@@ -73,7 +73,7 @@ namespace FLEETMOD
     }
     [HarmonyPatch(typeof(PLShipControl), "FixedUpdate")]
     public class PatchWarpBundling
-    {
+    { /// Patch ship stacking in warp
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             /*List<CodeInstruction> findSequence = new List<CodeInstruction>()

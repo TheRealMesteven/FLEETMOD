@@ -13,15 +13,18 @@ namespace FLEETMOD
 			{
 				if (PLServer.Instance != null)
 				{
-					foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
+                    float LowestWarpRange = PLEncounterManager.Instance.PlayerShip.MyStats.WarpRange;
+                    foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 					{
-						if (plshipInfoBase != null && plshipInfoBase.TagID == -23)
+						if (plshipInfoBase != null && plshipInfoBase.TagID == -23 && plshipInfoBase.MyStats.WarpRange < LowestWarpRange)
 						{
-							___m_WarpRange = plshipInfoBase.MyStats.WarpRange;
+							LowestWarpRange = plshipInfoBase.MyStats.WarpRange;
 							break;
 						}
 					}
-				}/*    /// STARTED WORKING ON REWRITING WARP RANGE CALCULATION BUT NOT MUCH LUCK. PROBS LOOK INTO THE GAMES IMPLEMENTATION
+                    ___m_WarpRange = LowestWarpRange;
+
+                }/*    /// STARTED WORKING ON REWRITING WARP RANGE CALCULATION BUT NOT MUCH LUCK. PROBS LOOK INTO THE GAMES IMPLEMENTATION
                 bool flag = PLServer.Instance != null;
                 if (flag)
                 {
