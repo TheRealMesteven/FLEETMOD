@@ -75,7 +75,6 @@ namespace FLEETMOD
 			}
 			else
 			{
-				MyVariables.isrunningmod = true;
 				return true;
 			}
 		}

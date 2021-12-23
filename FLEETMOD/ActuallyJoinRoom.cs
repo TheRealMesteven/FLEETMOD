@@ -54,7 +54,12 @@ namespace FLEETMOD
         {
             if (!PhotonNetwork.isMasterClient && !MyVariables.isrunningmod)
             {
+                MyVariables.isrunningmod = false;
                 ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.ActivateFleetmod", PhotonTargets.MasterClient, new object[] { });
+            }
+            else
+            {
+                MyVariables.isrunningmod = true;
             }
         }
     }
