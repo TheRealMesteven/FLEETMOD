@@ -107,6 +107,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemovePlayer.cs" />
     <Compile Include="SafeLabelSetText.cs" />
+    <Compile Include="ScreenColourPatch.cs" />
     <Compile Include="ServerAddCrewBotPlayer.cs" />
     <Compile Include="ServerChangePlayerNames.cs" />
     <Compile Include="ServerCreateShip.cs" />
