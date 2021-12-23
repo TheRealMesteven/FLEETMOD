@@ -11,6 +11,7 @@ namespace FLEETMOD
         public static int shipcount = 255;
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
+        public static bool CargoMenu = false;
         public static int GetShipCaptain (int inShipID)
         {
             foreach (PLPlayer pLPlayer in PLServer.Instance.AllPlayers)

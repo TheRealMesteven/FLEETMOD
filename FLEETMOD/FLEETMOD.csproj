@@ -76,6 +76,7 @@
     <Compile Include="AddHostileShip.cs" />
     <Compile Include="AttemptToTransferNeutralCargo.cs" />
     <Compile Include="CalculateStats.cs" />
+    <Compile Include="CargoMenu.cs" />
     <Compile Include="ClaimShip.cs" />
     <Compile Include="ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />
