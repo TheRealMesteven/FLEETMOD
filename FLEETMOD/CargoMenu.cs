@@ -16,6 +16,8 @@ namespace FLEETMOD
         private static float Height = 0.4f;
         public static int inCurrentShipID;
         public static int inNetID;
+        public static Dictionary<int, int> CargoTransfer = new Dictionary<int, int>();
+        /// inCurrentShipID | inNetID
         internal CargoMenu()
         {
             CargoMenu.Instance = this;
@@ -27,7 +29,9 @@ namespace FLEETMOD
         private void WindowFunction(int WindowID)
         {
             GUILayout.BeginVertical();
-            GUILayout.Label("\n[FleetManager] Select which ship to transfer cargo to . . .");
+            PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(CargoTransfer.First().Key) as PLShipInfo;
+            PLShipComponent componentFromNetID = plshipInfo.MyStats.GetComponentFromNetID(CargoTransfer.First().Value);
+            GUILayout.Label($"\n[FleetManager] {componentFromNetID.Name}");
             foreach (PLShipInfo pLShipInfo in PLEncounterManager.Instance.AllShips.Values)
             {
                 if (pLShipInfo != null && pLShipInfo.TagID == -23)
@@ -38,10 +42,8 @@ namespace FLEETMOD
                         {
                             if (PLEncounterManager.Instance != null)
                             {
-                                PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(inCurrentShipID) as PLShipInfo;
                                 if (plshipInfo != null)
                                 {
-                                    PLShipComponent componentFromNetID = plshipInfo.MyStats.GetComponentFromNetID(inNetID);
                                     if (componentFromNetID != null)
                                     {
                                         pLShipInfo.MyStats.AddShipComponent(PLWare.CreateFromHash(1, (int)PLShipComponent.createHashFromInfo((int)componentFromNetID.ActualSlotType, componentFromNetID.SubType, componentFromNetID.Level, 0, 12)) as PLShipComponent, -1, ESlotType.E_COMP_CARGO);
