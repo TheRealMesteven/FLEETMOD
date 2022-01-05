@@ -69,7 +69,7 @@ namespace FLEETMOD
                     }
                     else
                     {
-                        if (MyVariables.shipcount != 0 && (MyVariables.shipcount * 5) != PhotonNetwork.room.MaxPlayers && (MyVariables.shipcount * 5) > PhotonNetwork.room.MaxPlayers) // if limit != 0 & limit != count & limit > count
+                        if (MyVariables.shipcount != 0 && PhotonNetwork.room.MaxPlayers / 5 < (MyVariables.shipcount + 1))
                         {
                             if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
                             {

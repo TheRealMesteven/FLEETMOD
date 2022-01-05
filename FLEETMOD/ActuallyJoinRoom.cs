@@ -30,6 +30,7 @@ namespace FLEETMOD
                 }
                 if (!room.CustomProperties["Ship_Type"].ToString().Contains("FLEETMOD"))
                 {
+                    MyVariables.isrunningmod = false;
                     PLNetworkManager.Instance.JoinRoom(room);
                     PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
                     PLLoader.Instance.IsWaitingOnNetwork = true;

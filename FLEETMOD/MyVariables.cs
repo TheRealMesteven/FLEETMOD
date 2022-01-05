@@ -8,7 +8,7 @@ namespace FLEETMOD
         public static bool shipfriendlyfire = false;
         public static bool shipgodmode = false;
         //public static float warprange = -1;
-        public static int shipcount = 255;
+        public static int shipcount = 7;
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
         public static bool CargoMenu = false;
