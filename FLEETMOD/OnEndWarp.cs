@@ -31,7 +31,6 @@ namespace FLEETMOD
                         {
                             var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
                             go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
-                            UnityEngine.GameObject.DontDestroyOnLoad(go);
                             MyVariables.DialogGenerated = true;
                         }
                     }

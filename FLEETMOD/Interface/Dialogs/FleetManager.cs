@@ -26,10 +26,10 @@ namespace FLEETMOD.Interface.Dialogs
         {
             base.Start(); // base init
             currentdialog = 0;
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Requisition a new Ship", new PLHailChoiceDelegate(RSCaptainChoice)));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request a new Ship", new PLHailChoiceDelegate(RSCaptainChoice)));
             this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Request Captain for Ship", new PLHailChoiceDelegate(RCSShipChoice)));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship in storage", new PLHailChoiceDelegate(SSShipChoice)));
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(LSShipChoice)));
+            //this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Store Ship in storage", new PLHailChoiceDelegate(SSShipChoice)));
+            //this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Withdraw Ship from storage", new PLHailChoiceDelegate(LSShipChoice)));
             ExitButton();
         }
 

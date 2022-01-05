@@ -53,8 +53,9 @@ namespace FLEETMOD
 							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
 						});
 						PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
-					}
-				}
+                        PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome Admiral \n\n Use the Faction Manager Comms to spawn and manage ships! \n\n Use < > Keys To Manage Players in their crews. \n Hold Space And Click A Player Ship To Teleport.</color>"));
+                    }
+                }
 				if (!PhotonNetwork.isMasterClient && ___m_Lifetime > 2f && PLEncounterManager.Instance.GetCPEI() != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted)
 				{
 					if (!PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 2f && PhotonNetwork.player.GetScore() == 0)
