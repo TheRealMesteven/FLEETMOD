@@ -11,7 +11,7 @@ namespace FLEETMOD
 		{
 			if (MyVariables.isrunningmod)
 			{
-				if (PLServer.Instance != null)
+				if (PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
 				{
                     float LowestWarpRange = PLEncounterManager.Instance.PlayerShip.MyStats.WarpRange;
                     foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
