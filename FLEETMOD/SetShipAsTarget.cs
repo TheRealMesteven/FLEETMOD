@@ -15,24 +15,24 @@ namespace FLEETMOD
 			}
 			else
 			{
-				if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
-				{
-					if ((PLEncounterManager.Instance.PlayerShip == PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) || !PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() || (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && MyVariables.shipfriendlyfire)) && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
-					{
+                if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
+                {
+                    if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) == null || (PLEncounterManager.Instance.PlayerShip == PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) || !PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() || (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && MyVariables.shipfriendlyfire))) && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
+                    {
                         PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID = target.SpaceTargetID;
                         PLEncounterManager.Instance.PlayerShip.LastCaptainTargetedShipIDLocallyChangedTime = Time.time;
-                        if (!PhotonNetwork.isMasterClient)
+                        foreach (PLPlayer pLPlayer in MyVariables.GetShipCrew(PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID))
                         {
-                            PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", PhotonTargets.MasterClient, new object[] 
+                            PLEncounterManager.Instance.PlayerShip.photonView.RPC("Captain_SetTargetShip", pLPlayer.GetPhotonPlayer(), new object[]
                             {
                             PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID
                             });
                         }
                     }
-					if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && !MyVariables.shipfriendlyfire)
-					{
+                    if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && !MyVariables.shipfriendlyfire)
+                    {
                         if (!(PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).MyTLI.SubHubID == PLNetworkManager.Instance.LocalPlayer.MyCurrentTLI.SubHubID))
-                        { 
+                        {
                             PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport To Friendly IF NO Friendly Fire
                             {
                             PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).MyTLI.SubHubID,
@@ -53,7 +53,7 @@ namespace FLEETMOD
                         PLTabMenu.Instance.OnClick_ClearTarget();
                         MyVariables.recentfriendlyfire = false;
                     }
-				}
+                }
 				return false;
 			}
 		}

@@ -35,6 +35,18 @@ namespace FLEETMOD
             }
             return -1;
         }
+        public static List<PLPlayer> GetShipCrew (int inShipID)
+        {
+            List<PLPlayer> Crew = null;
+            foreach (KeyValuePair<int, PLPlayer> pair in ShipCrews)
+            {
+                if (pair.Value != null && pair.Key == inShipID && pair.Value.TeamID == 0)
+                {
+                    Crew.Add(pair.Value);
+                }
+            }
+            return Crew;
+        }
         public static bool ShipHasCaptain (int inShipID)
         {
             if (PLServer.Instance != null && PLEncounterManager.Instance.GetShipFromID(inShipID) != null)
