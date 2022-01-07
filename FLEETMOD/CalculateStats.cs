@@ -19,7 +19,6 @@ namespace FLEETMOD
 						if (plshipInfoBase != null && plshipInfoBase.TagID == -23 && plshipInfoBase.MyStats.WarpRange < LowestWarpRange)
 						{
 							LowestWarpRange = plshipInfoBase.MyStats.WarpRange;
-							break;
 						}
 					}
                     ___m_WarpRange = LowestWarpRange;
