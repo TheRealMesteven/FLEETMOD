@@ -15,32 +15,38 @@ namespace FLEETMOD
 			}
 			else
 			{
-				int num = 0;
-				int num2 = 0;
-				int num3 = 0;
+				int UnalignedShips = 0;
+				int UnchargedShips = 0;
+				int UnFueledShips = 0;
 				foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
 					if (plshipInfoBase.TagID < -3 && plshipInfoBase != null)
 					{
 						if (PLServer.Instance.m_ShipCourseGoals.Count > 0)
 						{
-                            PLSectorInfo map = PLStarmap.Instance.CurrentShipPath[1];
-                            if (plshipInfoBase.WarpTargetID != map.ID)
+                            if (PLStarmap.Instance != null && PLStarmap.Instance.CurrentShipPath[1] != null)
                             {
-                                num++;
+                                if (plshipInfoBase.WarpTargetID != PLStarmap.Instance.CurrentShipPath[1].ID)
+                                {
+                                    UnalignedShips++;
+                                }
+                            }
+                            else
+                            {
+                                UnalignedShips = 1;
                             }
 						}
 						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{
-							num2++;
+                            UnchargedShips++;
 						}
 						if (plshipInfoBase.NumberOfFuelCapsules < 1)
 						{
-							num3++;
+                            UnFueledShips++;
 						}
 					}
 				}
-				bool flag6 = num == 0 && num2 == 0 && num3 == 0 && __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && __instance.MyScreenHubBase.OptionalShipInfo.NumberOfFuelCapsules > 0 && PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) < 0.5f;
+				bool flag6 = UnalignedShips == 0 && UnchargedShips == 0 && UnFueledShips == 0 && __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && __instance.MyScreenHubBase.OptionalShipInfo.NumberOfFuelCapsules > 0 && PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) < 0.5f;
 				if (__instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip() && !__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard)
 				{
 					bool flag8 = false;

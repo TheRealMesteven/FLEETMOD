@@ -11,42 +11,40 @@ namespace FLEETMOD
 		{
 			if (MyVariables.isrunningmod)
 			{
-				int num = 0;
-				int num2 = 0;
-				int num3 = 0;
-				string text = "";
+                int UnalignedShips = 0;
+                int UnchargedShips = 0;
+                int UnFueledShips = 0;
+                string text = "";
 				string str = "";
                 string str2 = "";
                 PLSectorInfo map = null;
-                try
+                if (PLStarmap.Instance != null && PLStarmap.Instance.CurrentShipPath[1] != null)
                 {
                     map = PLStarmap.Instance.CurrentShipPath[1];
                 }
-                catch
-                {
-
-                }
+                ///
                 foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
                     if (plshipInfoBase != null && plshipInfoBase.TagID < -3 && PLServer.Instance.m_ShipCourseGoals.Count > 0)
 					{
                         if (map != null && plshipInfoBase.WarpTargetID != map.ID)
 						{
-							num++;
+                            UnalignedShips++;
 							text = plshipInfoBase.ShipNameValue;
 						}
 						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{
-							num2++;
+                            UnchargedShips++;
 							str = plshipInfoBase.ShipNameValue;
 						}
 						if (plshipInfoBase.NumberOfFuelCapsules < 1)
 						{
-							num3++;
+                            UnFueledShips++;
 							str2 = plshipInfoBase.ShipNameValue;
 						}
 					}
 				}
+                ///
 				PLGlobal.SafeGameObjectSetActive(___WarpDrivePanel.gameObject, !__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard && __instance.MyScreenHubBase.OptionalShipInfo.WarpChargeStage != EWarpChargeStage.E_WCS_ACTIVE && __instance.MyScreenHubBase.OptionalShipInfo.NumberOfFuelCapsules > 0 && !__instance.MyScreenHubBase.OptionalShipInfo.InWarp && !__instance.MyScreenHubBase.OptionalShipInfo.Abandoned);
 				PLGlobal.SafeGameObjectSetActive(___JumpComputerPanel.gameObject, !__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard);
 				PLGlobal.SafeGameObjectSetActive(___m_BlockingTargetOnboardPanel.gameObject, __instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard);
@@ -144,14 +142,14 @@ namespace FLEETMOD
 					}
 					else
 					{
-						if (num2 > 0)
+						if (UnchargedShips > 0)
 						{
 							___m_JumpButtonLabel.text = "Prep The " + str;
 							___m_JumpButtonLabelTop.text = "Prep The " + str;
 						}
 						else
 						{
-							if (num3 > 0)
+							if (UnFueledShips > 0)
 							{
 								___m_JumpButtonLabel.text = "No Fuel on the " + str2;
 								___m_JumpButtonLabelTop.text = "No Fuel on the " + str2;
@@ -165,7 +163,7 @@ namespace FLEETMOD
 								}
 								else
 								{
-									if (__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && num == 0)
+									if (__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && UnalignedShips == 0)
 									{
 										___m_JumpButtonLabel.text = "Captain Warp To Sector " + __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID.ToString();
 										___m_JumpButtonLabelTop.text = "Captain Warp To Sector " + __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID.ToString();
