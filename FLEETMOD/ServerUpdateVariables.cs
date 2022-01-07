@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using HarmonyLib;
 using PulsarModLoader;
 using UnityEngine;
 
@@ -37,7 +39,7 @@ namespace FLEETMOD
             MyVariables.Fleet = new List<int>();
             MyVariables.EnabledFleetmod = new List<PLPlayer>();
             MyVariables.ShipCrews = new Dictionary<int, PLPlayer>();
-            EnabledFleetmod.Add(PLNetworkManager.Instance.LocalPlayer);
+            MyVariables.EnabledFleetmod.Add(PLNetworkManager.Instance.LocalPlayer);
         }
     }
 }

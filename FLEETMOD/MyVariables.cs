@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FLEETMOD
 {
@@ -12,7 +14,7 @@ namespace FLEETMOD
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
         public static bool CargoMenu = false;
-        public static Dictionary<int,PLPlayer> ShipCrews;
+        public static Dictionary<int, PLPlayer> ShipCrews;
         // ShipID, PLPlayer // List of crews in ship
         public static List<int> Fleet;
         // ShipIDs of the ships in the Fleet
@@ -21,13 +23,13 @@ namespace FLEETMOD
         
         public static int GetShipCaptain (int inShipID)
         {
-            foreach (PLPlayer pLPlayer in ShipCrews[inShipID])
+            foreach (KeyValuePair<int,PLPlayer> pair in ShipCrews)
             {
-                if (pLPlayer != null && pLPlayer.GetClassID() == 0 && pLPlayer.TeamID == 0)
+                if (pair.Value != null && pair.Key == inShipID && pair.Value.GetClassID() == 0 && pair.Value.TeamID == 0)
                 {
                     //if (pLPlayer.GetPhotonPlayer().GetScore() == inShipID)
                     //{
-                        return pLPlayer.GetPlayerID();
+                        return pair.Value.GetPlayerID();
                     //}
                 }
             }
