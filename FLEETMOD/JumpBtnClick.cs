@@ -24,17 +24,14 @@ namespace FLEETMOD
 					{
 						if (PLServer.Instance.m_ShipCourseGoals.Count > 0)
 						{
-                            if (PLStarmap.Instance != null && PLStarmap.Instance.CurrentShipPath[1] != null)
+                            if (PLServer.Instance.ClientHasFullStarmap && plshipInfoBase.WarpTargetID != PLStarmap.Instance.CurrentShipPath[1].ID)
                             {
-                                if (plshipInfoBase.WarpTargetID != PLStarmap.Instance.CurrentShipPath[1].ID)
-                                {
-                                    UnalignedShips++;
-                                }
+                                UnalignedShips++;
                             }
-                            else
-                            {
-                                UnalignedShips = 1;
-                            }
+                        }
+                        else
+                        {
+                            UnalignedShips = 1;
 						}
 						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{

@@ -14,18 +14,18 @@ namespace FLEETMOD
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
         public static bool CargoMenu = false;
-        public static Dictionary<int, PLPlayer> ShipCrews;
+        public static Dictionary<PLShipInfo, PLPlayer> ShipCrews;
         // ShipID, PLPlayer // List of crews in ship
-        public static List<int> Fleet;
+        public static List<PLShipInfo> Fleet;
         // ShipIDs of the ships in the Fleet
         public static List<PLPlayer> EnabledFleetmod;
         // PLPlayer of the Players who have Fleetmod active and running
         
         public static int GetShipCaptain (int inShipID)
         {
-            foreach (KeyValuePair<int,PLPlayer> pair in ShipCrews)
+            foreach (KeyValuePair<PLShipInfo, PLPlayer> pair in ShipCrews)
             {
-                if (pair.Value != null && pair.Key == inShipID && pair.Value.GetClassID() == 0 && pair.Value.TeamID == 0)
+                if (pair.Value != null && pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && pair.Value.GetClassID() == 0 && pair.Value.TeamID == 0)
                 {
                     //if (pLPlayer.GetPhotonPlayer().GetScore() == inShipID)
                     //{
@@ -38,9 +38,9 @@ namespace FLEETMOD
         public static List<PLPlayer> GetShipCrew (int inShipID)
         {
             List<PLPlayer> Crew = null;
-            foreach (KeyValuePair<int, PLPlayer> pair in ShipCrews)
+            foreach (KeyValuePair<PLShipInfo, PLPlayer> pair in ShipCrews)
             {
-                if (pair.Value != null && pair.Key == inShipID && pair.Value.TeamID == 0)
+                if (pair.Value != null && pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && pair.Value.TeamID == 0)
                 {
                     Crew.Add(pair.Value);
                 }

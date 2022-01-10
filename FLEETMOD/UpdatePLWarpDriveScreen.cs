@@ -18,20 +18,27 @@ namespace FLEETMOD
 				string str = "";
                 string str2 = "";
                 PLSectorInfo map = null;
-                if (PLStarmap.Instance != null && PLStarmap.Instance.CurrentShipPath[1] != null)
+                try
                 {
-                    map = PLStarmap.Instance.CurrentShipPath[1];
+                    if (PLServer.Instance.ClientHasFullStarmap && PLServer.Instance.m_ShipCourseGoals.Count > 0)
+                    {
+                        map = PLStarmap.Instance.CurrentShipPath[1];
+                    }
                 }
+                catch { }
                 ///
                 foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 				{
                     if (plshipInfoBase != null && plshipInfoBase.TagID < -3 && PLServer.Instance.m_ShipCourseGoals.Count > 0)
 					{
-                        if (map != null && plshipInfoBase.WarpTargetID != map.ID)
-						{
-                            UnalignedShips++;
-							text = plshipInfoBase.ShipNameValue;
-						}
+                        if (map != null)
+                        {
+                            if (plshipInfoBase.WarpTargetID != map.ID)
+                            {
+                                UnalignedShips++;
+                                text = plshipInfoBase.ShipNameValue;
+                            }
+                        }
 						if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
 						{
                             UnchargedShips++;

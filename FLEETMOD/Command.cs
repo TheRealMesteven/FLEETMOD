@@ -257,6 +257,7 @@ namespace FLEETMOD
                 return false;
             }
         }
+
         public class FLEETMODCommandsEnable : IChatCommand
         {
             public string[] CommandAliases()
@@ -296,7 +297,8 @@ namespace FLEETMOD
                 }
                 return false;
             }
-        }*/
+        }
         public static bool Debug = false;
+    }*/
     }
 }

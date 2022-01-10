@@ -36,9 +36,9 @@ namespace FLEETMOD
     { /// Initial Patch creating the dictionaries and lists.
         static void Postfix()
         {
-            MyVariables.Fleet = new List<int>();
+            MyVariables.Fleet = new List<PLShipInfo>();
             MyVariables.EnabledFleetmod = new List<PLPlayer>();
-            MyVariables.ShipCrews = new Dictionary<int, PLPlayer>();
+            MyVariables.ShipCrews = new Dictionary<PLShipInfo, PLPlayer>();
             MyVariables.EnabledFleetmod.Add(PLNetworkManager.Instance.LocalPlayer);
         }
     }

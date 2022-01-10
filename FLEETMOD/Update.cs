@@ -275,13 +275,13 @@ namespace FLEETMOD
 								});
 							}
 						}
-						bool flag38 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus);
+						bool flag38 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap;
 						if (flag38)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{
 								PLEncounterManager.Instance.PlayerShip.ShipID,
-								PLServer.Instance.m_ShipCourseGoals[0],
+                                PLStarmap.Instance.CurrentShipPath[1],
 								PLServer.Instance.GetEstimatedServerMs(),
 								-1
 							});
