@@ -6,18 +6,14 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-	// Token: 0x02000029 RID: 41
 	[HarmonyPatch(typeof(PLServer), "Update")]
 	internal class Update
 	{
-		// Token: 0x06000050 RID: 80 RVA: 0x00006C74 File Offset: 0x00004E74
 		public static void Postfix(PLServer __instance)
 		{
-			bool isrunningmod = MyVariables.isrunningmod;
-            if (isrunningmod)
+            if (MyVariables.isrunningmod)
 			{
-				bool flag = __instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null;
-				if (flag)
+				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
                     PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;
@@ -29,33 +25,27 @@ namespace FLEETMOD
 					PLInGameUI.Instance.CurrentVersionLabel.text = myversion;
 					PLInGameUI.Instance.ControlsText.enabled = true;
 					string str = "<color=#FFFFFF>";
-					bool flag2 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && !PhotonNetwork.isMasterClient;
-					if (flag2)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && !PhotonNetwork.isMasterClient)
 					{
 						str = "<color=#0066FF>";
 					}
-					bool flag3 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && PhotonNetwork.isMasterClient;
-					if (flag3)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && PhotonNetwork.isMasterClient)
 					{
 						str = "<color=#ffff00>";
 					}
-					bool flag4 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 1;
-					if (flag4)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 1)
 					{
 						str = "<color=#FFFFFF>";
 					}
-					bool flag5 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 2;
-					if (flag5)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 2)
 					{
 						str = "<color=#00FF00>";
 					}
-					bool flag6 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 3;
-					if (flag6)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 3)
 					{
 						str = "<color=#FF0000>";
 					}
-					bool flag7 = PLNetworkManager.Instance.LocalPlayer.GetClassID() == 4;
-					if (flag7)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 4)
 					{
 						str = "<color=#FF6600>";
 					}
@@ -85,16 +75,14 @@ namespace FLEETMOD
                         }
                     }
                     ///
-                    bool flag8 = PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0;
-					if (flag8)
+					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0)
 					{
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;
 					}
-					bool flag10 = __instance != null && !PhotonNetwork.isMasterClient &&  PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null; // This is where warp range bindings occur
-					if (flag10)
+					// This is where warp range bindings occur
+					if (__instance != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null)
 					{
-						bool flag11 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist != PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
-						if (flag11)
+						if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist != PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist)
 						{
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						} // This is end of warp range bindings
@@ -109,98 +97,79 @@ namespace FLEETMOD
 							PLTabMenu.Instance.TabMenuActive = false;
 						}
                         */
-						bool flag13 = PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID != 0;
-						if (flag13)
+						if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID != 0)
 						{
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.TeamID = 0;
 						}
-						bool flag14 = PLNetworkManager.Instance.LocalPlayer.GetPawn() != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 2f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip != null;
-						if (flag14)
+						if (PLNetworkManager.Instance.LocalPlayer.GetPawn() != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 2f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip != null)
 						{
-							bool flag15 = PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.GetIsPlayerShip() && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TeamID != -1 && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip != PLNetworkManager.Instance.LocalPlayer.StartingShip;
-							if (flag15)
+							if (PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.GetIsPlayerShip() && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TeamID != -1 && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip != PLNetworkManager.Instance.LocalPlayer.StartingShip)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TeamID = -1;
 							}
 						}
-						bool autoTarget = PLEncounterManager.Instance.PlayerShip.AutoTarget;
-						if (autoTarget)
+						if (PLEncounterManager.Instance.PlayerShip.AutoTarget)
 						{
 							PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
 						}
-						bool flag16 = (PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 1f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip) || (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "locked" && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 5f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip);
-						if (flag16)
+						if ((PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 1f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip) || (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "locked" && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 5f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip))
 						{
-							bool flag17 = !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG");
-							if (flag17)
+							if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG"))
 							{
-								int startIndex = PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•");
 								PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 								{
-									"BRIG " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(startIndex)
+									"BRIG " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•"))
 								});
 							}
 							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu(string.Concat(new string[]
 							{
 								"<color=#c0c0c0><size=15>You Have Been Confined To The Brig By The Admiral.\n\n Please Wait Here Until The Admiral Releases You.</size></color>"
 							})));
-							bool flag18 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_OUTRIDER;
-							if (flag18)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_OUTRIDER)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(12.5f, -406f, -2f);
 							}
-							bool flag19 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID;
-							if (flag19)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(9.4f, -400.9f, -13.8f);
 							}
-							bool flag20 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ROLAND;
-							if (flag20)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ROLAND)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(8.8f, -391f, -30.8f);
 							}
-							bool flag21 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_HUMAN;
-							if (flag21)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_HUMAN)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-14.8f, -365.8f, 38.1f);
 							}
-							bool flag22 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_WDCRUISER;
-							if (flag22)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_WDCRUISER)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-9.4f, -397f, -5f);
 							}
-							bool flag23 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_DESTROYER;
-							if (flag23)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_DESTROYER)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(0.2f, 405f, 14.1f);
 							}
-							bool flag24 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ANNIHILATOR;
-							if (flag24)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ANNIHILATOR)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-5.6f, -400f, -1.9f);
 							}
-							bool flag25 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CIVILIAN_STARTING_SHIP;
-							if (flag25)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CIVILIAN_STARTING_SHIP)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-5.6f, -384.5f, 24f);
 							}
-							bool flag26 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_STARGAZER;
-							if (flag26)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_STARGAZER)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-7.3f, -394.5f, 13.6f);
 							}
-							bool flag27 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CARRIER;
-							if (flag27)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CARRIER)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(1.2f, -386f, 18.4f);
 							}
-							bool flag28 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_SYLVASSI;
-							if (flag28)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_SYLVASSI)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-16.1f, -397.5f, -15.5f);
 							}
-							bool flag29 = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID_SC;
-							if (flag29)
+							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID_SC)
 							{
 								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(9.4f, -400.9f, -13.8f);
 							}
@@ -214,8 +183,7 @@ namespace FLEETMOD
 								}
 							}
 						}
-						bool flag31 = PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "open";
-						if (flag31)
+						if (PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "open")
 						{
 							PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName = "open";
 							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu(string.Concat(new string[]
@@ -232,29 +200,24 @@ namespace FLEETMOD
 							}
 						}
 					}
-					bool flag33 = PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted;
-					if (flag33)
+					if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
 					{
-						bool flag34 = PLNetworkManager.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PhotonNetwork.isMasterClient && PLServer.Instance != null && PLServer.Instance.AllPlayersLoaded() && PLEncounterManager.Instance.PlayerShip != null && Mathf.Abs((float)((long)PLServer.Instance.GetEstimatedServerMs() - (long)PLEncounterManager.Instance.PlayerShip.LastBeginWarpServerTime)) > 16000f && PhotonNetwork.player.NickName != "skipwarp";
-						if (flag34)
+						if (PLNetworkManager.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PhotonNetwork.isMasterClient && PLServer.Instance != null && PLServer.Instance.AllPlayersLoaded() && PLEncounterManager.Instance.PlayerShip != null && Mathf.Abs((float)((long)PLServer.Instance.GetEstimatedServerMs() - (long)PLEncounterManager.Instance.PlayerShip.LastBeginWarpServerTime)) > 16000f && PhotonNetwork.player.NickName != "skipwarp")
 						{
 							PhotonNetwork.player.NickName = "skipwarp";
 						}
-						bool flag35 = !PLEncounterManager.Instance.PlayerShip.InWarp && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "skipwarp";
-						if (flag35)
+						if (!PLEncounterManager.Instance.PlayerShip.InWarp && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "skipwarp")
 						{
 							PhotonNetwork.player.NickName = "null";
 						}
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							bool flag36 = plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && plplayer.GetPlayerName(false).Contains("•") && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot;
-							if (flag36)
+							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && plplayer.GetPlayerName(false).Contains("•") && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
 							{
 								plplayer.StartingShip = (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo);
-								int startIndex2 = plplayer.GetPlayerName(false).LastIndexOf("•");
 								plplayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 								{
-									plplayer.StartingShip.ShipNameValue + " " + plplayer.GetPlayerName(false).Substring(startIndex2)
+									plplayer.StartingShip.ShipNameValue + " " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•"))
 								});
 								plplayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
 								{
@@ -265,18 +228,15 @@ namespace FLEETMOD
 						}
 						foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
 						{
-							bool flag37 = plplayer2 != null && plplayer2.GetPhotonPlayer() != null && plplayer2.PlayerLifeTime > 10f && plplayer2.GetPlayerName(false).Contains("FREE") && plplayer2.GetPhotonPlayer().NickName != "locked";
-							if (flag37)
+							if (plplayer2 != null && plplayer2.GetPhotonPlayer() != null && plplayer2.PlayerLifeTime > 10f && plplayer2.GetPlayerName(false).Contains("FREE") && plplayer2.GetPhotonPlayer().NickName != "locked")
 							{
-								int startIndex3 = plplayer2.GetPlayerName(false).LastIndexOf("•");
 								plplayer2.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 								{
-									plplayer2.StartingShip.ShipNameValue + " " + plplayer2.GetPlayerName(false).Substring(startIndex3)
+									plplayer2.StartingShip.ShipNameValue + " " + plplayer2.GetPlayerName(false).Substring(plplayer2.GetPlayerName(false).LastIndexOf("•"))
 								});
 							}
 						}
-						bool flag38 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap;
-						if (flag38)
+						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{
@@ -286,15 +246,13 @@ namespace FLEETMOD
 								-1
 							});
 						}
-						bool autoTarget2 = PLEncounterManager.Instance.PlayerShip.AutoTarget;
-						if (autoTarget2)
+						if (PLEncounterManager.Instance.PlayerShip.AutoTarget)
 						{
 							PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
 						}
 						foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
 						{
-							bool flag39 = plshipInfoBase != null && plshipInfoBase.IsAuxSystemActive(6) && plshipInfoBase.TagID == -23;
-							if (flag39)
+							if (plshipInfoBase != null && plshipInfoBase.IsAuxSystemActive(6) && plshipInfoBase.TagID == -23)
 							{
 								PLServer.Instance.photonView.RPC("SetAuxReactorConfigOff", PhotonTargets.All, new object[]
 								{
@@ -304,16 +262,14 @@ namespace FLEETMOD
 							}
 						}
 					}
-					bool flag40 = PhotonNetwork.isMasterClient && Time.time - __instance.LobbyPropertiesUpdateLastTime > 0.5f && PhotonNetwork.room != null;
-					if (flag40)
+					if (PhotonNetwork.isMasterClient && Time.time - __instance.LobbyPropertiesUpdateLastTime > 0.5f && PhotonNetwork.room != null)
 					{
 						__instance.LobbyPropertiesUpdateLastTime = Time.time;
 						int num = 0;
 						for (int i = 0; i < __instance.AllPlayers.Count; i++)
 						{
 							PLPlayer plplayer3 = __instance.AllPlayers[i];
-							bool flag41 = plplayer3 != null && plplayer3.IsBot && plplayer3.TeamID == 0;
-							if (flag41)
+							if (plplayer3 != null && plplayer3.IsBot && plplayer3.TeamID == 0)
 							{
 								num++;
 							}
@@ -321,13 +277,11 @@ namespace FLEETMOD
 						Hashtable hashtable = new Hashtable();
 						hashtable.Add("CurrentPlayersPlusBots", PhotonNetwork.room.PlayerCount + num);
 						hashtable.Add("Private", PLNetworkManager.Instance.IsPrivateGame);
-						bool flag42 = PLGlobal.Instance.Galaxy != null && PLGlobal.Instance.Galaxy.GenerationSettings != null;
-						if (flag42)
+						if (PLGlobal.Instance.Galaxy != null && PLGlobal.Instance.Galaxy.GenerationSettings != null)
 						{
 							hashtable.Add("GenSettings", PLGlobal.Instance.Galaxy.GenerationSettings.CreateDataString());
 						}
-						bool flag43 = PLEncounterManager.Instance.PlayerShip != null;
-						if (flag43)
+						if (PLEncounterManager.Instance.PlayerShip != null)
 						{
 							hashtable.Add("Ship_Name", PLEncounterManager.Instance.PlayerShip.ShipNameValue);
 							hashtable.Add("Ship_Type", Plugin.myversion);
@@ -337,16 +291,14 @@ namespace FLEETMOD
 							hashtable.Add("Ship_Name", PhotonNetwork.room.CustomProperties["Ship_Name"]);
 							hashtable.Add("Ship_Type", PhotonNetwork.room.CustomProperties["Ship_Type"]);
 						}
-						bool flag44 = PhotonNetwork.room.CustomProperties.ContainsKey("SteamServerID");
-						if (flag44)
+						if (PhotonNetwork.room.CustomProperties.ContainsKey("SteamServerID"))
 						{
 							hashtable.Add("SteamServerID", PhotonNetwork.room.CustomProperties["SteamServerID"]);
 							CSteamID steamID = SteamUser.GetSteamID();
 							string text = steamID.m_SteamID.ToString() + ",";
 							foreach (PhotonPlayer photonPlayer in PhotonNetwork.playerList)
 							{
-								bool flag45 = photonPlayer != null && photonPlayer.SteamID != CSteamID.Nil && photonPlayer.SteamID != steamID;
-								if (flag45)
+								if (photonPlayer != null && photonPlayer.SteamID != CSteamID.Nil && photonPlayer.SteamID != steamID)
 								{
 									text = text + photonPlayer.SteamID.m_SteamID.ToString() + ",";
 								}
@@ -354,34 +306,29 @@ namespace FLEETMOD
 							hashtable.Add("PlayerSteamIDs", text);
 						}
 						bool flag46 = hashtable.Count != PhotonNetwork.room.CustomProperties.Count;
-						bool flag47 = !flag46;
-						if (flag47)
+						if (!flag46)
 						{
 							foreach (object obj in hashtable.Keys)
 							{
 								string text2 = (string)obj;
-								bool flag48 = PhotonNetwork.room.CustomProperties[text2].ToString() != hashtable[text2].ToString();
-								if (flag48)
+								if (PhotonNetwork.room.CustomProperties[text2].ToString() != hashtable[text2].ToString())
 								{
 									flag46 = true;
 									break;
 								}
 							}
 						}
-						bool flag49 = flag46;
-						if (flag49)
+						if (flag46)
 						{
 							PhotonNetwork.room.SetCustomProperties(hashtable, null, false);
 						}
 					}
-					bool flag50 = Time.time - PLServer.Instance.LobbyPropertiesUpdateLastTime > 0.2f && PhotonNetwork.room != null;
-					if (flag50)
+					if (Time.time - PLServer.Instance.LobbyPropertiesUpdateLastTime > 0.2f && PhotonNetwork.room != null)
 					{
 						int num2 = 0;
 						foreach (PLShipInfoBase plshipInfoBase2 in PLEncounterManager.Instance.AllShips.Values)
 						{
-							bool flag51 = plshipInfoBase2 != null && plshipInfoBase2.GetIsPlayerShip();
-							if (flag51)
+							if (plshipInfoBase2 != null && plshipInfoBase2.GetIsPlayerShip())
 							{
 								num2++;
 							}

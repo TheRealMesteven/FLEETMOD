@@ -24,6 +24,7 @@ namespace FLEETMOD
                 }
                 if ((string)room.CustomProperties["Ship_Type"] == Plugin.myversion)
                 {
+                    MyVariables.isrunningmod = false;
                     PLNetworkManager.Instance.JoinRoom(room);
                     PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
                     PLLoader.Instance.IsWaitingOnNetwork = true;
@@ -74,6 +75,7 @@ namespace FLEETMOD
             }
             else if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod)
             {
+                MyVariables.EnabledFleetmod.Add(PLServer.GetPlayerForPhotonPlayer(sender.sender));
                 ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", sender.sender, new object[] { });
             }
         }

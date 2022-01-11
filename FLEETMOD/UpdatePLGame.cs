@@ -56,7 +56,7 @@ namespace FLEETMOD
 						PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
                     }
                 }
-				if (!PhotonNetwork.isMasterClient && ___m_Lifetime > 2f && PLEncounterManager.Instance.GetCPEI() != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted)
+				if (!PhotonNetwork.isMasterClient && ___m_Lifetime > 2f && PLEncounterManager.Instance.GetCPEI() != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted)
 				{
 					if (!PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 2f && PhotonNetwork.player.GetScore() == 0)
 					{
