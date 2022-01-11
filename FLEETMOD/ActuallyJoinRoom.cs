@@ -56,7 +56,7 @@ namespace FLEETMOD
             if (!PhotonNetwork.isMasterClient && !MyVariables.isrunningmod)
             {
                 MyVariables.isrunningmod = false;
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.ActivateFleetmod", PhotonTargets.MasterClient, new object[] { });
+                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", PhotonTargets.MasterClient, new object[] { });
             }
             else
             {
@@ -74,7 +74,7 @@ namespace FLEETMOD
             }
             else if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod)
             {
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.ActivateFleetmod", sender.sender, new object[] { });
+                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", sender.sender, new object[] { });
             }
         }
     }
