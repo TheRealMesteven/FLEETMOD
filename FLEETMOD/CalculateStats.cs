@@ -35,6 +35,11 @@ namespace FLEETMOD
                         //PulsarModLoader.Utilities.Logger.Info($"{PLNetworkManager.Instance.LocalPlayer.GetPlayerName()} {__instance.Ship.ShipNameValue} | | {plshipInfoBase.MyStats.Ship.ShipNameValue}  {___m_WarpRange}");
                         if (plshipInfoBase != null && plshipInfoBase.GetLifetime() > 3f && plshipInfoBase.TagID == -23)
                         {
+                            if (plshipInfoBase.MyWarpDrive == null)
+                            {
+                                ___m_WarpRange = 0f;
+                                continue;
+                            }
                             if (plshipInfoBase.MyWarpDrive.WarpRange < ___m_WarpRange)
                             {
                                 ___m_WarpRange = plshipInfoBase.MyWarpDrive.WarpRange;
