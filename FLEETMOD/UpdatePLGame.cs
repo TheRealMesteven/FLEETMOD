@@ -20,7 +20,7 @@ namespace FLEETMOD
 				{
 					___HasDoneSetup = true;
 				}
-				if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null)
+                if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null)
 				{
 					if (PLServer.Instance.GameHasStarted && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.GetClassID() == -1)
 					{
@@ -38,7 +38,8 @@ namespace FLEETMOD
 						});
 						PLNetworkManager.Instance.ConsoleText.Insert(0, "Game Has Started. You Are The Admiral.");
 						PLServer.Instance.GameHasStarted = true;
-					}
+                        PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome Admiral \n\n Use the Faction Manager Comms to spawn and manage ships! \n\n Use < > Keys To Manage Players in their crews. \n Hold Space And Click A Player Ship To Teleport.</color>"));
+                    }
 					if (PLServer.Instance.GameHasStarted && !PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
 					{
 						PLServer.Instance.photonView.RPC("StartPlayer", PhotonTargets.MasterClient, new object[]
@@ -53,7 +54,6 @@ namespace FLEETMOD
 							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
 						});
 						PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
-                        PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome Admiral \n\n Use the Faction Manager Comms to spawn and manage ships! \n\n Use < > Keys To Manage Players in their crews. \n Hold Space And Click A Player Ship To Teleport.</color>"));
                     }
                 }
 				if (!PhotonNetwork.isMasterClient && ___m_Lifetime > 2f && PLEncounterManager.Instance.GetCPEI() != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted)
