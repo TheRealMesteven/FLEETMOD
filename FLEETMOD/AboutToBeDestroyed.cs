@@ -15,8 +15,21 @@ namespace FLEETMOD
 			}
 			else
 			{
+				/*continue if following evaluates true
+				 *&&
+				 *Ship has NOT been destroyed
+				 *Server Instance != null
+				 *Local Player != null
+				 *Server GameHasStarted
+				 *Local Player Has Started
+				*/
 				if (!__instance.HasBeenDestroyed && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
 				{
+					/*continue if following evaluates true
+					 *&&
+					 *this Ship is part of the Fleet
+					 *Local Player is MasterClient
+					*/
 					if (__instance.TagID == -23 && PhotonNetwork.isMasterClient)
 					{
 						PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
@@ -27,37 +40,71 @@ namespace FLEETMOD
 							"SHIP"
 						});
 					}
-                    ///<summary>
-                    /// The below lines of code sets each player of a destroyed ship as crew of the host ship.
-                    ///</summary>
+					/*continue if following evaluates true
+					 *&&
+					 *Local Player is Master Client
+					 *Local Player Ship != this Ship
+					*/
 					if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
 					{
+						/*foreach player on the server
+						 *continue if following evaluates true
+						 *&&
+						 *player != null
+						 *player photonplayer != null
+						 *player != masterclient
+						 *player != bot
+						 *player ship != this ship
+						 *<summary>
+						 *Moves this ship crew to Host ship
+						 *</summary>
+						*/
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot && plplayer.StartingShip == __instance)
 							{
-                                plplayer.SetClassID(1);
+                                				plplayer.SetClassID(1);
 								plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
 								plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
 							}
 						}
 					}
-                    ///<summary>
-                    /// Below lines of code sets each players ship as the host ship when the hosts ship is destroyed, causing the game to fail like normal.
-                    ///</summary>
-                    if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
-                    {
-                        foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-                        {
-                            if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
-                            {
-                                plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
-                                plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
-                            }
-                        }
-                    }
-                    ///
-                    if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TagID == -23 && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == __instance && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
+					/*continue if following evaluates true
+					 *&&
+					 *Local Player is Master Client
+					 *Local Player Ship == this Ship
+					*/
+                    			if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
+			                {
+						/*foreach player on the server
+						 *continue if following evaluates true
+						 *&&
+						 *player != null
+						 *player photonplayer != null
+						 *player != masterclient
+						 *player != bot
+						 *<summary>
+						 *Moves this Host crew to other ship
+						 *##BROKEN
+						 *</summary>
+						*/
+				                foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                        			{
+				                        if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
+				                        {
+				                                plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
+      					                        plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
+				                        }
+			                        }
+			                }
+					/*continue if following evaluates true
+					 *Local Player is Master Client
+					 *Local Player != null
+					 *Local Player Current Ship == Fleet Ship
+					 *Local Player Current Ship == this ship
+					 *Local Player Main Ship != this ship
+					*/
+			                if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TagID == -23 && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == __instance && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
 					{
 						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
 						{
@@ -65,7 +112,7 @@ namespace FLEETMOD
 							0
 						});
 					}
-                    __instance.TagID = -1;
+             				__instance.TagID = -1;
 				}
 				return true;
 			}
