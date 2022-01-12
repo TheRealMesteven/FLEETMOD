@@ -23,7 +23,7 @@ namespace FLEETMOD
 					PLXMLOptionsIO.Instance.CurrentOptions.SetStringValue("TipNumber", ___TipNumber.ToString());
 				}
 				___TipStrings.Clear();
-				___TipStrings.Add("<color=green>Fleet Mod succesfully initialized!</color>")
+				___TipStrings.Add("<color=green>Fleet Mod succesfully initialized!</color>");
 				___TipStrings.Add("<color=yellow>Fleet Mod - Ask The Admiral When You Join To Create A New Ship</color>");
 				___TipStrings.Add("<color=yellow>Fleet Mod - When You Have More Than One Ship Use Keys < & > (, & .) To Scroll Through The Ships</color>");
 			}
