@@ -18,9 +18,10 @@ namespace FLEETMOD
         // ShipID, PLPlayer // List of crews in ship
         public static List<PLShipInfo> Fleet;
         // ShipIDs of the ships in the Fleet
-        public static List<PLPlayer> EnabledFleetmod;
+        public static List<PhotonPlayer> FleetmodPhoton;
+        public static List<PLPlayer> FleetmodPlayer;
         // PLPlayer of the Players who have Fleetmod active and running
-        
+
         public static int GetShipCaptain (int inShipID)
         {
             foreach (KeyValuePair<PLShipInfo, PLPlayer> pair in ShipCrews)
