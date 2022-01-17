@@ -75,7 +75,7 @@ namespace FLEETMOD
             }
             else if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod)
             {
-                MyVariables.EnabledFleetmod.Add(PLServer.GetPlayerForPhotonPlayer(sender.sender));
+                MyVariables.FleetmodPhoton.Add(sender.sender);
                 ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", sender.sender, new object[] { });
             }
         }

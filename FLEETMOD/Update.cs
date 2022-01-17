@@ -225,17 +225,23 @@ namespace FLEETMOD
 									0
 								});
 							}
-						}
-						foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
-						{
-							if (plplayer2 != null && plplayer2.GetPhotonPlayer() != null && plplayer2.PlayerLifeTime > 10f && plplayer2.GetPlayerName(false).Contains("FREE") && plplayer2.GetPhotonPlayer().NickName != "locked")
-							{
-								plplayer2.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-								{
-									plplayer2.StartingShip.ShipNameValue + " " + plplayer2.GetPlayerName(false).Substring(plplayer2.GetPlayerName(false).LastIndexOf("•"))
-								});
-							}
-						}
+                            if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("FREE") && plplayer.GetPhotonPlayer().NickName != "locked")
+                            {
+                                plplayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
+                                {
+                                    plplayer.StartingShip.ShipNameValue + " " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•"))
+                                });
+                            }
+                        }
+                        foreach (PhotonPlayer Photon in MyVariables.FleetmodPhoton)
+                        {
+                            try
+                            {
+                                MyVariables.FleetmodPlayer.Add(PLServer.GetPlayerForPhotonPlayer(Photon));
+                                MyVariables.FleetmodPhoton.Remove(Photon);
+                            }
+                            catch { }
+                        }
 						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
