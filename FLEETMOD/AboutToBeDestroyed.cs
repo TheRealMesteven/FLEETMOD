@@ -1,7 +1,12 @@
 ﻿using System;
 using HarmonyLib;
 using UnityEngine;
-
+/*
+ * Checks if ship instance has been destroyed
+ * On destroy, move crew of destroyed ship to host's ship/admiral ship
+ * (WIP) Code for setting another ship in fleet to the Admiral ship
+ * 
+ */
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLShipInfoBase), "AboutToBeDestroyed")]

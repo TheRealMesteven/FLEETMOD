@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-
+/*
+ * Code for altered Cargo Menu UI for Fleetmod.
+ * defines UI behavior and appearance as well as transferring cargo between ships 
+ */
 namespace FLEETMOD
 {
     internal class CargoMenu : UnityEngine.MonoBehaviour

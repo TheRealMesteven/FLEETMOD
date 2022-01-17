@@ -1,7 +1,12 @@
 ﻿using System;
 using HarmonyLib;
 using PulsarModLoader;
-
+/*
+ * Checks if player is running mod
+ * Netcode for joining room with fleetmod running
+ * 
+ * 
+ */
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
