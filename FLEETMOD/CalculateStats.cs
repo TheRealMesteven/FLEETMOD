@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using CodeStage.AntiCheat.ObscuredTypes;
 using HarmonyLib;
-
+/*
+ * Calculates warp range for fleet
+ * 
+ */
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLShipStats), "CalculateStats")]
