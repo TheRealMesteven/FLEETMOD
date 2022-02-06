@@ -67,6 +67,8 @@ namespace FLEETMOD
                     }
                     MyVariables.DialogGenerated = false;
                 }
+                MyVariables.survivalBonus++;
+                MyVariables.survivalBonus = Mathf.Clamp(MyVariables.survivalBonus, -5, 20);
                 return false;
             }
         }

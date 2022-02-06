@@ -5,7 +5,7 @@ using PulsarModLoader;
 using UnityEngine;
 
 namespace FLEETMOD
-{
+{   
     internal class ServerUpdateVariables : ModMessage
     {
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
@@ -40,7 +40,7 @@ namespace FLEETMOD
             MyVariables.FleetmodPlayer = new List<PLPlayer>();
             MyVariables.FleetmodPhoton = new List<PhotonPlayer>();
             MyVariables.ShipCrews = new Dictionary<PLShipInfo, PLPlayer>();
-            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer);
+            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer);           
         }
     }
 }

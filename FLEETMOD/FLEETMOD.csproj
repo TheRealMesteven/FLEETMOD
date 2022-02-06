@@ -47,7 +47,7 @@
       <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
     <Reference Include="PulsarModLoader">
-      <HintPath>D:\Steam\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\PulsarModLoader.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\PulsarModLoader.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,6 +103,7 @@
     <Compile Include="OnEndWarp.cs" />
     <Compile Include="OnPhotonSerializeView.cs" />
     <Compile Include="OnWarp.cs" />
+    <Compile Include="PLPawnNetworkDestroy.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemovePlayer.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="UpdatePlayerOverview.cs" />
     <Compile Include="UpdatePLGame.cs" />
     <Compile Include="UpdatePLInGameUI.cs" />
+    <Compile Include="UpdatePLPawn.cs" />
     <Compile Include="UpdatePLRepairDepot.cs" />
     <Compile Include="UpdatePLTabMenu.cs" />
     <Compile Include="UpdatePLWarpDriveScreen.cs" />

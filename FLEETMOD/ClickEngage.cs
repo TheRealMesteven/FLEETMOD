@@ -14,39 +14,12 @@ namespace FLEETMOD
 			if (PLServer.Instance != null && PLServer.Instance.GameHasStarted)
 			{
 				PLMusic.PostEvent("play_sx_playermenu_click_major", PLGlobal.Instance.gameObject);
-				switch (___CurrentSelectedShipIndex)
-				{
-				case 3:
-					PLNetworkManager.Instance.SelectedShipTypeID = 4;
-					break;
-				case 4:
-					PLNetworkManager.Instance.SelectedShipTypeID = 5;
-					break;
-				case 5:
-					PLNetworkManager.Instance.SelectedShipTypeID = 6;
-					break;
-				case 6:
-					PLNetworkManager.Instance.SelectedShipTypeID = 7;
-					break;
-				case 7:
-					PLNetworkManager.Instance.SelectedShipTypeID = 8;
-					break;
-				case 8:
-					PLNetworkManager.Instance.SelectedShipTypeID = 9;
-					break;
-				case 9:
-					PLNetworkManager.Instance.SelectedShipTypeID = 10;
-					break;
-				case 10:
-					PLNetworkManager.Instance.SelectedShipTypeID = 11;
-					break;
-				case 11:
-					PLNetworkManager.Instance.SelectedShipTypeID = 12;
-					break;
-				default:
+
+				if (___CurrentSelectedShipIndex >= 3 && ___CurrentSelectedShipIndex <= 11)
+					PLNetworkManager.Instance.SelectedShipTypeID = ___CurrentSelectedShipIndex + 1;
+				else
 					PLNetworkManager.Instance.SelectedShipTypeID = ___CurrentSelectedShipIndex;
-					break;
-				}
+				
 				if (PLNetworkManager.Instance.SelectedShipTypeID == 8)
 				{
 					PLNetworkManager.Instance.SelectedShipTypeID = 3;

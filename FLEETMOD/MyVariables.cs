@@ -11,6 +11,8 @@ namespace FLEETMOD
         public static bool shipgodmode = false;
         //public static float warprange = -1;
         public static int shipcount = 7;
+        public static int survivalBonus;
+        // variable for storing current survival bonus. Used in UpdatePLPawn
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
         public static bool CargoMenu = false;
