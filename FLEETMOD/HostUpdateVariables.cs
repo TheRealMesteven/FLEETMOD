@@ -13,6 +13,7 @@ namespace FLEETMOD
                 PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerUpdateVariables", PhotonTargets.All, new object[]{
                     MyVariables.shipfriendlyfire,
                     MyVariables.recentfriendlyfire,
+                    MyVariables.survivalBonusDict // Sending healthBonus dictionary from host to clients
                     //MyVariables.warprange,
                 });
             }
