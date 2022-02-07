@@ -11,6 +11,7 @@ namespace FLEETMOD
         public static bool shipgodmode = false;
         //public static float warprange = -1;
         public static int shipcount = 7;
+        // variable for storing current survival bonus. Used in UpdatePLPawn
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
         public static bool CargoMenu = false;
@@ -21,6 +22,11 @@ namespace FLEETMOD
         public static List<PhotonPlayer> FleetmodPhoton;
         public static List<PLPlayer> FleetmodPlayer;
         // PLPlayer of the Players who have Fleetmod active and running
+        public static Dictionary<int /*PlayerID*/ , /*Bonus*/ int> survivalBonusDict; 
+        // Dictionary that stores <playerID,healthBonus> on hostside, then it's being sent to clients
+        public static int MySurvivalBonus; 
+        // variable for storing localplayer's healthBonus
+
 
         public static int GetShipCaptain (int inShipID)
         {

@@ -16,56 +16,55 @@ namespace FLEETMOD
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
                     PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
-                    PLEncounterManager.Instance.PlayerShip.TagID = -23;
-					string myversion = Plugin.myversion;
+					PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.supportRichText = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.text = "<color=#ffffff>Your Admiral </color><color=#ffff00>\n" + PLServer.Instance.GetPlayerFromPlayerID(0).GetPlayerName(true) + "</color>";
-					PLInGameUI.Instance.CurrentVersionLabel.text = myversion;
+					PLInGameUI.Instance.CurrentVersionLabel.text = Plugin.myversion;
 					PLInGameUI.Instance.ControlsText.enabled = true;
 					string str = "<color=#FFFFFF>";
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && !PhotonNetwork.isMasterClient)
+
+					// Switched ifs to fancy switch statement
+
+					switch (PLNetworkManager.Instance.LocalPlayer.GetClassID())
 					{
-						str = "<color=#0066FF>";
+						case 0:
+							if (PhotonNetwork.isMasterClient) str = "<color=#0066FF>";
+							else str = "<color=#ffff00>";
+							break;
+						case 1:
+							str = "<color=#FFFFFF>";
+							break;
+						case 2:
+							str = "<color=#00FF00>";
+							break;
+						case 3:
+							str = "<color=#FF0000>";
+							break;
+						case 4:
+							str = "<color=#FF6600>";
+							break;
+
 					}
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && PhotonNetwork.isMasterClient)
+
+					PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
 					{
-						str = "<color=#ffff00>";
-					}
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 1)
-					{
-						str = "<color=#FFFFFF>";
-					}
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 2)
-					{
-						str = "<color=#00FF00>";
-					}
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 3)
-					{
-						str = "<color=#FF0000>";
-					}
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == 4)
-					{
-						str = "<color=#FF6600>";
-					}
-                    PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
-                    {
-                        "Server : " + PhotonNetwork.room.Name + "\n \n",
-                        str + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(true) + "\n \n </color>",
-                        string.Concat(new object[]
-                        {
-                            "Players : ",
-                            PhotonNetwork.room.PlayerCount,
-                            " / ",
-                            PhotonNetwork.room.MaxPlayers,
-                            "\n\n"
+						"Server : " + PhotonNetwork.room.Name + "\n \n",
+						str + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(true) + "\n \n </color>",
+						string.Concat(new object[]
+						{
+							"Players : ",
+							PhotonNetwork.room.PlayerCount,
+							" / ",
+							PhotonNetwork.room.MaxPlayers,
+							"\n\n"
 						})
 					});
-                    ///<summary>
-                    /// Below code creates Outpost dialog for assigning captains to unmanned ships.
-                    ///</summary>
-                    if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate"))
+					///<summary>
+					/// Below code creates Outpost dialog for assigning captains to unmanned ships.
+					///</summary>
+					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate"))
                     {
                         if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
@@ -125,54 +124,60 @@ namespace FLEETMOD
 							{
 								"<color=#c0c0c0><size=15>You Have Been Confined To The Brig By The Admiral.\n\n Please Wait Here Until The Admiral Releases You.</size></color>"
 							})));
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_OUTRIDER)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(12.5f, -406f, -2f);
+
+							var playerPawn = PLNetworkManager.Instance.LocalPlayer.GetPawn(); // Getting LocalPlayerPawn Instance
+							// Switched ifs to fancy switch statement
+							switch (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID)
+                            {
+								case EShipType.E_OUTRIDER:
+									playerPawn.transform.position = new Vector3(12.5f, -406f, -2f);
+									break;
+
+								case EShipType.E_INTREPID:
+									playerPawn.transform.position = new Vector3(9.4f, -400.9f, -13.8f);
+									break;
+
+								case EShipType.E_ROLAND:
+									playerPawn.transform.position = new Vector3(8.8f, -391f, -30.8f);
+									break;
+
+								case EShipType.OLDWARS_HUMAN:
+									playerPawn.transform.position = new Vector3(-14.8f, -365.8f, 38.1f);
+									break;
+
+								case EShipType.E_WDCRUISER:
+									playerPawn.transform.position = new Vector3(-9.4f, -397f, -5f);
+									break;
+
+								case EShipType.E_DESTROYER:
+									playerPawn.transform.position = new Vector3(0.2f, 405f, 14.1f);
+									break;
+
+								case EShipType.E_ANNIHILATOR:
+									playerPawn.transform.position = new Vector3(-5.6f, -400f, -1.9f);
+									break;
+
+								case EShipType.E_CIVILIAN_STARTING_SHIP:
+									playerPawn.transform.position = new Vector3(-5.6f, -384.5f, 24f);
+									break;
+
+								case EShipType.E_STARGAZER:
+									playerPawn.transform.position = new Vector3(-7.3f, -394.5f, 13.6f);
+									break;
+
+								case EShipType.E_CARRIER:
+									playerPawn.transform.position = new Vector3(1.2f, -386f, 18.4f);
+									break;
+
+								case EShipType.OLDWARS_SYLVASSI:
+									playerPawn.transform.position = new Vector3(-16.1f, -397.5f, -15.5f);
+									break;
+
+								case EShipType.E_INTREPID_SC:
+									playerPawn.transform.position = new Vector3(9.4f, -400.9f, -13.8f);
+									break;
 							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(9.4f, -400.9f, -13.8f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ROLAND)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(8.8f, -391f, -30.8f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_HUMAN)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-14.8f, -365.8f, 38.1f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_WDCRUISER)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-9.4f, -397f, -5f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_DESTROYER)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(0.2f, 405f, 14.1f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_ANNIHILATOR)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-5.6f, -400f, -1.9f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CIVILIAN_STARTING_SHIP)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-5.6f, -384.5f, 24f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_STARGAZER)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-7.3f, -394.5f, 13.6f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_CARRIER)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(1.2f, -386f, 18.4f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.OLDWARS_SYLVASSI)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(-16.1f, -397.5f, -15.5f);
-							}
-							if (PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.ShipTypeID == EShipType.E_INTREPID_SC)
-							{
-								PLNetworkManager.Instance.LocalPlayer.GetPawn().transform.position = new Vector3(9.4f, -400.9f, -13.8f);
-							}
+
 							PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName = "locked";
 							foreach (PLDoor pldoor in PLDoor.AllDoors)
 							{
@@ -212,6 +217,12 @@ namespace FLEETMOD
 						}
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
+							if (!MyVariables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
+							// if playerid doesn't exist in dictionary add playerid to dict and set hp bonus to 0
+							{
+								MyVariables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
+							}
+
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && plplayer.GetPlayerName(false).Contains("•") && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
 							{
 								plplayer.StartingShip = (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo);

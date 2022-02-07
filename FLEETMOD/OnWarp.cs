@@ -27,7 +27,7 @@ namespace FLEETMOD
                         if (plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != null && !plshipInfoBase.InWarp && plshipInfoBase != __instance)
                         {
                             foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-                            {
+                            {                               
                                 if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.GetPhotonPlayer().GetScore() == plshipInfoBase.ShipID)
                                 {
                                     plplayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
@@ -66,6 +66,13 @@ namespace FLEETMOD
                         }
                     }
                     MyVariables.DialogGenerated = false;
+                }
+                if (PhotonNetwork.isMasterClient)
+                {
+                    foreach (PLPlayer player in PLServer.Instance.AllPlayers) // Update healthbonus on warp
+                    {
+                        MyVariables.survivalBonusDict[player.GetPlayerID()] = Mathf.Clamp(MyVariables.survivalBonusDict[player.GetPlayerID()] + 1, -5, 20);
+                    }           
                 }
                 return false;
             }

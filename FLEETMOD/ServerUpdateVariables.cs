@@ -5,13 +5,14 @@ using PulsarModLoader;
 using UnityEngine;
 
 namespace FLEETMOD
-{
+{   
     internal class ServerUpdateVariables : ModMessage
     {
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
         {
             MyVariables.shipfriendlyfire = (bool)arguments[0];
             MyVariables.recentfriendlyfire = (bool)arguments[1];
+            MyVariables.survivalBonusDict = (Dictionary<int, int>)arguments[2]; //Reading healthBonus info from host
             //MyVariables.warprange = (float)arguments[1];
         }
     }
@@ -40,7 +41,8 @@ namespace FLEETMOD
             MyVariables.FleetmodPlayer = new List<PLPlayer>();
             MyVariables.FleetmodPhoton = new List<PhotonPlayer>();
             MyVariables.ShipCrews = new Dictionary<PLShipInfo, PLPlayer>();
-            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer);
+            MyVariables.survivalBonusDict = new Dictionary<int, int>();
+            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer);           
         }
     }
 }
