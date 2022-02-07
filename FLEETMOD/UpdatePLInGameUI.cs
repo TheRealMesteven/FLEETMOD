@@ -16,7 +16,7 @@ namespace FLEETMOD
 				PLInGameUI.Instance.ControlsText.enabled = true;
 				if (PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
 				{
-					if (PLServer.Instance != null && ___relevantPlayersForCrewStatus != null)
+					if (___relevantPlayersForCrewStatus != null)
 					{
 						___relevantPlayersForCrewStatus.Clear();
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
@@ -96,17 +96,17 @@ namespace FLEETMOD
 					{
 						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0) // If the skipwarp label should appear (Host nickname as skipwarp indicates we're in warp)
 						{
-							PLGlobal.SafeLabelSetText(PLInGameUI.Instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true)));
-							PLInGameUI.Instance.SkipWarpLabel.enabled = true;
+							PLGlobal.SafeLabelSetText(__instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true)));
+							__instance.SkipWarpLabel.enabled = true;
 						}
 						else
 						{
-							PLInGameUI.Instance.SkipWarpLabel.enabled = false;
+							__instance.SkipWarpLabel.enabled = false;
 						}
 					}
 					else
 					{
-						PLInGameUI.Instance.SkipWarpLabel.enabled = false;
+						__instance.SkipWarpLabel.enabled = false;
 					}
 					string a2 = "";
 					if (PLCameraSystem.Instance != null)
@@ -116,7 +116,7 @@ namespace FLEETMOD
 					if (UnityEngine.Random.Range(0, 20) == 0 || PLServer.Instance == null)
 					{
 						string text = "";
-						if (PLInGameUI.Instance.ControlsText.enabled)
+						if (__instance.ControlsText.enabled)
 						{
 							if (a2 == "LocalPawn")
 							{
@@ -130,7 +130,7 @@ namespace FLEETMOD
 								text = "";
 							}
 						}
-						PLGlobal.SafeLabelSetText(PLInGameUI.Instance.ControlsText, text);
+						PLGlobal.SafeLabelSetText(__instance.ControlsText, text);
 					}
 				}
 			}
