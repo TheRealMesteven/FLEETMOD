@@ -38,11 +38,11 @@ namespace FLEETMOD
         static void Postfix()
         {
             MyVariables.Fleet = new List<PLShipInfo>();
-            MyVariables.FleetmodPlayer = new List<PLPlayer>();
+            MyVariables.FleetmodPlayer = new List<int>();
             MyVariables.FleetmodPhoton = new List<PhotonPlayer>();
-            MyVariables.ShipCrews = new Dictionary<PLShipInfo, PLPlayer>();
+            MyVariables.ShipCrews = new Dictionary<PLShipInfo, int>();
             MyVariables.survivalBonusDict = new Dictionary<int, int>();
-            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer);           
+            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer.GetPlayerID());           
         }
     }
 }
