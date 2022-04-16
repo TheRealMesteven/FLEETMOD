@@ -12,11 +12,11 @@ namespace FLEETMOD
     public class Plugin : PulsarMod
     {
         public override string Version => Plugin.myversion;
-        public override string Author => "Mest, Dragon, Mikey, Badryuiner";
+        public override string Author => "Mest, Dragon, Mikey, Badryuiner, Rayman";
         public override string Name => "FleetMod";
         public override int MPFunctionality => 0;
         public override string HarmonyIdentifier() => "Dragon+Mest.Fleetmod";
-        public static string myversion = "FLEETMOD v1.6.1";
+        public static string myversion = "FLEETMOD v1.6.2";
 
         public Plugin()
         { /// ## Setup where config default is estabilished and values read
