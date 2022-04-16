@@ -123,7 +123,7 @@ namespace FLEETMOD
                     PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
                     if (arguments.Length < 2)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "To change class as a non-modded Fleetmod user try: \n /" + this.CommandAliases()[0] + "[ShipID/Name or approximate] [ClassID/Name]");
+                        PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "To change class as a non-modded Fleetmod user try: \n !" + this.CommandAliases()[0] + " [ShipID/Name or approximate] [ClassID/Name]");
                         return;
                     }
                     if (Player.GetPlayerName(false).Contains("•")) // Ensure Fleetmodded Clients dont utilize the system
