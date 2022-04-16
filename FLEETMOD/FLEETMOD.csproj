@@ -41,6 +41,7 @@
     <Compile Include="CalculateStats.cs" />
     <Compile Include="CargoMenu.cs" />
     <Compile Include="ClaimShip.cs" />
+    <Compile Include="PlayerPos.cs" />
     <Compile Include="ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />
     <Compile Include="Command.cs" />

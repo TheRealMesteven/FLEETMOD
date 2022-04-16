@@ -46,6 +46,54 @@ namespace FLEETMOD
                 return false;
             }
         }*/
+        public class FLEETMODChangeClass : ChatCommand
+        {
+            public override string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "fmcc"
+                };
+            }
+
+            public override string Description()
+            {
+                return "Fleetmod change player class";
+            }
+
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0] + "[ShipID] [PlayerID] [ClassID]";
+            }
+
+            public override void Execute(string arguments)
+            {
+                string[] args = arguments.Split(' ');
+                if (MyVariables.isrunningmod)
+                {
+                    PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(Int32.Parse(args[1]));
+                    if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                    {
+                        MyVariables.UnModdedCrews.Add(Int32.Parse(args[1]), Int32.Parse(args[0])); // Adds to UnModded Crew dictionary (Holds PlayerID and ShipID)
+                        PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[] // Assigns Class
+                        {
+                            Int32.Parse(args[1]),
+                            Int32.Parse(args[2])
+                        });
+                        Player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
+                        {
+                            PLEncounterManager.Instance.GetShipFromID(Int32.Parse(args[0])).MyTLI.SubHubID,
+                            0
+                        });
+                        Player.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(Int32.Parse(args[0])); // Set Starting Ship
+                        Player.GetPhotonPlayer().SetScore(Int32.Parse(args[0])); // Update Score
+                        PulsarModLoader.Utilities.Messaging.Notification("Assigning Complete.", PLNetworkManager.Instance.LocalPlayer, Int32.Parse(args[1]), 4000, false);
+                        PulsarModLoader.Utilities.Messaging.Notification("You have been assigned to the " + PLEncounterManager.Instance.GetShipFromID(Int32.Parse(args[0])).ShipNameValue + "!", Player, Int32.Parse(args[1]), 4000, false);
+                    }
+                }
+                return;
+            }
+        }
         public class FLEETMODFriendlyFire : ChatCommand
         {
             public override string[] CommandAliases()

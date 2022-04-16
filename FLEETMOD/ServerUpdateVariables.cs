@@ -37,12 +37,16 @@ namespace FLEETMOD
     { /// Initial Patch creating the dictionaries and lists.
         static void Postfix()
         {
-            MyVariables.Fleet = new List<PLShipInfo>();
+            /*MyVariables.Fleet = new List<PLShipInfo>();
             MyVariables.FleetmodPlayer = new List<int>();
-            MyVariables.FleetmodPhoton = new List<PhotonPlayer>();
+            MyVariables.FleetmodPhoton = new List<PhotonPlayer>();*/
             MyVariables.ShipCrews = new Dictionary<PLShipInfo, int>();
             MyVariables.survivalBonusDict = new Dictionary<int, int>();
-            MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer.GetPlayerID());           
+            if (PhotonNetwork.isMasterClient)
+            {
+                MyVariables.UnModdedCrews = new Dictionary<int, int>();
+            }
+            //MyVariables.FleetmodPlayer.Add(PLNetworkManager.Instance.LocalPlayer.GetPlayerID());           
         }
     }
 }

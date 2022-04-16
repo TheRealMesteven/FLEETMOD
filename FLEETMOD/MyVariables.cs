@@ -17,15 +17,17 @@ namespace FLEETMOD
         public static bool CargoMenu = false;
         public static Dictionary<PLShipInfo, int /*PlayerID*/> ShipCrews;
         // ShipID, PlayerID // List of crews in ship
-        public static List<PLShipInfo> Fleet;
+        //public static List<PLShipInfo> Fleet;
         // ShipIDs of the ships in the Fleet
-        public static List<PhotonPlayer> FleetmodPhoton;
-        public static List<int /*PlayerID*/> FleetmodPlayer;
+        //public static List<PhotonPlayer> FleetmodPhoton;
+        //public static List<int /*PlayerID*/> FleetmodPlayer;
         // PlayerID of the Players who have Fleetmod active and running
         public static Dictionary<int /*PlayerID*/ , /*Bonus*/ int> survivalBonusDict; 
         // Dictionary that stores <playerID,healthBonus> on hostside, then it's being sent to clients
-        public static int MySurvivalBonus; 
+        public static int MySurvivalBonus;
         // variable for storing localplayer's healthBonus
+        public static Dictionary<int /*PlayerID*/ , /*ShipID*/ int> UnModdedCrews;
+        // Dictionary that stores <playerID,shipID> on host side, to teleport unmodded crews to correct ship.
 
 
         public static int GetShipCaptain (int inShipID)

@@ -22,6 +22,7 @@ namespace FLEETMOD
             {
                 if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip == __instance as PLShipInfo)
                 {
+                    Dictionary<int,PlayerPos> UnModdedPositions = new Dictionary<int, PlayerPos>(); // PlayerID, PlayerPos
                     foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
                     {
                         if (plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != null && !plshipInfoBase.InWarp && plshipInfoBase != __instance)
@@ -35,6 +36,16 @@ namespace FLEETMOD
                                         plshipInfoBase.MyTLI.SubHubID,
                                         0
                                     });
+                                    if (MyVariables.UnModdedCrews.ContainsKey(plplayer.GetPlayerID()))
+                                    {
+                                        PlayerPos Position = new PlayerPos
+                                        {
+                                            pos = plplayer.GetPawn().transform.position,
+                                            hubid = plplayer.MyCurrentTLI.SubHubID,
+                                            ttiid = plplayer.TTIID
+                                        };
+                                        UnModdedPositions.Add(plplayer.GetPlayerID(), Position);
+                                    }
                                 }
                             }
                             PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
@@ -66,6 +77,22 @@ namespace FLEETMOD
                         }
                     }
                     MyVariables.DialogGenerated = false;
+                    if (PhotonNetwork.isMasterClient)
+                    {
+                        foreach (KeyValuePair<int, PlayerPos> keyValuePair in UnModdedPositions) // Teleport unmodded players back to their positions when warping
+                        {
+                            PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(keyValuePair.Key);
+                            player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                            {
+                                keyValuePair.Value.hubid,
+                                keyValuePair.Value.ttiid
+                            });
+                            player.photonView.RPC("RecallPawnToPos", PhotonTargets.All, new object[]
+                            {
+                                keyValuePair.Value.pos
+                            });
+                        }
+                    }
                 }
                 if (PhotonNetwork.isMasterClient)
                 {

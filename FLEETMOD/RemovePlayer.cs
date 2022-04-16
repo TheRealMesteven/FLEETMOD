@@ -53,6 +53,10 @@ namespace FLEETMOD
 					PLServer.Instance.ClearPlayerData(inPlayer);
 					PLServer.Instance.AllPlayers.Remove(inPlayer);
 					MyVariables.survivalBonusDict.Remove(inPlayer.GetPlayerID());//Removing player from healthBonus dictonary on leave
+					if (MyVariables.UnModdedCrews.ContainsKey(inPlayer.GetPlayerID()))
+                    {
+						MyVariables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
+					}
 					if (inPlayer.GetPawn() != null)
 					{
 						inPlayer.GetPawn().transform.parent = null;
