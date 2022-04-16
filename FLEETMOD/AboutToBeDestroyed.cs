@@ -95,6 +95,8 @@ namespace FLEETMOD
                         
                         if (NewAdmiralShip != null)
                         {
+                            /* The Admiral ship is the only player ship with TeamID of 0 */
+                            NewAdmiralShip.TeamID = 0;
                             /*foreach player on the server
 						    *continue if following evaluates true
 						    *&&
@@ -110,12 +112,10 @@ namespace FLEETMOD
 		    				 *Moves the Host crew to other ship
 			    			 *</summary>
 				    		*/
-                            PulsarModLoader.Utilities.Logger.Info($"[FMDS] Moving players to new ship");
                             foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
                             {
                                 if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.IsBot && (plplayer.StartingShip == __instance || (plplayer.StartingShip == NewAdmiralShip && plplayer.GetClassID() == 0)))
                                 {
-                                    PulsarModLoader.Utilities.Logger.Info("[FMDS] Player found . . . moving");
                                     if (!plplayer.GetPhotonPlayer().IsMasterClient)
                                     {
                                         plplayer.SetClassID(1);
@@ -127,7 +127,7 @@ namespace FLEETMOD
                         }
                         else
                         {
-                            PulsarModLoader.Utilities.Logger.Info("[FMDS] No alternate ships detected, disconnecting. . .");
+                            /* Forces host to close the game and thus ends the session. */
                             PLUIEscapeMenu.Instance.OnClick_Disconnect();
                         }
                     }
