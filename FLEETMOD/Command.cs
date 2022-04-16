@@ -238,11 +238,19 @@ namespace FLEETMOD
                 {
                     PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
                     int subHubID = playerFromPlayerID.StartingShip.MyTLI.SubHubID;
-                    playerFromPlayerID.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                    if (playerFromPlayerID.SubHubID == subHubID)
                     {
+                        PulsarModLoader.Utilities.Messaging.Echo(playerFromPlayerID.GetPhotonPlayer(), "You're already on your ship!");
+                    }
+                    else
+                    {
+                        playerFromPlayerID.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                        {
                     subHubID,
                     0
-                    });
+                        });
+                        PulsarModLoader.Utilities.Messaging.Echo(playerFromPlayerID.GetPhotonPlayer(), "Teleported To Ship.");
+                    }
                 }
             }
         }

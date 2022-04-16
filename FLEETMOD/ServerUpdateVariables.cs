@@ -48,7 +48,7 @@ namespace FLEETMOD
                 MyVariables.UnModdedCrews = new Dictionary<int, int>();
                 foreach (PulsarMod pulsarMod in ModManager.Instance.GetAllMods())
                 {
-                    if (pulsarMod.HarmonyIdentifier() == "mod.id107.beammeup" || pulsarMod.Name == "Exotic Components")
+                    if (pulsarMod.HarmonyIdentifier() == "mod.id107.beammeup")
                     {
                         PulsarModLoader.Utilities.Logger.Info("Fleetmod has disabled " + pulsarMod.Name + " due to mod conflicts.");
                         pulsarMod.Unload();
