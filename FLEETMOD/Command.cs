@@ -46,7 +46,7 @@ namespace FLEETMOD
                 return false;
             }
         }*/
-        public class FLEETMODChangeClass : ChatCommand
+        /*public class FLEETMODChangeClass : ChatCommand
         {
             public override string[] CommandAliases()
             {
@@ -90,6 +90,119 @@ namespace FLEETMOD
                         PulsarModLoader.Utilities.Messaging.Notification("Assigning Complete.", PLNetworkManager.Instance.LocalPlayer, Int32.Parse(args[1]), 4000, false);
                         PulsarModLoader.Utilities.Messaging.Notification("You have been assigned to the " + PLEncounterManager.Instance.GetShipFromID(Int32.Parse(args[0])).ShipNameValue + "!", Player, Int32.Parse(args[1]), 4000, false);
                     }
+                }
+                return;
+            }
+        }*/
+        public class FLEETMODChangeClass : PublicCommand
+        {
+            public override string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "fmcc"
+                };
+            }
+
+            public override string Description()
+            {
+                return "Fleetmod public command to change ship and class\n Enter the Ship name or ID (No Spaces, but partial accuracies work) then the Class Name or ID";
+            }
+
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0] + "[ShipID/Name] [ClassID/Name]";
+            }
+
+            public override void Execute(string arguments, int SenderID)
+            {
+                string[] args = arguments.Split(' '); // Args[0] = ShipName Args[1] = ClassName
+                if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
+                {
+                    PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
+                    if (Player.GetPlayerName(false).Contains("•")) // Ensure Fleetmodded Clients dont utilize the system
+                    {
+                        PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "If you have Fleetmod, use the tab buttons to change class! \nIf not, please change your username to exclude • ");
+                        return;
+                    }
+                    int ClassID = Player.GetClassID();
+                    int ShipID = Player.GetPhotonPlayer().GetScore();
+                    if (int.TryParse(args[0], out ShipID)) // ShipID is an integer
+                    {
+                        if (PLEncounterManager.Instance.GetShipFromID(ShipID) == null || !PLEncounterManager.Instance.GetShipFromID(ShipID).GetIsPlayerShip())
+                        {
+                            ShipID = Player.GetPhotonPlayer().GetScore();
+                        }
+                    }
+                    else
+                    {
+                        foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values) // ShipID is not an integer
+                        {
+                            if (plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != null)
+                            {
+                                if (plshipInfoBase.ShipNameValue.ToLower() == args[0].ToLower())
+                                {
+                                    ShipID = plshipInfoBase.ShipID;
+                                    break;
+                                }
+                                if (plshipInfoBase.ShipNameValue.ToLower().Contains(args[0].ToLower()))
+                                {
+                                    ShipID = plshipInfoBase.ShipID;
+                                }
+                            }
+                        }
+                    }
+                    if (int.TryParse(args[1], out ClassID)) // ClassID is an integer
+                    {
+                        if (ClassID < 1 || ClassID > 4)
+                        {
+                            ClassID = Player.GetClassID();
+                        }
+                    }
+                    else 
+                    {
+                        switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
+                        {
+                            case "c":
+                                PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
+                                break;
+                            case "p":
+                                ClassID = 1;
+                                break;
+                            case "s":
+                                ClassID = 2;
+                                break;
+                            case "w":
+                                ClassID = 3;
+                                break;
+                            case "e":
+                                ClassID = 4;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if (MyVariables.UnModdedCrews.ContainsKey(Player.GetPlayerID()))
+                    {
+                        MyVariables.UnModdedCrews[Player.GetPlayerID()] = ShipID;
+                    }
+                    else
+                    {
+                        MyVariables.UnModdedCrews.Add(Player.GetPlayerID(), ShipID); // Adds to UnModded Crew dictionary (Holds PlayerID and ShipID)
+                    }
+                    PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[] // Assigns Class
+                    {
+                            Player.GetPlayerID(),
+                            ClassID
+                    });
+                        Player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
+                        {
+                            PLEncounterManager.Instance.GetShipFromID(ShipID).MyTLI.SubHubID,
+                            0
+                        });
+                        Player.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
+                        Player.GetPhotonPlayer().SetScore(ShipID); // Update Score
+                    PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), Player.GetPlayerName() + ", you are now a " + Player.GetClassName() + " onboard the " + Player.StartingShip.ShipNameValue + "!");
                 }
                 return;
             }
