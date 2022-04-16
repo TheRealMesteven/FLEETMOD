@@ -119,7 +119,7 @@
   <ItemGroup>
     <Reference Include="!CustomSaves, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\!CustomSaves.dll</HintPath>
+      <HintPath>Lib\!CustomSaves.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -148,12 +148,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\PLInputBase.dll</HintPath>
     </Reference>
-    <Reference Include="PulsarModLoader, Version=0.10.4.20, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PulsarModLoader, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\PulsarModLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="PulsarPluginLoader">
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\PulsarPluginLoader.dll</HintPath>
+      <HintPath>Lib\PulsarModLoader.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

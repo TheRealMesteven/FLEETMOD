@@ -125,6 +125,11 @@ namespace FLEETMOD
                                 }
                             }
                         }
+                        else
+                        {
+                            PulsarModLoader.Utilities.Logger.Info("[FMDS] No alternate ships detected, disconnecting. . .");
+                            PLUIEscapeMenu.Instance.OnClick_Disconnect();
+                        }
                     }
                     /*continue if following evaluates true
 					 *Local Player is Master Client
