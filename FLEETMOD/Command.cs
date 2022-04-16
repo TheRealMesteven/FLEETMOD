@@ -120,6 +120,11 @@ namespace FLEETMOD
                 if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
                 {
                     PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
+                    if (arguments.Length < 2)
+                    {
+                        PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "To change class as a non-modded Fleetmod user try: \n /" + this.CommandAliases()[0] + "[ShipID/Name or approximate] [ClassID/Name]");
+                        return;
+                    }
                     if (Player.GetPlayerName(false).Contains("•")) // Ensure Fleetmodded Clients dont utilize the system
                     {
                         PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), "If you have Fleetmod, use the tab buttons to change class! \nIf not, please change your username to exclude • ");
