@@ -176,13 +176,13 @@ namespace FLEETMOD
 							{
 								__instance.MyPlayer.TS_IsMuted = true;
 								___cached_LastUpdatedPlayerInfoTime = 0f;
-								PLVoiceChatManager.Instance.MuteClient(__instance.MyPlayer.TS_ClientID);
+								//PLVoiceChatManager.Instance.MuteClient(__instance.MyPlayer.TS_ClientID);
 							}
 							if (inButton.m_Label.text == "Unmute")
 							{
 								__instance.MyPlayer.TS_IsMuted = false;
 								___cached_LastUpdatedPlayerInfoTime = 0f;
-								PLVoiceChatManager.Instance.UnmuteClient(__instance.MyPlayer.TS_ClientID);
+								//PLVoiceChatManager.Instance.UnmuteClient(__instance.MyPlayer.TS_ClientID);
 							}
 						}
 					}

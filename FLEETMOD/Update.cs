@@ -244,7 +244,7 @@ namespace FLEETMOD
                                 });
                             }
                         }
-                        foreach (PhotonPlayer Photon in MyVariables.FleetmodPhoton)
+                        /*foreach (PhotonPlayer Photon in MyVariables.FleetmodPhoton)
                         {
                             try
                             {
@@ -252,7 +252,7 @@ namespace FLEETMOD
                                 MyVariables.FleetmodPhoton.Remove(Photon);
                             }
                             catch { }
-                        }
+                        }*/
 						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]

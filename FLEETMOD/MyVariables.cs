@@ -33,7 +33,7 @@ namespace FLEETMOD
             foreach (KeyValuePair<PLShipInfo, int> pair in ShipCrews)
             {
                 PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(pair.Value);
-                if (pair.Value != null && pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && Player.GetClassID() == 0 && Player.TeamID == 0)
+                if (pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && Player.GetClassID() == 0 && Player.TeamID == 0)
                 {
                         return pair.Value;
                 }
