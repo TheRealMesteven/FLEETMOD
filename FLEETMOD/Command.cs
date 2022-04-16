@@ -1,4 +1,5 @@
 ﻿using System;
+using PulsarModLoader;
 using PulsarModLoader.Chat.Commands;
 using PulsarModLoader.Chat.Commands.CommandRouter;
 using UnityEngine;
@@ -157,7 +158,7 @@ namespace FLEETMOD
                             }
                         }
                     }
-                    if (int.TryParse(args[1], out ClassID)) // ClassID is an integer
+                    if (int.TryParse(args[1], out ClassID) && args[1].Length < 3) // ClassID is an integer
                     {
                         if (ClassID < 1 || ClassID > 4)
                         {
@@ -166,6 +167,7 @@ namespace FLEETMOD
                     }
                     else 
                     {
+                        ClassID = Player.GetClassID();
                         switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
                         {
                             case "c":
@@ -210,6 +212,38 @@ namespace FLEETMOD
                     PulsarModLoader.Utilities.Messaging.Echo(Player.GetPhotonPlayer(), Player.GetPlayerName() + ", you are now a " + Player.GetClassName() + " onboard the " + Player.StartingShip.ShipNameValue + "!");
                 }
                 return;
+            }
+        }
+        internal class FLEETMODBeamMeUp : PublicCommand
+        {
+            // Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250
+            public override string[] CommandAliases()
+            {
+                return new string[]
+                {
+                "ship"
+                };
+            }
+
+            // Token: 0x06000002 RID: 2 RVA: 0x00002070 File Offset: 0x00000270
+            public override string Description()
+            {
+                return "Teleport the player back to the ship";
+            }
+
+            // Token: 0x06000003 RID: 3 RVA: 0x00002088 File Offset: 0x00000288
+            public override void Execute(string arguments, int SenderID)
+            {
+                if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient)
+                {
+                    PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
+                    int subHubID = playerFromPlayerID.StartingShip.MyTLI.SubHubID;
+                    playerFromPlayerID.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                    {
+                    subHubID,
+                    0
+                    });
+                }
             }
         }
         public class FLEETMODFriendlyFire : ChatCommand
