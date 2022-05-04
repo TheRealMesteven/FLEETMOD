@@ -24,34 +24,34 @@ namespace FLEETMOD
                 new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLLevelSync), "PlayerShip"))
             }; // PLShipInfo plshipInfo = PLEncounterManager.Instance.PlayerShip;
 
-        List<CodeInstruction> patch = new List<CodeInstruction>()
+            List<CodeInstruction> patch = new List<CodeInstruction>()
             {
                 new CodeInstruction(OpCodes.Ldarg_0), // this
                 new CodeInstruction(OpCodes.Call, Method(typeof(PlayerShipReplace), "PatchShip"))
             }; // result: PLShipInfo plshipInfo = FLEETMOD.PlayerShipReplace.PatchShip(this);
 
             return PatchBySequence(instructions, target, patch, PatchMode.REPLACE, showDebugOutput: false);
+        }
     }
-}
 
-[HarmonyPatch(typeof(PLSpaceScrap), "Update")]
-class SpaceScrapUpdate
-{
-    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    [HarmonyPatch(typeof(PLSpaceScrap), "Update")]
+    class SpaceScrapUpdate
     {
-        return PatchBySequence(instructions,
-            new CodeInstruction[]
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            return PatchBySequence(instructions,
+                new CodeInstruction[]
+            {
                 new CodeInstruction(OpCodes.Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
                 new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLLevelSync), "PlayerShip")),
                 new CodeInstruction(OpCodes.Stloc_0)
-            }, 
-                new CodeInstruction[]
-            {
+                },
+                    new CodeInstruction[]
+                {
                 new CodeInstruction(OpCodes.Ldarg_0), // this
                 new CodeInstruction(OpCodes.Call, Method(typeof(PlayerShipReplace), "PatchShip")),
                 new CodeInstruction(OpCodes.Stloc_0)
-}, PatchMode.AFTER, CheckMode.ALWAYS, false);
+    }, PatchMode.AFTER, CheckMode.ALWAYS, false);
             /*
              * Before: PLShipInfo plshipInfo = PLEncounterManager.Instance.PlayerShip;
              * After: PLShipInfo plshipInfo = PLEncounterManager.Instance.PlayerShip;
@@ -61,13 +61,13 @@ class SpaceScrapUpdate
     }
 
     [HarmonyPatch(typeof(PLShipInfo), "UpdateSensorDish")]
-class UpdateSensorDishPatch
-{
-    static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    class UpdateSensorDishPatch
     {
-        return PatchBySequence(instructions,
-            new CodeInstruction[]
-            {
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            return PatchBySequence(instructions,
+                new CodeInstruction[]
+                {
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, Method(typeof(Photon.MonoBehaviour), "get_photonView")),
                     new CodeInstruction(OpCodes.Ldstr, "RequestScrapCollectFromSensorDish"),
@@ -88,60 +88,60 @@ class UpdateSensorDishPatch
 					    this.SensorDishCurrentSecondaryTarget_Scrap.EncounterNetID
 				    });
                      */
-                },
-                new CodeInstruction[]
-                {
+                    },
+                    new CodeInstruction[]
+                    {
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLShipInfo), "SensorDishCurrentSecondaryTarget_Scrap")),
                     new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLSpecialEncounterNetObject), "get_EncounterNetID")),
                     new CodeInstruction(OpCodes.Call, Method(typeof(UpdateSensorDishPatch), "Fix"))
-                }, PatchMode.REPLACE, CheckMode.ALWAYS, false);
+                    }, PatchMode.REPLACE, CheckMode.ALWAYS, false);
         }
 
         public static void Fix(int NetID)
-{
-    ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SensorDishCollectScrap", PhotonTargets.MasterClient, new object[]
-    {
+        {
+            ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ModMessages.SensorDishCollectScrap", PhotonTargets.MasterClient, new object[]
+            {
                 NetID,
                 PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.ShipID
-    });
-}
+            });
+        }
     }
 
     public class PlayerShipReplace
-{
-    public static PLShipInfo PatchShip(PLSpaceScrap scrap) // Low on performance?
     {
-        if (scrap != null)
+        public static PLShipInfo PatchShip(PLSpaceScrap scrap) // Low on performance?
         {
-            List<PLShipInfo> allFleetShips = new List<PLShipInfo>();
-            foreach (PLShipInfo fleetship in PLEncounterManager.Instance.AllShips.Values)
+            if (scrap != null)
             {
-                if (fleetship != null && fleetship.TagID == -23)
+                List<PLShipInfo> allFleetShips = new List<PLShipInfo>();
+                foreach (PLShipInfo fleetship in PLEncounterManager.Instance.AllShips.Values)
                 {
-                   allFleetShips.Add(fleetship);
+                    if (fleetship != null && !fleetship.IsDrone)
+                    {
+                        allFleetShips.Add(fleetship);
+                    }
+                    //Info($"NewShip: {fleetship.Key} - {((PLShipInfo)PLEncounterManager.Instance.GetShipFromID(fleetship.Value)).ShipName}");
                 }
-                //Info($"NewShip: {fleetship.Key} - {((PLShipInfo)PLEncounterManager.Instance.GetShipFromID(fleetship.Value)).ShipName}");
+
+                var pos = scrap.transform.position;
+                float dist = float.MaxValue;
+                PLShipInfo selectedShip = PLEncounterManager.Instance.PlayerShip; // anti-null
+
+                foreach (var ship in allFleetShips)
+                {
+                    var localdist = Vector3.Distance(ship.GetSpaceLoc(), pos);
+                    //Info($"{localdist.ToString()} vs {dist} - {ship.ShipName}");
+                    if (dist > localdist)
+                    {
+                        dist = localdist;
+                        selectedShip = ship;
+                    }
+                }
+                return selectedShip;
             }
 
-            var pos = scrap.transform.position;
-            float dist = float.MaxValue;
-            PLShipInfo selectedShip = PLEncounterManager.Instance.PlayerShip; // anti-null
-
-            foreach (var ship in allFleetShips)
-            {
-                var localdist = Vector3.Distance(ship.GetSpaceLoc(), pos);
-                //Info($"{localdist.ToString()} vs {dist} - {ship.ShipName}");
-                if (dist > localdist)
-                {
-                    dist = localdist;
-                    selectedShip = ship;
-                }
-            }
-            return selectedShip;
+            return PLEncounterManager.Instance.PlayerShip;
         }
-
-        return PLEncounterManager.Instance.PlayerShip;
     }
-}
 }

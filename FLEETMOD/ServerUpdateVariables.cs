@@ -32,7 +32,7 @@ namespace FLEETMOD
             }
         }
     }
-    [HarmonyPatch(typeof(PLServer), "Start")]
+    [HarmonyPatch(typeof(PLGame), "Start")]
     class StartPatch
     { /// Initial Patch creating the dictionaries and lists.
         static void Postfix()

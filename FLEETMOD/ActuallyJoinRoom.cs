@@ -54,7 +54,7 @@ namespace FLEETMOD
             }
         }
     }
-    [HarmonyPatch(typeof(PLServer), "Start")]
+    [HarmonyPatch(typeof(PLGame), "Start")]
     internal class TriggerFleetmod
     {
         private static void Postfix()

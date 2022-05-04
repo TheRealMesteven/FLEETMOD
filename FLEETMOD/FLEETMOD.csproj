@@ -132,7 +132,7 @@
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\source\repos\Hard-Mode\Hard Mode\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -149,9 +149,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\PLInputBase.dll</HintPath>
     </Reference>
-    <Reference Include="PulsarModLoader, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PulsarModLoader, Version=0.10.4.20, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\PulsarModLoader.dll</HintPath>
+      <HintPath>..\..\..\..\..\source\repos\Hard-Mode\Hard Mode\lib\PulsarModLoader.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -60,7 +60,7 @@ namespace FLEETMOD
 						break;
 					case EWarpChargeStage.E_WCS_READY:
 					{
-						if (flag6 && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
+						if (flag6)
 						{
 							flag8 = true;
 							if (PLNetworkManager.Instance.LocalPlayer != null)
