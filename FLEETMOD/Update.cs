@@ -33,7 +33,13 @@ namespace FLEETMOD
 							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
 						});
 					}
-
+					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • "))
+                    {
+						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
+						{
+							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•" + 2))
+						});
+					}
 					switch (PLNetworkManager.Instance.LocalPlayer.GetClassID())
 					{
 						case 0:
@@ -71,8 +77,8 @@ namespace FLEETMOD
 					///<summary>
 					/// Below code creates Outpost dialog for assigning captains to unmanned ships.
 					///</summary>
-					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate"))
-                    {
+					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor"))
+					{
                         if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
                             MyVariables.DialogGenerated = true;

@@ -123,12 +123,7 @@ namespace FLEETMOD
                     PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(SenderID);
                     if (arguments.Length < 2)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "To change class as a non-modded Fleetmod user try: \n !" + this.CommandAliases()[0] + " [ShipID/Name or approximate] [ClassID/Name]");
-                        return;
-                    }
-                    if (Player.GetPlayerName(false).Contains("•")) // Ensure Fleetmodded Clients dont utilize the system
-                    {
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "If you have Fleetmod, use the tab buttons to change class! \nIf not, please change your username to exclude • ");
+                        PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "To change class try: \n !" + this.CommandAliases()[0] + " [ShipID/Name or approximate] [ClassID/Name]");
                         return;
                     }
                     int ClassID = Player.GetClassID();
@@ -160,12 +155,13 @@ namespace FLEETMOD
                     }
                     if (int.TryParse(args[1], out ClassID) && args[1].Length < 3) // ClassID is an integer
                     {
-                        if (ClassID == 0)
+                        if (ClassID < 0 || ClassID > 4)
+                        {
+                            ClassID = Player.GetClassID();
+                        }
+                        if (ClassID == 0 && !Player.GetPlayerName(false).Contains("•"))
                         {
                             PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
-                        }
-                        if (ClassID < 1 || ClassID > 4)
-                        {
                             ClassID = Player.GetClassID();
                         }
                     }
@@ -175,7 +171,12 @@ namespace FLEETMOD
                         switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
                         {
                             case "c":
-                                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
+                                if (!Player.GetPlayerName(false).Contains("•"))
+                                {
+                                    PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
+                                    break;
+                                }
+                                ClassID = 0;
                                 break;
                             case "p":
                                 ClassID = 1;

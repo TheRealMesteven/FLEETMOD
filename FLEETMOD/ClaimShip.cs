@@ -56,12 +56,12 @@ namespace FLEETMOD
                         {
                             if (plplayer2 != null && !plplayer2.IsBot)
                             {
-                                PLServer.Instance.photonView.RPC("AddNotification", plplayer2.GetPhotonPlayer(), new object[]
+                                PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                                 {
-                                    PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
-                                    plplayer2.GetPlayerID(),
-                                    PLServer.Instance.GetEstimatedServerMs() + 3000,
-                                    true
+                                PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
+                                Color.green,
+                                0,
+                                "SHIP"
                                 });
                             }
                         }
@@ -73,12 +73,12 @@ namespace FLEETMOD
                         {
                             if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
                             {
-                                PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]
+                                PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                                 {
                                 PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Claimed Ship.",
+                                Color.green,
                                 0,
-                                PLServer.Instance.GetEstimatedServerMs() + 3000,
-                                true
+                                "SHIP"
                                 });
                                 PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = 1;
                                 PLEncounterManager.Instance.GetShipFromID(inShipID).TagID = -23;

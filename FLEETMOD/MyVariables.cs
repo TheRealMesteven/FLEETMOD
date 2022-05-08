@@ -14,6 +14,7 @@ namespace FLEETMOD
         // variable for storing current survival bonus. Used in UpdatePLPawn
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
+        public static bool FuelDialog = false;
         public static bool CargoMenu = false;
         public static Dictionary<PLShipInfo, int /*PlayerID*/> ShipCrews;
         // ShipID, PlayerID // List of crews in ship
