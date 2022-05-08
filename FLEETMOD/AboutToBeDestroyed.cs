@@ -130,6 +130,7 @@ namespace FLEETMOD
                             /* Forces host to close the game and thus ends the session. */
                             PLUIEscapeMenu.Instance.OnClick_Disconnect();
                         }
+                        __instance.HasBeenDestroyed = true;
                     }
                     /*continue if following evaluates true
 					 *Local Player is Master Client
@@ -138,6 +139,7 @@ namespace FLEETMOD
 					 *Local Player Current Ship == this ship
 					 *Local Player Main Ship != this ship
 					*/
+                    /*
                     if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPawn() != null && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.TagID == -23 && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == __instance && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
                     {
                         PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
@@ -146,6 +148,7 @@ namespace FLEETMOD
                             0
                         });
                     }
+                    */
                     __instance.TagID = -1;
                 }
                 return true;

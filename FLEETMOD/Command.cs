@@ -218,6 +218,47 @@ namespace FLEETMOD
                 return;
             }
         }
+        public class FLEETMODForceChangeClass : ChatCommand
+        {
+            public override string[] CommandAliases()
+            {
+                return new string[]
+                {
+                    "fmcc"
+                };
+            }
+
+            public override string Description()
+            {
+                return "Fleetmod public command to change ship and class\n Enter the Ship name or ID (No Spaces, but partial accuracies work) then the Class Name or ID";
+            }
+
+            public string UsageExample()
+            {
+                return "/" + this.CommandAliases()[0] + "[ShipID/Name] [ClassID/Name]";
+            }
+
+            public override void Execute(string arguments)
+            {
+                string[] args = arguments.Split(' ');
+                int.TryParse(args[0], out int PlayerID);
+                int.TryParse(args[1], out int ClassID);
+                int.TryParse(args[2], out int ShipID);
+                PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[] // Assigns Class
+                {
+                            PlayerID,
+                            ClassID
+                });
+                PLServer.Instance.GetPlayerFromPlayerID(PlayerID).photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
+                {
+                            PLEncounterManager.Instance.GetShipFromID(ShipID).MyTLI.SubHubID,
+                            0
+                });
+                PLServer.Instance.GetPlayerFromPlayerID(PlayerID).StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
+                PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetPhotonPlayer().SetScore(ShipID); // Update Score
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetPlayerName() + ", you are now a " + PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetClassName() + " onboard the " + PLServer.Instance.GetPlayerFromPlayerID(PlayerID).StartingShip.ShipNameValue + "!");
+            }
+        }
         internal class FLEETMODBeamMeUp : PublicCommand
         {
             // Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250

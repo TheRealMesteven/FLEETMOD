@@ -16,7 +16,7 @@ namespace FLEETMOD
         public override string Name => "FleetMod";
         public override int MPFunctionality => 0;
         public override string HarmonyIdentifier() => "Dragon+Mest.Fleetmod";
-        public static string myversion = "FLEETMOD v1.6.5";
+        public static string myversion = "FLEETMOD v1.6.5.1";
 
         public Plugin()
         { /// ## Setup where config default is estabilished and values read
