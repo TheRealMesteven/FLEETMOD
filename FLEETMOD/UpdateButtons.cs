@@ -114,12 +114,12 @@ namespace FLEETMOD
 								}
 								else
 								{
-									if (__instance.MyPlayer != null && __instance.MyPlayer.GetPhotonPlayer().NickName != "locked" && PhotonNetwork.isMasterClient && __instance.MyPlayer.GetClassID() != 0 && __instance.MyPlayer.GetPhotonPlayer().GetScore() > 0)
+									if (__instance.MyPlayer != null && __instance.MyPlayer.GetPhotonPlayer().NickName != "locked" && PhotonNetwork.isMasterClient && __instance.MyPlayer.GetClassID() != 0 && __instance.MyPlayer.GetPlayerName(false).Contains("•") && __instance.MyPlayer.GetPhotonPlayer().GetScore() > 0)
 									{
 										text = "To Brig";
 									}
 									else
-									{
+									{	
 										text = "";
 									}
 								}

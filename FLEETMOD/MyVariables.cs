@@ -32,13 +32,10 @@ namespace FLEETMOD
 
         public static int GetShipCaptain (int inShipID)
         {
-            foreach (KeyValuePair<PLShipInfo, int> pair in ShipCrews)
+            foreach (PLPlayer Player in PLServer.Instance.AllPlayers)
             {
-                PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(pair.Value);
-                if (pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && Player.GetClassID() == 0 && Player.TeamID == 0)
-                {
-                        return pair.Value;
-                }
+                if (Player != null && Player.TeamID == 0 && Player.GetPhotonPlayer().GetScore() == inShipID && Player.GetClassID() == 0)
+                        return Player.GetPlayerID();
             }
             return -1;
         }
