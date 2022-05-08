@@ -41,6 +41,7 @@
     <Compile Include="CalculateStats.cs" />
     <Compile Include="CargoMenu.cs" />
     <Compile Include="ClaimShip.cs" />
+    <Compile Include="Interface\Dialogs\FuelTransfer.cs" />
     <Compile Include="PlayerPos.cs" />
     <Compile Include="ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="ShouldShowClassSelectionScreen.cs" />
     <Compile Include="TakeDamage.cs" />
     <Compile Include="TeamMessage.cs" />
+    <Compile Include="TransferFuel.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="UpdateAllRightShips.cs" />
     <Compile Include="UpdateButtons.cs" />

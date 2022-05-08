@@ -43,6 +43,7 @@ namespace FLEETMOD
             MyVariables.ShipCrews = new Dictionary<PLShipInfo, int>();
             MyVariables.survivalBonusDict = new Dictionary<int, int>();
             MyVariables.DialogGenerated = false;
+            MyVariables.FuelDialog = false;
             if (PhotonNetwork.isMasterClient)
             {
                 MyVariables.UnModdedCrews = new Dictionary<int, int>();

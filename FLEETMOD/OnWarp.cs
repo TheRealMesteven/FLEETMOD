@@ -77,6 +77,7 @@ namespace FLEETMOD
                         }
                     }
                     MyVariables.DialogGenerated = false;
+                    MyVariables.FuelDialog = false;
                     if (PhotonNetwork.isMasterClient)
                     {
                         foreach (KeyValuePair<int, PlayerPos> keyValuePair in UnModdedPositions) // Teleport unmodded players back to their positions when warping
