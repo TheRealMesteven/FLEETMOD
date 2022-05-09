@@ -86,12 +86,6 @@ namespace FLEETMOD
                             go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
                         }
                     }
-					if (!MyVariables.FuelDialog && PhotonNetwork.isMasterClient)
-                    {
-						MyVariables.FuelDialog = true;
-						var go = new UnityEngine.GameObject("FuelTransfer_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
-						go.AddComponent<Interface.Dialogs.FuelTransfer>(); // Also TODO: Rename local vars...
-					}
                     ///
 					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0)
 					{
