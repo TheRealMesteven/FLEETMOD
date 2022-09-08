@@ -15,7 +15,7 @@ namespace FLEETMOD
 			{
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
-                    PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
+					PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
 					PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
@@ -24,7 +24,6 @@ namespace FLEETMOD
 					PLInGameUI.Instance.CurrentVersionLabel.text = Plugin.myversion;
 					PLInGameUI.Instance.ControlsText.enabled = true;
 					string str = "<color=#FFFFFF>";
-
 					// Switched ifs to fancy switch statement
 					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(" • "))
                     {
@@ -35,10 +34,10 @@ namespace FLEETMOD
 					}
 					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • "))
                     {
-						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-						{
-							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•" + 2))
-						});
+							PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
+							{
+							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•") + 2)
+							});
 					}
 					switch (PLNetworkManager.Instance.LocalPlayer.GetClassID())
 					{
@@ -60,7 +59,6 @@ namespace FLEETMOD
 							break;
 
 					}
-
 					PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
 					{
 						"Server : " + PhotonNetwork.room.Name + "\n \n",
@@ -79,14 +77,14 @@ namespace FLEETMOD
 					///</summary>
 					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor"))
 					{
-                        if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
+						if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
                             MyVariables.DialogGenerated = true;
                             var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
                             go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
                         }
-                    }
-                    ///
+					}
+					///
 					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0)
 					{
 						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;
@@ -99,7 +97,7 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.LocalPlayer.StartingShip.WarpTravelDist = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.WarpTravelDist;
 						} // This is end of warp range bindings
 						PLNetworkManager.Instance.LocalPlayer.StartingShip.LastBeginWarpServerTime = PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.LastBeginWarpServerTime;
-                        /*
+						/*
                         bool flag12 = !PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.F1) && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0;
                         if (flag12)
 						{
