@@ -118,68 +118,69 @@
     <Content Include="Lib\UnityEngine.UI.dll" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="!CustomSaves, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\!CustomSaves.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\0Harmony.dll</HintPath>
+      <HintPath>Lib\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="ACTk.Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\ACTk.Runtime.dll</HintPath>
+      <HintPath>Lib\ACTk.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\source\repos\Hard-Mode\Hard Mode\lib\Assembly-CSharp.dll</HintPath>
+      <HintPath>Lib\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>Lib\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="com.rlabrecque.steamworks.net">
-      <HintPath>..\lib\com.rlabrecque.steamworks.net.dll</HintPath>
+    <Reference Include="com.rlabrecque.steamworks.net, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\com.rlabrecque.steamworks.net.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D, Version=4.1.6.10, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\Photon3Unity3D.dll</HintPath>
+      <HintPath>Lib\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="PLInputBase, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\PLInputBase.dll</HintPath>
+      <HintPath>Lib\PLInputBase.dll</HintPath>
     </Reference>
     <Reference Include="PulsarModLoader, Version=0.10.4.20, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\source\repos\Hard-Mode\Hard Mode\lib\PulsarModLoader.dll</HintPath>
+      <HintPath>Lib\PulsarModLoader.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.dll</HintPath>
+      <HintPath>Lib\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>Lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>Lib\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>Lib\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>Lib\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Fleetmod 2\FLEETMOD\Lib\UnityEngine.UI.dll</HintPath>
+      <HintPath>Lib\UnityEngine.UI.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
