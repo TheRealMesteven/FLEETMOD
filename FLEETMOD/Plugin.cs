@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using CustomSaves;
+using System.Linq;
 using HarmonyLib;
 using PulsarModLoader;
+using PulsarModLoader.SaveData;
 using UnityEngine;
 
 namespace FLEETMOD
@@ -14,109 +15,131 @@ namespace FLEETMOD
         public override string Version => Plugin.myversion;
         public override string Author => "Mest, Dragon, Mikey, Badryuiner, Rayman";
         public override string Name => "FleetMod";
-        public override int MPFunctionality => 0;
         public override string HarmonyIdentifier() => "Dragon+Mest.Fleetmod";
         public static string myversion = "FLEETMOD v1.6.5.1";
 
-        public Plugin()
-        { /// ## Setup where config default is estabilished and values read
-            CustomSaves.SaveManager.Instance.RegisterReaderAndWriter("FleetmodShips", AuxReader, AuxWriter);
-            config = new Plugin.FleetmodShips { Ship0 = null, Ship1 = null, Ship2 = null, Ship3 = null, Ship4 = null, Ship5 = null, Ship6 = null };
-            plugin = this;
-        }
-
-        private void AuxReader(BinaryReader reader)
-        { /// Maximum 7 additional ships saved
-            config.Ship0 = reader.ReadString();  	// 0
-            config.Ship1 = reader.ReadString();  	// 1
-            config.Ship2 = reader.ReadString();     // 2
-            config.Ship3 = reader.ReadString();  	// 3
-            config.Ship4 = reader.ReadString();    	// 4
-            config.Ship5 = reader.ReadString();   	// 5
-            config.Ship6 = reader.ReadString();		// 6 
-        }
-        private void AuxWriter(BinaryWriter writer)
+        class MySaveData : PMLSaveData
         {
+            public static Dictionary<string, string> Ships = null;
+            public override string Identifier()
+            {
+                return "Mest.FleetMod";
+            }
+
+            public override void LoadData(byte[] Data, uint VersionID)
+            {
+                //your data should be read here
+                Ships = DeSerializeFleetShips(Data);
+            }
+
+            public override byte[] SaveData()
+            {
+                //your savedata should be written here as a byte array.
+                return SerializeFleetShips(GetFleetShips());
+            }
+        }
+        public static List<PLShipInfo> GetFleetShips()
+        {
+            List<PLShipInfo> Ships = new List<PLShipInfo>();
             foreach (PLShipInfoBase shipInfo in PLEncounterManager.Instance.AllShips.Values)
             { /// Code for saving each ship
-				if (shipInfo != null && shipInfo.GetIsPlayerShip() && shipInfo.ShipID != PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore())
+				if (shipInfo != null && !shipInfo.HasBeenDestroyed && shipInfo.GetIsPlayerShip())
                 {
-                    writer.Write(shipInfo.ShipNameValue + "⍰" + shipInfo.MyStats.CreateDataString());
+                    Ships.Add((PLShipInfo)shipInfo);
                 }
             }
+            return Ships;
         }
-
-        internal static FleetmodShips config;
-        internal static Plugin plugin;
-
-        internal struct FleetmodShips
+        public static byte[] SerializeFleetShips(List<PLShipInfo> shipInfos)
         {
-            public string Ship0, Ship1, Ship2, Ship3, Ship4, Ship5, Ship6;
+            MemoryStream dataStream = new MemoryStream();
+            dataStream.Position = 0;
+            using (BinaryWriter writer = new BinaryWriter(dataStream))
+            {
+                if (shipInfos.Count > 0)
+                {
+                    writer.Write(shipInfos.Count());
+                    foreach (PLShipInfo shipInfo in shipInfos)
+                    {
+                        if (shipInfo == PLEncounterManager.Instance.PlayerShip)
+                        {
+                            writer.Write("");
+                        }
+                        else
+                        {
+                            writer.Write(shipInfo.ShipName);
+                        }
+                        writer.Write(shipInfo.MyStats.CreateDataString());
+                    }
+                }
+            }
+            return dataStream.ToArray();
         }
-
-        internal IEnumerator SpawnFleetShips()
+        public static Dictionary<string, string> DeSerializeFleetShips(byte[] byteData)
+        {
+            MemoryStream memoryStream = new MemoryStream(byteData);
+            memoryStream.Position = 0;
+            try
+            {
+                using (BinaryReader reader = new BinaryReader(memoryStream))
+                {
+                    int shipInfosCount = reader.ReadInt32();
+                    Dictionary<string, string> shipInfos = new Dictionary<string, string>();
+                    for (int i = 0; i < shipInfosCount; i++)
+                    {
+                        string Shipname = reader.ReadString();
+                        string CrewString = reader.ReadString();
+                        shipInfos.Add(Shipname, CrewString);
+                    }
+                    return shipInfos;
+                }
+            }
+            catch (Exception ex)
+            {
+                PulsarModLoader.Utilities.Logger.Info($"Failed to read FleetShip List, returning null.\n{ex.Message}");
+                return null;
+            }
+        }
+        public static IEnumerator SpawnFleetShips()
         {/// ## Applying the saved values
-            while ((PLEncounterManager.Instance == null) || (PLEncounterManager.Instance.PlayerShip == null)) yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship0 != null)
+            while (PLEncounterManager.Instance == null || PLEncounterManager.Instance.PlayerShip == null || MySaveData.Ships == null) yield return new WaitForEndOfFrame();
+            foreach (KeyValuePair<string, string> keyValuePair in MySaveData.Ships)
             {
-                SpawnShip(Plugin.config.Ship0);
+                SpawnShip(keyValuePair.Key, keyValuePair.Value);
+                yield return new WaitForEndOfFrame();
             }
-            yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship1 != null)
-            {
-                SpawnShip(Plugin.config.Ship1);
-            }
-            yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship2 != null)
-            {
-                SpawnShip(Plugin.config.Ship2);
-            }
-            yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship3 != null)
-            {
-                SpawnShip(Plugin.config.Ship3);
-            }
-            yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship4 != null)
-            {
-                SpawnShip(Plugin.config.Ship4);
-            }
-            yield return new WaitForEndOfFrame();
-            if (Plugin.config.Ship5 != null)
-            {
-                SpawnShip(Plugin.config.Ship5);
-            }
-            yield return new WaitForEndOfFrame();
+            yield break;
         }
-        private void SpawnShip(string ShipCode)
+        private static void SpawnShip(string Shipname, string CrewString)
         {
-            PLEncounterManager.ShipLayout shipLayout = new PLEncounterManager.ShipLayout(ShipCode.Split('⍰')[1] + ", " + PLEncounterManager.Instance.PlayerShip.MyStats.CreateCrewString());
+            if (Shipname == "") return;
+            PLEncounterManager.ShipLayout shipLayout = new PLEncounterManager.ShipLayout(CrewString + ", " + PLEncounterManager.Instance.PlayerShip.MyStats.CreateCrewString());
             GameObject gameObject = PhotonNetwork.Instantiate("NetworkPrefabs/" + PLPersistantEncounterInstance.GetPrefabNameForShipType(shipLayout.ShipType), new Vector3(50f, 50f, 50f), Quaternion.identity, 0, null);
             gameObject.GetComponent<PLShipInfo>().SetShipID(PLServer.ServerSpaceTargetIDCounter++);
             gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
             gameObject.GetComponent<PLShipInfo>().TagID = -23;
             gameObject.GetComponent<PLShipInfo>().TeamID = 1;
             gameObject.GetComponent<PLShipInfo>().OnIsNewStartingShip();
-            gameObject.GetComponent<PLShipInfo>().ShipNameValue = ShipCode.Split('⍰')[0];
+            gameObject.GetComponent<PLShipInfo>().ShipNameValue = Shipname;
             gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
             gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
             {
-                "The " + ShipCode.Split('⍰')[0] + " Has Joined!",
+                "The " + Shipname + " Has Joined!",
                 Color.green,
                 0,
                 "SHIP"
             });
         }
     }
-    [HarmonyPatch(typeof(PLServer), "ServerCaptainStartGame")]
+    [HarmonyPatch(typeof(PLServer), "Start")]
     internal class FleetShipSpawning
     {
         public static void Postfix()
         {
             if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient)
             {
-                PLServer.Instance.StartCoroutine(Plugin.plugin.SpawnFleetShips());
+                PLServer.Instance.StartCoroutine(Plugin.SpawnFleetShips());
             }
         }
     }
