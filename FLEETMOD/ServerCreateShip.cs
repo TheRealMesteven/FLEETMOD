@@ -34,7 +34,7 @@ namespace FLEETMOD
                 }
                 else
                 {
-                    PLServer.Instance.photonView.RPC("AddCrewWarning", PLServer.Instance.GetPlayerFromPlayerID((int)(arguments[1])).GetPhotonPlayer(), new object[]
+                    PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.MasterClient, new object[]
                     {
                         "Ship Limit Has Been Reached!",
                         Color.red,
