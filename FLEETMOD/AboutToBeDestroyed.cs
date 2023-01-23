@@ -85,7 +85,7 @@ namespace FLEETMOD
                         PLShipInfo NewAdmiralShip = null;
                         foreach (PLShipInfo Fleetship in PLEncounterManager.Instance.AllShips.Values)
                         {
-                            if (Fleetship != null && Fleetship.TagID == -23 && Fleetship != __instance)
+                            if (Fleetship != null && !Fleetship.HasBeenDestroyed && Fleetship.TagID == -23 && Fleetship != __instance)
                             {
                                 PulsarModLoader.Utilities.Logger.Info($"[FMDS] New Admiral Ship Found!");
                                 NewAdmiralShip = Fleetship;
