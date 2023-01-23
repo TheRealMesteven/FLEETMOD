@@ -10,7 +10,7 @@ namespace FLEETMOD
         public static bool shipfriendlyfire = false;
         public static bool shipgodmode = false;
         //public static float warprange = -1;
-        public static int shipcount = 7;
+        public static int shipcount = 4;
         // variable for storing current survival bonus. Used in UpdatePLPawn
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
@@ -28,6 +28,9 @@ namespace FLEETMOD
         public static int MySurvivalBonus;
         // variable for storing localplayer's healthBonus
         public static Dictionary<int /*PlayerID*/ , /*ShipID*/ int> UnModdedCrews;
+        ///public static bool TeleportedBrig = false;
+        //public static List<int> BriggedCrew;
+
         // Dictionary that stores <playerID,shipID> on host side, to teleport unmodded crews to correct ship.
 
 

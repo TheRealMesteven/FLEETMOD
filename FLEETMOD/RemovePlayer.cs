@@ -1,4 +1,5 @@
 ﻿using System;
+using ExitGames.Client.Photon.LoadBalancing;
 using HarmonyLib;
 using UnityEngine;
 
@@ -21,10 +22,18 @@ namespace FLEETMOD
 					{
 						inPlayer.GetPlayerName(false)
 					});
-					int num = 0;
+					
+					//int num = 0;
 					if (inPlayer.GetPhotonPlayer().GetScore() > 0 && inPlayer.StartingShip != null && !inPlayer.StartingShip.HasBeenDestroyed && inPlayer.GetClassID() == 0)
 					{
-						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
+                        PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+						{
+							$"{inPlayer.StartingShip.ShipNameValue}\n has lost her Captain",
+							Color.green,
+							0,
+							"SHIP"
+                        });
+                        /*foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer != inPlayer && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetClassID() != 0 && plplayer.GetPhotonPlayer().GetScore() == inPlayer.GetPhotonPlayer().GetScore() && !plplayer.IsBot)
 							{
@@ -43,8 +52,9 @@ namespace FLEETMOD
 								});
 								break;
 							}
-						}
-					}
+						}*/
+                    }
+					
 					/*if (PhotonNetwork.isMasterClient && num == 0 && inPlayer.StartingShip != PLNetworkManager.Instance.LocalPlayer.StartingShip && inPlayer.GetClassID() == 0)
 					{
 						inPlayer.StartingShip.DestroySelf(inPlayer.StartingShip);
@@ -57,7 +67,11 @@ namespace FLEETMOD
                     {
 						MyVariables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
 					}
-					if (inPlayer.GetPawn() != null)
+                    /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
+                    {
+                        MyVariables.BriggedCrew.Remove(inPlayer.GetPlayerID());
+                    }*/
+                    if (inPlayer.GetPawn() != null)
 					{
 						inPlayer.GetPawn().transform.parent = null;
 						inPlayer.GetPawn().gameObject.SetActive(true);

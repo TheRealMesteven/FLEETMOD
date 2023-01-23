@@ -13,6 +13,7 @@ namespace FLEETMOD
             MyVariables.shipfriendlyfire = (bool)arguments[0];
             MyVariables.recentfriendlyfire = (bool)arguments[1];
             MyVariables.survivalBonusDict = (Dictionary<int, int>)arguments[2]; //Reading healthBonus info from host
+            //MyVariables.BriggedCrew = (List<int>)arguments[3];
             //MyVariables.warprange = (float)arguments[1];
         }
     }
@@ -42,7 +43,9 @@ namespace FLEETMOD
             MyVariables.FleetmodPhoton = new List<PhotonPlayer>();*/
             MyVariables.ShipCrews = new Dictionary<PLShipInfo, int>();
             MyVariables.survivalBonusDict = new Dictionary<int, int>();
+            //MyVariables.BriggedCrew = new List<int>();
             MyVariables.DialogGenerated = false;
+            //MyVariables.TeleportedBrig = false;
             if (PhotonNetwork.isMasterClient)
             {
                 MyVariables.UnModdedCrews = new Dictionary<int, int>();

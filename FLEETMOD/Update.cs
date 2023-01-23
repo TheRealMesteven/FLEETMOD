@@ -32,7 +32,7 @@ namespace FLEETMOD
 							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
 						});
 					}
-					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • "))
+					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • ") /*&& !MyVariables.TeleportedBrig*/)
                     {
 							PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
 							{
@@ -85,9 +85,10 @@ namespace FLEETMOD
                         }
 					}
 					///
-					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp != 0)
+					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && (UpdatePLTabMenu.CrewPage != 0 || UpdatePLTabMenu.ChangeClassPage))
 					{
-						PLNetworkManager.Instance.LocalPlayer.FBBiscuitsSoldSinceWarp = 0;
+                        UpdatePLTabMenu.CrewPage = 0;
+						UpdatePLTabMenu.ChangeClassPage = false;
 					}
 					// This is where warp range bindings occur
 					if (__instance != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null)
@@ -122,7 +123,9 @@ namespace FLEETMOD
 						{
 							PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
 						}
-						if ((PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 1f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip) || (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "locked" && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 5f && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip))
+						/*if (MyVariables.BriggedCrew.Contains(PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && !MyVariables.TeleportedBrig 
+							&& PLNetworkManager.Instance.LocalPlayer.GetPawn().Lifetime > 1f 
+							&& PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip == PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip)
 						{
 							if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("BRIG"))
 							{
@@ -189,32 +192,32 @@ namespace FLEETMOD
 									break;
 							}
 
-							PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName = "locked";
+							MyVariables.TeleportedBrig = true;
 							foreach (PLDoor pldoor in PLDoor.AllDoors)
 							{
-								bool flag30 = pldoor != null;
-								if (flag30)
+								if (pldoor != null)
 								{
-									pldoor.OpenRange = 0.5f;
+									pldoor.OpenRange = 0f;
 								}
 							}
 						}
-						if (PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("FREE") && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "open")
+						
+						if (!MyVariables.BriggedCrew.Contains(PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && MyVariables.TeleportedBrig)
 						{
-							PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName = "open";
+							MyVariables.TeleportedBrig = false;
 							PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu(string.Concat(new string[]
 							{
 								"<color=#c0c0c0><size=15>You Have Been Released From The Brig.</size></color>"
 							})));
 							foreach (PLDoor pldoor2 in PLDoor.AllDoors)
 							{
-								bool flag32 = pldoor2 != null;
-								if (flag32)
+								if (pldoor2 != null)
 								{
 									pldoor2.OpenRange = 2.5f;
 								}
 							}
 						}
+						*/
 					}
 					if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
 					{
@@ -247,23 +250,14 @@ namespace FLEETMOD
 									0
 								});
 							}
-                            if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("FREE") && plplayer.GetPhotonPlayer().NickName != "locked")
+                            /*if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("FREE") && plplayer.GetPhotonPlayer().NickName != "locked")
                             {
                                 plplayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
                                 {
                                     plplayer.StartingShip.ShipNameValue + " " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•"))
                                 });
-                            }
+                            }*/
                         }
-                        /*foreach (PhotonPlayer Photon in MyVariables.FleetmodPhoton)
-                        {
-                            try
-                            {
-                                MyVariables.FleetmodPlayer.Add(PLServer.GetPlayerForPhotonPlayer(Photon));
-                                MyVariables.FleetmodPhoton.Remove(Photon);
-                            }
-                            catch { }
-                        }*/
 						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]

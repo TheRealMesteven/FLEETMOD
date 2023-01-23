@@ -22,7 +22,7 @@ namespace FLEETMOD
 				 **Local Player Not in brig
 		                 **Player Ship not in warp
 		                 */
-                if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName != "locked" && !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
+                if (PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer != null && /*!MyVariables.TeleportedBrig &&*/ !PLNetworkManager.Instance.LocalPlayer.StartingShip.InWarp)
                 {
                     /*continue if the following evaluates true
 		        	         *&&
