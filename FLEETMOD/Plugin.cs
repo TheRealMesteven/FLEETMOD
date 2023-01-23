@@ -34,8 +34,12 @@ namespace FLEETMOD
 
             public override byte[] SaveData()
             {
+                //return new byte[] { };
+                
                 //your savedata should be written here as a byte array.
-                return SerializeFleetShips(GetFleetShips());
+                byte[] Array = SerializeFleetShips(GetFleetShips());
+                return Array;
+                
             }
         }
         public static List<PLShipInfo> GetFleetShips()
@@ -43,8 +47,8 @@ namespace FLEETMOD
             List<PLShipInfo> Ships = new List<PLShipInfo>();
             foreach (PLShipInfoBase shipInfo in PLEncounterManager.Instance.AllShips.Values)
             { /// Code for saving each ship
-				if (shipInfo != null && !shipInfo.HasBeenDestroyed && shipInfo.GetIsPlayerShip())
-                {
+				if (shipInfo != null && !shipInfo.GetHasBeenDestroyed() && shipInfo.GetIsPlayerShip() && !shipInfo.IsDrone)
+                    {
                     Ships.Add((PLShipInfo)shipInfo);
                 }
             }
@@ -69,7 +73,10 @@ namespace FLEETMOD
                         {
                             writer.Write(shipInfo.ShipName);
                         }
-                        writer.Write(shipInfo.MyStats.CreateDataString());
+                        string DataString = shipInfo.MyStats.CreateDataString();
+                        PulsarModLoader.Utilities.Logger.Info($"[FLEETMOD] - Save {DataString}");
+                        writer.Write(DataString);
+                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"[FLEETMOD] Saved {shipInfo.ShipName}");
                     }
                 }
             }
