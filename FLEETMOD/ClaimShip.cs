@@ -52,24 +52,19 @@ namespace FLEETMOD
                 {
                     if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
                     {
-                        foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
+                        
+                        PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                         {
-                            if (plplayer2 != null && !plplayer2.IsBot)
-                            {
-                                PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
-                                {
-                                PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
-                                Color.green,
-                                0,
-                                "SHIP"
-                                });
-                            }
-                        }
+                            PLEncounterManager.Instance.GetShipFromID(inShipID).ShipNameValue + " Is Now A Neutral Ship.",
+                            Color.green,
+                            0,
+                            "SHIP"
+                        });
                         PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID = -1;
                     }
                     else
                     {
-                        if (MyVariables.shipcount != 0 && PhotonNetwork.room.MaxPlayers / 5 < (MyVariables.shipcount + 1))
+                        if (MyVariables.Fleet.Count < MyVariables.shipcount)
                         {
                             if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
                             {

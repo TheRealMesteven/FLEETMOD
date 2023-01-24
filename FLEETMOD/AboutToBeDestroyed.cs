@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
@@ -29,15 +30,19 @@ namespace FLEETMOD
                 }
                 if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != __instance as PLShipInfo)
                 {
+                    List<int> OldShipCrew = new List<int>();
                     foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
                     {
                         if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot && plplayer.StartingShip == __instance)
                         {
                             plplayer.SetClassID(1);
                             plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
+                            OldShipCrew.Add(plplayer.GetPlayerID());
                             plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
                         }
                     }
+                    MyVariables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
+                    MyVariables.Fleet.Remove(__instance.ShipID);
                 }
                 if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
                 {
@@ -56,6 +61,7 @@ namespace FLEETMOD
                     if (NewAdmiralShip != null)
                     {
                         NewAdmiralShip.TeamID = 0;
+                        List<int> OldShipCrew = new List<int>();
                         foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
                         {
                             if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.IsBot && (plplayer.StartingShip == __instance || (plplayer.StartingShip == NewAdmiralShip && plplayer.GetClassID() == 0)))
@@ -63,17 +69,20 @@ namespace FLEETMOD
                                 if (!plplayer.GetPhotonPlayer().IsMasterClient)
                                 {
                                     plplayer.SetClassID(1);
+                                    OldShipCrew.Add(plplayer.GetPlayerID());
                                 }
                                 plplayer.GetPhotonPlayer().SetScore(NewAdmiralShip.ShipID);
                                 plplayer.StartingShip = NewAdmiralShip;
                             }
                         }
+                        MyVariables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
                     }
                     else
                     {
                         /* Forces host to close the game and thus ends the session. */
                         PLUIEscapeMenu.Instance.OnClick_Disconnect();
                     }
+                    MyVariables.Fleet.Remove(__instance.ShipID);
                     __instance.HasBeenDestroyed = true;
                 }
                 __instance.TagID = -1;

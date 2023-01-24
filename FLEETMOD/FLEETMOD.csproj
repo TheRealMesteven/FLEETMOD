@@ -40,6 +40,7 @@
     <Compile Include="AttemptToTransferNeutralCargo.cs" />
     <Compile Include="CalculateStats.cs" />
     <Compile Include="ClaimShip.cs" />
+    <Compile Include="MakePlayerShipFleet.cs" />
     <Compile Include="PlayerPos.cs" />
     <Compile Include="Disabled\ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />

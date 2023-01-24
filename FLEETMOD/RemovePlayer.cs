@@ -67,6 +67,14 @@ namespace FLEETMOD
                     {
 						MyVariables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
 					}
+					if (MyVariables.Modded.Contains(inPlayer.GetPlayerID()))
+					{
+						MyVariables.Modded.Remove(inPlayer.GetPlayerID());
+					}
+                    if (MyVariables.NonModded.Contains(inPlayer.GetPlayerID()))
+                    {
+                        MyVariables.NonModded.Remove(inPlayer.GetPlayerID());
+                    }
                     /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
                     {
                         MyVariables.BriggedCrew.Remove(inPlayer.GetPlayerID());

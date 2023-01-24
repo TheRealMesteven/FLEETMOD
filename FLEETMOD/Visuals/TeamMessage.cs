@@ -43,7 +43,7 @@ namespace FLEETMOD.Visuals
                 new CodeInstruction(OpCodes.Ldarg_0, null),
                 new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(TeamMessage), "Replacement"))
             },
-            HarmonyHelpers.PatchMode.REPLACE, HarmonyHelpers.CheckMode.NONNULL, true);
+            HarmonyHelpers.PatchMode.REPLACE, HarmonyHelpers.CheckMode.NONNULL);
 		}
 		private static void Replacement(PLNetworkManager __instance)
 		{

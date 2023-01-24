@@ -15,7 +15,8 @@ namespace FLEETMOD
         public override string Version => Plugin.myversion;
         public override string Author => "Mest, Dragon, Mikey, Badryuiner, Rayman";
         public override string Name => "FleetMod";
-        public override string HarmonyIdentifier() => "Dragon+Mest.Fleetmod";
+        public override string HarmonyIdentifier() => harmonyIden;
+        public static string harmonyIden = "Dragon+Mest.Fleetmod";
         public static string myversion = "FLEETMOD v1.6.6";
 
         class MySaveData : PMLSaveData
@@ -130,6 +131,7 @@ namespace FLEETMOD
             gameObject.GetComponent<PLShipInfo>().ShipNameValue = Shipname;
             gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
             gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
+            MyVariables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
             {
                 "The " + Shipname + " Has Joined!",

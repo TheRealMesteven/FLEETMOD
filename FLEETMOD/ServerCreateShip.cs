@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PulsarModLoader;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace FLEETMOD
 		{
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
             {
-                if (MyVariables.shipcount != 0 && PhotonNetwork.room.MaxPlayers / 5 < (MyVariables.shipcount + 1))
+                if (MyVariables.Fleet.Count < MyVariables.shipcount)
                 {
                     PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID((int)arguments[1]);
                     GameObject gameObject = PhotonNetwork.Instantiate("NetworkPrefabs/" + PLGlobal.Instance.PlayerShipNetworkPrefabNames[(int)arguments[0]], new Vector3(50f, 50f, 50f), Quaternion.identity, 0, null);
@@ -22,6 +23,7 @@ namespace FLEETMOD
                     gameObject.GetComponent<PLShipInfo>().ShipNameValue = (string)arguments[2];
                     gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
                     gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
+                    MyVariables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
                     playerFromPlayerID.GetPhotonPlayer().SetScore(gameObject.GetComponent<PLShipInfo>().ShipID);
                     playerFromPlayerID.SetClassID(0);
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]

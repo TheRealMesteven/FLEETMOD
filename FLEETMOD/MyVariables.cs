@@ -6,11 +6,11 @@ namespace FLEETMOD
 {
     internal class MyVariables
     {
-        public static bool isrunningmod = true;
+        public static bool isrunningmod = false;
         public static bool shipfriendlyfire = false;
         public static bool shipgodmode = false;
         //public static float warprange = -1;
-        public static int shipcount = 4;
+        public static int shipcount = 5;
         // variable for storing current survival bonus. Used in UpdatePLPawn
         public static bool recentfriendlyfire = false;
         public static bool DialogGenerated = false;
@@ -18,11 +18,9 @@ namespace FLEETMOD
         public static bool CargoMenu = false;
         public static Dictionary<PLShipInfo, int /*PlayerID*/> ShipCrews;
         // ShipID, PlayerID // List of crews in ship
-        //public static List<PLShipInfo> Fleet;
-        // ShipIDs of the ships in the Fleet
-        //public static List<PhotonPlayer> FleetmodPhoton;
-        //public static List<int /*PlayerID*/> FleetmodPlayer;
-        // PlayerID of the Players who have Fleetmod active and running
+        public static Dictionary<int, List<int>> Fleet; /*ShipID, List<PlayerID>*/
+        public static List<int> Modded; // PlayerID of the Players who have Fleetmod active and running
+        public static List<int> NonModded; // PlayerID of the Players who dont have Fleetmod active and running
         public static Dictionary<int /*PlayerID*/ , /*Bonus*/ int> survivalBonusDict; 
         // Dictionary that stores <playerID,healthBonus> on hostside, then it's being sent to clients
         public static int MySurvivalBonus;

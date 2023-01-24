@@ -1,4 +1,5 @@
 ﻿using System;
+using ExitGames.Client.Photon.LoadBalancing;
 using PulsarModLoader;
 using PulsarModLoader.Chat.Commands;
 using PulsarModLoader.Chat.Commands.CommandRouter;
@@ -159,11 +160,11 @@ namespace FLEETMOD
                         {
                             ClassID = Player.GetClassID();
                         }
-                        /*if (ClassID == 0 && !Player.GetPlayerName(false).Contains("•"))
+                        if (ClassID == 0 && MyVariables.NonModded.Contains(SenderID))
                         {
-                            PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
-                            ClassID = Player.GetClassID();
-                        }*/
+                            PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, Player.GetPlayerName() + ", cannot use the command to become captain!");
+                            return;
+                        }
                     }
                     else 
                     {
@@ -171,13 +172,13 @@ namespace FLEETMOD
                         switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
                         {
                             case "c":
-                                /*if (!Player.GetPlayerName(false).Contains("•"))
+                                if (MyVariables.Modded.Contains(SenderID))
                                 {
-                                    PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
+                                    ClassID = 0;
                                     break;
-                                }*/
-                                ClassID = 0;
-                                break;
+                                }
+                                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, Player.GetPlayerName() + ", cannot use the command to become captain!");
+                                return;
                             case "p":
                                 ClassID = 1;
                                 break;
@@ -216,7 +217,6 @@ namespace FLEETMOD
                         Player.GetPhotonPlayer().SetScore(ShipID); // Update Score
                     PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, Player.GetPlayerName() + ", you are now a " + Player.GetClassName() + " onboard the " + Player.StartingShip.ShipNameValue + "!");
                 }
-                return;
             }
         }
         public class FLEETMODForceChangeClass : ChatCommand
@@ -262,7 +262,6 @@ namespace FLEETMOD
         }
         internal class FLEETMODBeamMeUp : PublicCommand
         {
-            // Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250
             public override string[] CommandAliases()
             {
                 return new string[]
@@ -270,14 +269,10 @@ namespace FLEETMOD
                 "ship"
                 };
             }
-
-            // Token: 0x06000002 RID: 2 RVA: 0x00002070 File Offset: 0x00000270
             public override string Description()
             {
                 return "Teleport the player back to the ship";
             }
-
-            // Token: 0x06000003 RID: 3 RVA: 0x00002088 File Offset: 0x00000288
             public override void Execute(string arguments, int SenderID)
             {
                 if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient)
@@ -336,12 +331,67 @@ namespace FLEETMOD
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
                         }
                         MyVariables.shipfriendlyfire = !MyVariables.shipfriendlyfire;
-                        PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
+                        ServerUpdateVariables.UpdateClients();
                     }
                 }
-                return;
             }
-        }/*
+        }
+        public class FLEETMODGetFleet : ChatCommand
+        {
+            public override string[] CommandAliases() => new string[] { "fleet" };
+            public override string Description() => "Fleetmod ship friendly fire";
+            public string UsageExample() => "/" + this.CommandAliases()[0];
+            public override void Execute(string arguments)
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Fleet Count: {MyVariables.Fleet.Count}");
+                foreach (int ShipID in MyVariables.Fleet.Keys)
+                {
+                    PLShipInfo shipInfo = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID);
+                    if (shipInfo != null)
+                    {
+                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Fleet Contains: {shipInfo.ShipNameValue}");
+                    }
+                }
+            }
+        }
+        public class FLEETMODGetModded : ChatCommand
+        {
+            public override string[] CommandAliases() => new string[] { "modded" };
+            public override string Description() => "Fleetmod ship friendly fire";
+            public string UsageExample() => "/" + this.CommandAliases()[0];
+            public override void Execute(string arguments)
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Count: {MyVariables.Modded.Count}");
+                foreach (int pLPlayerID in MyVariables.Modded)
+                {
+                    PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(pLPlayerID);
+                    if (pLPlayer != null)
+                    {
+                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                    }
+                }
+            }
+        }
+        public class FLEETMODGetNonModded : ChatCommand
+        {
+            public override string[] CommandAliases() => new string[] { "nonmodded" };
+            public override string Description() => "Fleetmod ship friendly fire";
+            public string UsageExample() => "/" + this.CommandAliases()[0];
+            public override void Execute(string arguments)
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Non-Modded Count: {MyVariables.NonModded.Count}");
+                foreach (int pLPlayerID in MyVariables.NonModded)
+                {
+                    PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(pLPlayerID);
+                    if (pLPlayer != null)
+                    {
+                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                    }
+                }
+            }
+        }
+
+        /*
         public class FLEETMODShipLimit : ChatCommand
         {
             public override string[] CommandAliases()

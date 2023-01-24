@@ -42,9 +42,10 @@ namespace FLEETMOD.Interface.Dialogs
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
                 this.m_AllChoices.Clear();
-                foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
+                foreach (int moddedid in MyVariables.Modded)
                 {
-                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 /*&& possibleCaptain.GetPlayerName(false).Contains("•")*/)
+                    PLPlayer possibleCaptain = PLServer.Instance.GetPlayerFromPlayerID(moddedid);
+                    if (possibleCaptain != null && possibleCaptain.GetClassID() != 0)
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RSCaptainProcessing), possibleCaptain.GetPlayerID()));
                     }
@@ -131,9 +132,10 @@ namespace FLEETMOD.Interface.Dialogs
                 this.m_AllChoices.Clear();
                 currentdialog = 3;
                 this.DialogTextLeft += "\nAdmiral, who will be the captain of the ship?";
-                foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
+                foreach (int moddedid in MyVariables.Modded)
                 {
-                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 /*&& possibleCaptain.GetPlayerName().Contains("•")*/)
+                    PLPlayer possibleCaptain = PLServer.Instance.GetPlayerFromPlayerID(moddedid);
+                    if (possibleCaptain != null && possibleCaptain.GetClassID() != 0)
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RCSCaptainDefine), possibleCaptain.GetPlayerID()));
                     }

@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using HarmonyLib;
 using PulsarModLoader;
+using PulsarModLoader.MPModChecks;
+using PulsarModLoader.SaveData;
+using UnityEngine;
+
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
@@ -52,17 +58,35 @@ namespace FLEETMOD
             }
         }
     }
+    [HarmonyPatch(typeof(PLServer), "StartPlayer")]
+    internal class StartPlayer
+    {
+        private static void Postfix(PLServer __instance, int inID)
+        {
+            PLPlayer playerAtID = __instance.GetPlayerFromPlayerID(inID);
+            if (playerAtID != null && PhotonNetwork.isMasterClient)
+            {
+                if (playerAtID == PLNetworkManager.Instance.LocalPlayer)
+                {
+                    return;
+                }
+                if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Plugin.harmonyIden))
+                {
+                    MyVariables.Modded.Add(inID);
+                }
+                else
+                {
+                    MyVariables.NonModded.Add(inID);
+                }
+            }
+        }
+    }
     [HarmonyPatch(typeof(PLGame), "Start")]
     internal class TriggerFleetmod
     {
         private static void Postfix()
         {
-            if (!PhotonNetwork.isMasterClient && !MyVariables.isrunningmod)
-            {
-                MyVariables.isrunningmod = false;
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", PhotonTargets.MasterClient, new object[] { });
-            }
-            else
+            if (PhotonNetwork.isMasterClient)
             {
                 MyVariables.isrunningmod = true;
             }
@@ -70,16 +94,12 @@ namespace FLEETMOD
     }
     public class ActivateFleetmod : ModMessage
     {
+        public static List<PhotonPlayer> PhotonClients;
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
         {
             if (sender.sender == PhotonNetwork.masterClient)
             {
                 MyVariables.isrunningmod = true;
-            }
-            else if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod)
-            {
-                //MyVariables.FleetmodPhoton.Add(sender.sender);
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", sender.sender, new object[] { });
             }
         }
     }

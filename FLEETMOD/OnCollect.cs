@@ -117,7 +117,7 @@ namespace FLEETMOD
                 List<PLShipInfo> allFleetShips = new List<PLShipInfo>();
                 foreach (PLShipInfo fleetship in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (fleetship != null && !fleetship.IsDrone)
+                    if (fleetship != null && !fleetship.GetHasBeenDestroyed())
                     {
                         allFleetShips.Add(fleetship);
                     }

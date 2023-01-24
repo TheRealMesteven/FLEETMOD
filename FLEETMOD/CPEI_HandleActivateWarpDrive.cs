@@ -15,12 +15,12 @@ namespace FLEETMOD
 			}
 			else
 			{
-				/*if (!PLServer.Instance.GetPlayerFromPlayerID(playerID).GetPlayerName(false).Contains("•"))
+				if (MyVariables.NonModded.Contains(playerID))
 				{
 					return false;
 				}
 				else
-				{*/
+				{
 					PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]
 					{
 						PLServer.Instance.GetPlayerFromPlayerID(playerID).GetPlayerName(false) + " has engaged the warp! Heading to: " + PLEncounterManager.Instance.GetShipFromID(shipID).WarpTargetID.ToString(),
@@ -70,7 +70,7 @@ namespace FLEETMOD
 						}
 					}
 					return false;
-				//}
+				}
 			}
 		}
 	}

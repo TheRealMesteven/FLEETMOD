@@ -15,8 +15,11 @@ namespace FLEETMOD
 			{
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
-					PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.HostUpdateVariables", PhotonTargets.MasterClient, new object[] { });
-					PLEncounterManager.Instance.PlayerShip.TagID = -23;
+					if (PhotonNetwork.isMasterClient)
+					{
+						ServerUpdateVariables.UpdateClients();
+					}
+                    PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.supportRichText = true;
@@ -60,7 +63,7 @@ namespace FLEETMOD
 					///<summary>
 					/// Below code creates Outpost dialog for assigning captains to unmanned ships.
 					///</summary>
-					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor"))
+					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor") || PLServer.GetCurrentSector().Name.Contains("Fluffy"))
 					{
 						if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {

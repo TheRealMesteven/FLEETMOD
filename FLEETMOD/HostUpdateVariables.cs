@@ -14,8 +14,8 @@ namespace FLEETMOD
                     MyVariables.shipfriendlyfire,
                     MyVariables.recentfriendlyfire,
                     MyVariables.survivalBonusDict, // Sending healthBonus dictionary from host to clients
-                    //MyVariables.BriggedCrew
-                    //MyVariables.warprange,
+                    MyVariables.Modded,
+                    MyVariables.NonModded,
                 });
             }
         }
