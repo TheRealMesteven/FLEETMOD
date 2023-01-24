@@ -1,17 +1,15 @@
 ﻿using System;
 using HarmonyLib;
 using PulsarModLoader;
-/*
- * Checks if player is running mod
- * Netcode for joining room with fleetmod running
- * 
- * 
- */
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
     internal class ActuallyJoinRoom
     {
+        /// <summary>
+        /// Used to update play-list with fleet name.
+        /// Used to trigger Fleet.
+        /// </summary>
         public static bool Prefix(RoomInfo room)
         {
             if ((int)room.CustomProperties["CurrentPlayersPlusBots"] < (int)room.MaxPlayers)

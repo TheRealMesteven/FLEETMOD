@@ -97,7 +97,7 @@
     <Compile Include="UpdatePLTabMenu.cs" />
     <Compile Include="UpdatePLWarpDriveScreen.cs" />
     <Compile Include="UpdateRaceSectors.cs" />
-    <Compile Include="UpdateShipName.cs" />
+    <Compile Include="Visuals\UpdateShipName.cs" />
     <Compile Include="UpdateSpaceScrap.cs" />
     <Compile Include="Visuals\NameOverrides.cs" />
     <Compile Include="WarpSkipButtonClicked.cs" />

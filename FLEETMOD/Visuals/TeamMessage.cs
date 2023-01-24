@@ -11,6 +11,9 @@ namespace FLEETMOD.Visuals
 	[HarmonyPatch(typeof(PLNetworkManager), "ProcessCurrentChatText")]
 	internal class TeamMessage
 	{
+        /// <summary>
+        /// Edits the send message process to send a custom message with the custom format.
+        /// </summary>
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return HarmonyHelpers.PatchBySequence(instructions, new CodeInstruction[]

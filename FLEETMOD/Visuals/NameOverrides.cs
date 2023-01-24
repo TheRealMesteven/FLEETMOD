@@ -10,6 +10,9 @@ namespace FLEETMOD.Visuals
     [HarmonyPatch(typeof(PLPawn), "GetName")]
     internal class CombatTargetNameOverride
     {
+        /// <summary>
+        /// Sets the Pawn Name to the custom version. This changes the overhead name.
+        /// </summary>
         public static bool Prefix(PLPawn __instance, ref string __result)
         {
             if (!MyVariables.isrunningmod) return true;
