@@ -48,9 +48,10 @@ namespace FLEETMOD
                 {
                     PulsarModLoader.Utilities.Logger.Info($"[FMDS] Fleetmod Admiral Ship Destroyed");
                     PLShipInfo NewAdmiralShip = null;
-                    foreach (PLShipInfo Fleetship in PLEncounterManager.Instance.AllShips.Values)
+                    foreach (int FleetID in MyVariables.Fleet.Keys)
                     {
-                        if (Fleetship != null && !Fleetship.HasBeenDestroyed && Fleetship.TagID == -23 && Fleetship != __instance)
+                        PLShipInfo Fleetship = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(FleetID);
+                        if (Fleetship != null && !Fleetship.GetHasBeenDestroyed() && Fleetship != __instance)
                         {
                             PulsarModLoader.Utilities.Logger.Info($"[FMDS] New Admiral Ship Found!");
                             NewAdmiralShip = Fleetship;
@@ -76,11 +77,6 @@ namespace FLEETMOD
                             }
                         }
                         MyVariables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
-                    }
-                    else
-                    {
-                        /* Forces host to close the game and thus ends the session. */
-                        PLUIEscapeMenu.Instance.OnClick_Disconnect();
                     }
                     MyVariables.Fleet.Remove(__instance.ShipID);
                     __instance.HasBeenDestroyed = true;
