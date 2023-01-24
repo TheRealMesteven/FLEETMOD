@@ -52,7 +52,7 @@
     <Compile Include="GetIsPlayerShipPatch.cs" />
     <Compile Include="GetJoinGameElementFromRoomInfo.cs" />
     <Compile Include="GetNumEnemiesLeft.cs" />
-    <Compile Include="GetShipUIElementForShip.cs" />
+    <Compile Include="Visuals\GetShipUIElementForShip.cs" />
     <Compile Include="GetTextOfCaptainOrderID.cs" />
     <Compile Include="Interface\Dialogs\FleetManager.cs" />
     <Compile Include="Internal_AttemptBlindJump.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="TakeDamage.cs" />
     <Compile Include="Visuals\TeamMessage.cs" />
     <Compile Include="Update.cs" />
-    <Compile Include="UpdateAllRightShips.cs" />
+    <Compile Include="Visuals\UpdateAllRightShips.cs" />
     <Compile Include="UpdateButtons.cs" />
     <Compile Include="UpdatePlayerOverview.cs" />
     <Compile Include="UpdatePLGame.cs" />
