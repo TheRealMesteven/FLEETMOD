@@ -24,6 +24,10 @@ namespace FLEETMOD
                             list.Add(plshipInfoBase);
                         }
                     }
+                    list.Sort(delegate (PLShipInfoBase s1, PLShipInfoBase s2)
+                    {
+                        return s1.ShipID.CompareTo(s2.ShipID);
+                    });
                     if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.Comma) && CrewPage > 0 && __instance.TabMenuActive)
                     {
                         PLMusic.PostEvent("play_titlemenu_ui_click", __instance.gameObject);
