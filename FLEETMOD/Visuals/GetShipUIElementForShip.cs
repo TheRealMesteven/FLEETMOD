@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
 	[HarmonyPatch(typeof(PLUIOutsideWorldUI), "GetShipUIElementForShip")]
 	internal class GetShipUIElementForShip

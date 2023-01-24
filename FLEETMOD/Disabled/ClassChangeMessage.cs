@@ -1,10 +1,10 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Disabled
 {
-	[HarmonyPatch(typeof(PLServer), "EnemyClaimShip")]
-	internal class EnemyClaimShip
+	[HarmonyPatch(typeof(PLServer), "ClassChangeMessage")]
+	internal class ClassChangeMessage
 	{
 		public static bool Prefix()
 		{

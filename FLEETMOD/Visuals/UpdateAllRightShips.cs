@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
     [HarmonyPatch(typeof(PLInGameUI), "UpdateAllRightShips")]
     internal class UpdateAllRightShips
