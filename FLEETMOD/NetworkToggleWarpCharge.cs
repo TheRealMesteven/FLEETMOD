@@ -15,7 +15,7 @@ namespace FLEETMOD
 			}
 			else
 			{
-				if (!PLServer.GetPlayerForPhotonPlayer(pmi.sender).GetPlayerName(false).Contains("•"))
+				/*if (!PLServer.GetPlayerForPhotonPlayer(pmi.sender).GetPlayerName(false).Contains("•"))
 				{
 					PLServer.Instance.photonView.RPC("AddNotification", pmi.sender, new object[]
 					{
@@ -27,11 +27,7 @@ namespace FLEETMOD
 					return false;
 				}
 				else
-				{
-					if (Debug.isDebugBuild)
-					{
-						Debug.Log("QDB: ------------------------------------------------------------------------------------------------");
-					}
+				{*/
 					PLShipInfoBase shipFromID = PLEncounterManager.Instance.GetShipFromID(inShipID);
 					if (shipFromID != null)
 					{
@@ -72,7 +68,7 @@ namespace FLEETMOD
 						shipFromID.WarpChargeStage = (EWarpChargeStage)inWarpCharge;
 					}
 					return false;
-				}
+				//}
 			}
 		}
 	}

@@ -24,21 +24,6 @@ namespace FLEETMOD
 					PLInGameUI.Instance.CurrentVersionLabel.text = Plugin.myversion;
 					PLInGameUI.Instance.ControlsText.enabled = true;
 					string str = "<color=#FFFFFF>";
-					// Switched ifs to fancy switch statement
-					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(" • "))
-                    {
-						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-						{
-							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
-						});
-					}
-					if (!PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains(PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • ") /*&& !MyVariables.TeleportedBrig*/)
-                    {
-							PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-							{
-							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•") + 2)
-							});
-					}
 					switch (PLNetworkManager.Instance.LocalPlayer.GetClassID())
 					{
 						case 0:
@@ -237,13 +222,9 @@ namespace FLEETMOD
 								MyVariables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
 							}
 
-							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && plplayer.GetPlayerName(false).Contains("•") && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
+							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
 							{
 								plplayer.StartingShip = (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo);
-								plplayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-								{
-									plplayer.StartingShip.ShipNameValue + " " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•"))
-								});
 								plplayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
 								{
 									(PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).MyTLI.SubHubID,

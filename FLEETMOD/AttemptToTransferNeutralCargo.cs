@@ -44,7 +44,7 @@ namespace FLEETMOD
                             PLPlayer cachedFriendlyPlayerOfClass = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
                             PLServer.Instance.photonView.RPC("AddNotification", cachedFriendlyPlayerOfClass.GetPhotonPlayer(), new object[]
                             {
-                                __instance.GetPlayerName(false).Substring(__instance.GetPlayerName(false).LastIndexOf("•") + 2)+" has sent "+PLShipComponent.CreateShipComponentFromHash((int)PLShipComponent.createHashFromInfo((int)componentFromNetID.ActualSlotType, componentFromNetID.SubType, componentFromNetID.Level, 0, 12), null).GetItemName()+" to "+PLEncounterManager.Instance.GetShipFromID(__instance.GetPhotonPlayer().GetScore()).ShipName,
+                                __instance.GetPlayerName(false)+" has sent "+PLShipComponent.CreateShipComponentFromHash((int)PLShipComponent.createHashFromInfo((int)componentFromNetID.ActualSlotType, componentFromNetID.SubType, componentFromNetID.Level, 0, 12), null).GetItemName()+" to "+PLEncounterManager.Instance.GetShipFromID(__instance.GetPhotonPlayer().GetScore()).ShipName,
                                 __instance.GetPlayerID(),
                                 PLServer.Instance.GetEstimatedServerMs() + 6000,
                                 true

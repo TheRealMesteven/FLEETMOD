@@ -85,7 +85,7 @@
     <Compile Include="ShouldBeHostileToShip.cs" />
     <Compile Include="ShouldShowClassSelectionScreen.cs" />
     <Compile Include="TakeDamage.cs" />
-    <Compile Include="TeamMessage.cs" />
+    <Compile Include="Visuals\TeamMessage.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="UpdateAllRightShips.cs" />
     <Compile Include="UpdateButtons.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="UpdateRaceSectors.cs" />
     <Compile Include="UpdateShipName.cs" />
     <Compile Include="UpdateSpaceScrap.cs" />
+    <Compile Include="Visuals\NameOverrides.cs" />
     <Compile Include="WarpSkipButtonClicked.cs" />
   </ItemGroup>
   <ItemGroup>

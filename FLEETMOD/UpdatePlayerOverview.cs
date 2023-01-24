@@ -11,7 +11,7 @@ namespace FLEETMOD
         {
             if (MyVariables.isrunningmod)
             {
-                __instance.PlayerName.text = PLReadableStringManager.Instance.GetFormattedResultFromInputString(__instance.MyPlayer.GetPlayerName(true).Substring(PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).LastIndexOf("•") + 2));
+                __instance.PlayerName.text = PLReadableStringManager.Instance.GetFormattedResultFromInputString(__instance.MyPlayer.GetPlayerName(true));
                 if (UpdatePLTabMenu.ChangeClassPage)
                 {
                     __instance.ClassName.text = PLReadableStringManager.Instance.GetFormattedResultFromInputString(__instance.MyPlayer.StartingShip.ShipNameValue.ToUpper());

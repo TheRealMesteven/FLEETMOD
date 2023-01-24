@@ -159,11 +159,11 @@ namespace FLEETMOD
                         {
                             ClassID = Player.GetClassID();
                         }
-                        if (ClassID == 0 && !Player.GetPlayerName(false).Contains("•"))
+                        /*if (ClassID == 0 && !Player.GetPlayerName(false).Contains("•"))
                         {
                             PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
                             ClassID = Player.GetClassID();
-                        }
+                        }*/
                     }
                     else 
                     {
@@ -171,11 +171,11 @@ namespace FLEETMOD
                         switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
                         {
                             case "c":
-                                if (!Player.GetPlayerName(false).Contains("•"))
+                                /*if (!Player.GetPlayerName(false).Contains("•"))
                                 {
                                     PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Sorry " + Player.GetPlayerName() + ", you need Fleetmod to Captain a ship!");
                                     break;
-                                }
+                                }*/
                                 ClassID = 0;
                                 break;
                             case "p":

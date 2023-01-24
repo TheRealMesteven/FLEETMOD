@@ -47,12 +47,8 @@ namespace FLEETMOD
 							PLNetworkManager.Instance.LocalPlayer.GetPlayerID()
 						});
 					}
-					if (PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("•"))
+					if (PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
 					{
-						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-						{
-							PLEncounterManager.Instance.PlayerShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
-						});
 						PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
                     }
                 }
@@ -68,7 +64,7 @@ namespace FLEETMOD
 						PLNetworkManager.Instance.LocalPlayer.SetHasStarted(true);
 						PhotonNetwork.player.SetScore(1);
                     }
-					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == -1 && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false).Contains("•") && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 4f)
+					if (PLNetworkManager.Instance.LocalPlayer.GetClassID() == -1 && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 4f)
 					{
 						PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
 						{
@@ -76,10 +72,6 @@ namespace FLEETMOD
 							1
 						});
 						PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
-						PLNetworkManager.Instance.LocalPlayer.photonView.RPC("SetServerPlayerName", PhotonTargets.All, new object[]
-						{
-							PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipNameValue + " • " + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(false)
-						});
 						PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("<color=white>\n Welcome To </color><color=blue>" + PhotonNetwork.room.Name + "</color><color=white>\n \n  Press TAB Button During Game To Choose Your Class & Crew. \n\n Use < > Keys To Select The Ship You Would Like To Join. \n \n Ask The Admiral To Create A New Ship Of Your Choice.\n\n Hold Space And Click A Player Ship To Teleport.</color>"));
 					}
 				}

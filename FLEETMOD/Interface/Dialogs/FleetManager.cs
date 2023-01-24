@@ -44,7 +44,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.m_AllChoices.Clear();
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
-                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 && possibleCaptain.GetPlayerName(false).Contains("•"))
+                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 /*&& possibleCaptain.GetPlayerName(false).Contains("•")*/)
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RSCaptainProcessing), possibleCaptain.GetPlayerID()));
                     }
@@ -133,7 +133,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.DialogTextLeft += "\nAdmiral, who will be the captain of the ship?";
                 foreach (var possibleCaptain in PLServer.Instance.AllPlayers)
                 {
-                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 && possibleCaptain.GetPlayerName().Contains("•"))
+                    if (!possibleCaptain.IsBot && possibleCaptain.GetClassID() != 0 /*&& possibleCaptain.GetPlayerName().Contains("•")*/)
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleCaptain.GetPlayerName(), new PLHailChoiceDelegateData(RCSCaptainDefine), possibleCaptain.GetPlayerID()));
                     }

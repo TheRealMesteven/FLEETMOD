@@ -30,18 +30,9 @@ namespace FLEETMOD
 						if (displayShipRightInfo.Ship.ShipID == PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore())
 						{
                             displayShipRightInfo.NameLabel.color = Color.yellow;
-                            foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-                            {
-                                if (plplayer != null && plplayer.GetClassID() == 0 && PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer() != null)
-                                {
-                                    if (PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer().GetScore() == displayShipRightInfo.Ship.ShipID) // If Captain And Owns This Ship
-                                    {
-                                        displayShipRightInfo.TitleLabel.enabled = true;
-                                        PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "ADMIRAL • " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•") + 2));
-                                        displayShipRightInfo.TitleLabel.color = Color.yellow;
-                                    }
-                                }
-                            }
+                            displayShipRightInfo.TitleLabel.enabled = true;
+                            PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "ADMIRAL • " + PLServer.GetPlayerForPhotonPlayer(PhotonNetwork.masterClient).GetPlayerName());
+                            displayShipRightInfo.TitleLabel.color = Color.yellow;
                         }
                         /*continue iff the following evaluates true
                          * &&
@@ -51,24 +42,10 @@ namespace FLEETMOD
                         if (displayShipRightInfo.Ship.GetIsPlayerShip() && displayShipRightInfo.Ship.ShipID != PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore())
                         {
                             displayShipRightInfo.NameLabel.color = Color.green;
-                            foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-                            {
-                                /*continue iff the following evaluates true
-                                 * &&
-                                 * *plplayer != null
-                                 * *player classid != 0
-                                 * *player server instance != null
-                                 */
-                                if (plplayer != null && plplayer.GetClassID() == 0 && PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer() != null)
-                                {
-                                    if (PLServer.Instance.GetPlayerFromPlayerID(plplayer.GetPlayerID()).GetPhotonPlayer().GetScore() == displayShipRightInfo.Ship.ShipID) // If Captain And Owns This Ship
-                                    {
-                                        displayShipRightInfo.TitleLabel.enabled = true;
-                                        PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "CAPTAIN • " + plplayer.GetPlayerName(false).Substring(plplayer.GetPlayerName(false).LastIndexOf("•") + 2));
-                                        displayShipRightInfo.TitleLabel.color = Color.green;
-                                    }
-                                }
-                            }
+                            PLPlayer Captain = PLServer.Instance.GetPlayerFromPlayerID(MyVariables.GetShipCaptain(displayShipRightInfo.Ship.ShipID));
+                            displayShipRightInfo.TitleLabel.enabled = true;
+                            PLGlobal.SafeLabelSetText(displayShipRightInfo.TitleLabel, "CAPTAIN • " + Captain.GetPlayerName(false));
+                            displayShipRightInfo.TitleLabel.color = Color.green;
                         }
                         /*continue iff the following evaluates true
                         * &&
