@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
 	[HarmonyPatch(typeof(PLGalaxy), "UpdateRaceSectors")]
 	internal class UpdateRaceSectors

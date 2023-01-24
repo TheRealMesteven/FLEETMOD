@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Disabled
 {
 	[HarmonyPatch(typeof(PLGame), "ShouldShowClassSelectionScreen")]
 	internal class ShouldShowClassSelectionScreen

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
 	[HarmonyPatch(typeof(PLNetworkManager), "Update")]
 	internal class SetupTips

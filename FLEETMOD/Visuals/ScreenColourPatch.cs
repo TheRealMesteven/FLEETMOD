@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
     [HarmonyPatch(typeof(PLUIScreen), "TargetRootPanelColor")]
     class PLUIScreen_TargetRootPanelColor
