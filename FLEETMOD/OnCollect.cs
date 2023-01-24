@@ -115,59 +115,37 @@ namespace FLEETMOD
             if (scrap != null)
             {
                 List<PLShipInfo> allShips = new List<PLShipInfo>();
-                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 1");
                 foreach (PLShipInfoBase pLShipInfobase in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] A");
                     if (pLShipInfobase != null && !pLShipInfobase.GetHasBeenDestroyed() && !pLShipInfobase.IsDrone && pLShipInfobase.MyStats != null)
                     {
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] B");
                         PLShipInfo pLShipInfo = (PLShipInfo)pLShipInfobase;
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] B2");
                         if (pLShipInfo != null)
                         {
-                            PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] C");
                             PLSlot slot = pLShipInfo.MyStats.GetSlot(ESlotType.E_COMP_CARGO);
-                            PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] D");
                             if (slot != null)
                             {
-                                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] E");
                                 allShips.Add(pLShipInfo);
-                                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] F");
                             }
                         }
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] G");
                     }
-                    PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] H");
                     //Info($"NewShip: {fleetship.Key} - {((PLShipInfo)PLEncounterManager.Instance.GetShipFromID(fleetship.Value)).ShipName}");
                 }
-                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 2");
-
                 var pos = scrap.transform.position;
                 float dist = float.MaxValue;
-                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 3");
                 PLShipInfo selectedShip = PLEncounterManager.Instance.PlayerShip; // anti-null
-                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 4");
                 foreach (var ship in allShips)
                 {
-                    PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] a");
                     var localdist = Vector3.Distance(ship.GetSpaceLoc(), pos);
-                    PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] b");
                     //Info($"{localdist.ToString()} vs {dist} - {ship.ShipName}");
                     if (dist > localdist)
                     {
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] c");
                         dist = localdist;
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] d");
                         selectedShip = ship;
-                        PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] e");
                     }
-                    PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] f");
                 }
-                PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 5");
                 return selectedShip;
             }
-            PulsarModLoader.Utilities.Logger.Info("[FLEET SCRAP] 6");
             return PLEncounterManager.Instance.PlayerShip;
         }
     }
