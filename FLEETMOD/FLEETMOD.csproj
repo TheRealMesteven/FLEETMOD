@@ -41,6 +41,7 @@
     <Compile Include="CalculateStats.cs" />
     <Compile Include="ClaimShip.cs" />
     <Compile Include="Disabled\RestartSession.cs" />
+    <Compile Include="HighRollers.cs" />
     <Compile Include="MakePlayerShipFleet.cs" />
     <Compile Include="PlayerPos.cs" />
     <Compile Include="Disabled\ClassChangeMessage.cs" />
