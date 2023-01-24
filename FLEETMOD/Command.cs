@@ -339,17 +339,18 @@ namespace FLEETMOD
         public class FLEETMODGetFleet : ChatCommand
         {
             public override string[] CommandAliases() => new string[] { "fleet" };
-            public override string Description() => "Fleetmod ship friendly fire";
+            public override string Description() => "DEBUG Lists Fleet Ships";
             public string UsageExample() => "/" + this.CommandAliases()[0];
             public override void Execute(string arguments)
             {
-                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Fleet Count: {MyVariables.Fleet.Count}");
+                PLPlayer Local = PLNetworkManager.Instance.LocalPlayer;
+                PulsarModLoader.Utilities.Messaging.Echo(Local, $"Fleet Count: {MyVariables.Fleet.Count}");
                 foreach (int ShipID in MyVariables.Fleet.Keys)
                 {
                     PLShipInfo shipInfo = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID);
                     if (shipInfo != null)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Fleet Contains: {shipInfo.ShipNameValue}");
+                        PulsarModLoader.Utilities.Messaging.Echo(Local, $"Fleet Contains: {shipInfo.ShipNameValue}");
                     }
                 }
             }
@@ -357,17 +358,18 @@ namespace FLEETMOD
         public class FLEETMODGetModded : ChatCommand
         {
             public override string[] CommandAliases() => new string[] { "modded" };
-            public override string Description() => "Fleetmod ship friendly fire";
+            public override string Description() => "DEBUG Lists Modded Players";
             public string UsageExample() => "/" + this.CommandAliases()[0];
             public override void Execute(string arguments)
             {
-                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Count: {MyVariables.Modded.Count}");
+                PLPlayer Local = PLNetworkManager.Instance.LocalPlayer;
+                PulsarModLoader.Utilities.Messaging.Echo(Local, $"Modded Count: {MyVariables.Modded.Count}");
                 foreach (int pLPlayerID in MyVariables.Modded)
                 {
                     PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(pLPlayerID);
                     if (pLPlayer != null)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                        PulsarModLoader.Utilities.Messaging.Echo(Local, $"Modded Contains: {pLPlayer.GetPlayerName()}");
                     }
                 }
             }
@@ -375,17 +377,18 @@ namespace FLEETMOD
         public class FLEETMODGetNonModded : ChatCommand
         {
             public override string[] CommandAliases() => new string[] { "nonmodded" };
-            public override string Description() => "Fleetmod ship friendly fire";
+            public override string Description() => "DEBUG Lists Non-Modded Players";
             public string UsageExample() => "/" + this.CommandAliases()[0];
             public override void Execute(string arguments)
             {
-                PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Non-Modded Count: {MyVariables.NonModded.Count}");
+                PLPlayer Local = PLNetworkManager.Instance.LocalPlayer;
+                PulsarModLoader.Utilities.Messaging.Echo(Local, $"Non-Modded Count: {MyVariables.NonModded.Count}");
                 foreach (int pLPlayerID in MyVariables.NonModded)
                 {
                     PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(pLPlayerID);
                     if (pLPlayer != null)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                        PulsarModLoader.Utilities.Messaging.Echo(Local, $"Modded Contains: {pLPlayer.GetPlayerName()}");
                     }
                 }
             }
