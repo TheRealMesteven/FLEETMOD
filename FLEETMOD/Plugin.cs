@@ -17,7 +17,7 @@ namespace FLEETMOD
         public override string Name => "FleetMod";
         public override string HarmonyIdentifier() => harmonyIden;
         public static string harmonyIden = "Dragon+Mest.Fleetmod";
-        public static string myversion = "FLEETMOD v1.6.6";
+        public static string myversion = "FLEETMOD v1.7.0";
 
         class MySaveData : PMLSaveData
         {
