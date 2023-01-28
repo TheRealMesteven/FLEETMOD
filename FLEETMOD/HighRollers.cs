@@ -13,6 +13,7 @@ namespace FLEETMOD
     {
         public static void Postfix(PLHighRollersShipInfo __instance, PLPlayer player, PLLiarsDiceGame game)
         {
+            if (!MyVariables.isrunningmod) return;
             if (player != null && player.StartingShip != null)
             {
                 if (player.StartingShip != PLEncounterManager.Instance.PlayerShip && MyVariables.Fleet.ContainsKey(player.StartingShip.ShipID) && Array.IndexOf<PLLiarsDiceGame>(__instance.SmallGames, game) != -1)
