@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD.Visuals
+namespace FLEETMOD.Disabled
 {
 	[HarmonyPatch(typeof(PLServer), "ServerAddCrewBotPlayer")]
 	internal class ServerAddCrewBotPlayer
