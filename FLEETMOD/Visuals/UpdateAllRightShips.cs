@@ -23,7 +23,7 @@ namespace FLEETMOD.Visuals
                     PLInGameUI.DisplayShipRightInfo displayShipRightInfo = ___AllDisplayRightShipRightInfos[i];
                     if (displayShipRightInfo.Ship != null && displayShipRightInfo.Ship.GetIsPlayerShip())
                     {
-                        if (displayShipRightInfo.Ship.ShipID == PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore())
+                        if (displayShipRightInfo.Ship.ShipID == PhotonNetwork.masterClient.GetScore())
                         {
                             displayShipRightInfo.NameLabel.color = Color.yellow;
                             PLPlayer Admiral = PLServer.GetPlayerForPhotonPlayer(PhotonNetwork.masterClient);
@@ -38,7 +38,7 @@ namespace FLEETMOD.Visuals
                                 displayShipRightInfo.TitleLabel.enabled = false;
                             }
                         }
-                        if (displayShipRightInfo.Ship.ShipID != PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore())
+                        else
                         {
                             displayShipRightInfo.NameLabel.color = Color.green;
                             PLPlayer Captain = PLServer.Instance.GetPlayerFromPlayerID(MyVariables.GetShipCaptain(displayShipRightInfo.Ship.ShipID));
