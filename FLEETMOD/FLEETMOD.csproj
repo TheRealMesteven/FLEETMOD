@@ -48,6 +48,7 @@
     <Compile Include="Disabled\ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="TabMenuShipComps.cs" />
     <Compile Include="Warp\CPEI_HandleActivateWarpDrive.cs" />
     <Compile Include="Disabled\EnemyClaimShip.cs" />
     <Compile Include="EPlayerButtonType2.cs" />
