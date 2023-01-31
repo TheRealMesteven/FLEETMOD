@@ -17,7 +17,7 @@ namespace FLEETMOD.Visuals
 			{
 				foreach (PLUIOutsideWorldUI.ShipUIElement shipUIElement in ___DisplayedShipUIElements)
 				{
-                    if (PLEncounterManager.Instance.GetShipFromID(PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore()).ShipID == shipUIElement.Ship.ShipID && shipUIElement.Ship.GetIsPlayerShip())
+                    if (PhotonNetwork.masterClient.GetScore() == shipUIElement.Ship.ShipID && shipUIElement.Ship.GetIsPlayerShip())
 					{
                         shipUIElement.ShipName.text = "<color=yellow>" + shipUIElement.Ship.ShipNameValue + "</color>";
                     }
