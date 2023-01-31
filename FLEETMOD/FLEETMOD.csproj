@@ -47,7 +47,7 @@
     <Compile Include="Disabled\ClassChangeMessage.cs" />
     <Compile Include="ClickEngage.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="CPEI_HandleActivateWarpDrive.cs" />
+    <Compile Include="Warp\CPEI_HandleActivateWarpDrive.cs" />
     <Compile Include="Disabled\EnemyClaimShip.cs" />
     <Compile Include="EPlayerButtonType2.cs" />
     <Compile Include="GetCachedFriendlyPlayerOfClassPatch.cs" />
@@ -59,16 +59,16 @@
     <Compile Include="Disabled\GetTextOfCaptainOrderID.cs" />
     <Compile Include="Interface\Dialogs\FleetManager.cs" />
     <Compile Include="Internal_AttemptBlindJump.cs" />
-    <Compile Include="JumpBtnClick.cs" />
+    <Compile Include="Warp\JumpBtnClick.cs" />
     <Compile Include="KickSelf.cs" />
     <Compile Include="MyVariables.cs" />
-    <Compile Include="NetworkToggleWarpCharge.cs" />
-    <Compile Include="OnButtonClick.cs" />
+    <Compile Include="Warp\NetworkToggleWarpCharge.cs" />
+    <Compile Include="Warp\OnButtonClick.cs" />
     <Compile Include="OnButtonPress.cs" />
     <Compile Include="OnCollect.cs" />
-    <Compile Include="OnEndWarp.cs" />
+    <Compile Include="Warp\OnEndWarp.cs" />
     <Compile Include="OnPhotonSerializeView.cs" />
-    <Compile Include="OnWarp.cs" />
+    <Compile Include="Warp\OnWarp.cs" />
     <Compile Include="PLPawnNetworkDestroy.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,12 +96,12 @@
     <Compile Include="UpdatePLPawn.cs" />
     <Compile Include="UpdatePLRepairDepot.cs" />
     <Compile Include="UpdatePLTabMenu.cs" />
-    <Compile Include="UpdatePLWarpDriveScreen.cs" />
+    <Compile Include="Warp\UpdatePLWarpDriveScreen.cs" />
     <Compile Include="Disabled\UpdateRaceSectors.cs" />
     <Compile Include="Visuals\UpdateShipName.cs" />
     <Compile Include="UpdateSpaceScrap.cs" />
     <Compile Include="Visuals\NameOverrides.cs" />
-    <Compile Include="WarpSkipButtonClicked.cs" />
+    <Compile Include="Warp\WarpSkipButtonClicked.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\0Harmony.dll" />
