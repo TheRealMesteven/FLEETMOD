@@ -19,7 +19,7 @@ namespace FLEETMOD
 				if (roomInfo.CustomProperties["Ship_Type"].ToString().Contains("FLEETMOD") && uijoinGameElement.Room.Name == roomInfo.Name)
 				{
 					uijoinGameElement.GalaxySettingsLabel.text = (string)roomInfo.CustomProperties["Ship_Type"];
-					uijoinGameElement.GalaxySettingsLabel.color = Color.blue;
+					uijoinGameElement.GalaxySettingsLabel.color = Color.yellow;
 					uijoinGameElement.GalaxySettingsLabel.fontSize = 14;
 				}
 				if (uijoinGameElement.Room.Name == roomInfo.Name)
