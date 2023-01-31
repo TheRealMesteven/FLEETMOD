@@ -18,7 +18,7 @@ namespace FLEETMOD
             if (!MyVariables.isrunningmod) return true;
             if (!__instance.HasBeenDestroyed && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
             {
-                if (__instance.TagID == -23 && PhotonNetwork.isMasterClient)
+                if (PhotonNetwork.isMasterClient && __instance.GetIsPlayerShip())
                 {
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                     {
@@ -35,7 +35,10 @@ namespace FLEETMOD
                     {
                         if (plplayer != null && plplayer.GetPhotonPlayer() != null && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot && plplayer.StartingShip == __instance)
                         {
-                            plplayer.SetClassID(1);
+                            if (plplayer.GetClassID() == 0)
+                            {
+                                plplayer.SetClassID(1);
+                            }
                             plplayer.GetPhotonPlayer().SetScore(PhotonNetwork.player.GetScore());
                             OldShipCrew.Add(plplayer.GetPlayerID());
                             plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
@@ -69,7 +72,10 @@ namespace FLEETMOD
                             {
                                 if (!plplayer.GetPhotonPlayer().IsMasterClient)
                                 {
-                                    plplayer.SetClassID(1);
+                                    if (plplayer.GetClassID() == 0)
+                                    {
+                                        plplayer.SetClassID(1);
+                                    }
                                     OldShipCrew.Add(plplayer.GetPlayerID());
                                 }
                                 plplayer.GetPhotonPlayer().SetScore(NewAdmiralShip.ShipID);
