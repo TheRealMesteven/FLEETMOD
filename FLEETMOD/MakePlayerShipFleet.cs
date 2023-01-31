@@ -15,6 +15,7 @@ namespace FLEETMOD
             if (__instance != null && PhotonNetwork.isMasterClient)
             {
                 MyVariables.Fleet.Add(PLEncounterManager.Instance.PlayerShip.ShipID, new List<int>());
+                PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
             }
         }
     }
@@ -26,6 +27,7 @@ namespace FLEETMOD
             if (__instance != null && PhotonNetwork.isMasterClient)
             {
                 MyVariables.Fleet.Add(PLEncounterManager.Instance.PlayerShip.ShipID, new List<int>());
+                PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
             }
         }
     }

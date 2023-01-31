@@ -23,6 +23,7 @@ namespace FLEETMOD
                     gameObject.GetComponent<PLShipInfo>().ShipNameValue = (string)arguments[2];
                     gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
                     gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
+                    gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
                     MyVariables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
                     playerFromPlayerID.GetPhotonPlayer().SetScore(gameObject.GetComponent<PLShipInfo>().ShipID);
                     playerFromPlayerID.SetClassID(0);

@@ -245,21 +245,6 @@ namespace FLEETMOD
 								-1
 							});
 						}
-						if (PLEncounterManager.Instance.PlayerShip.AutoTarget)
-						{
-							PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
-						}
-						foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
-						{
-							if (plshipInfoBase != null && plshipInfoBase.IsAuxSystemActive(6) && plshipInfoBase.TagID == -23)
-							{
-								PLServer.Instance.photonView.RPC("SetAuxReactorConfigOff", PhotonTargets.All, new object[]
-								{
-									plshipInfoBase.ShipID,
-									6
-								});
-							}
-						}
 					}
 					if (PhotonNetwork.isMasterClient && Time.time - __instance.LobbyPropertiesUpdateLastTime > 0.5f && PhotonNetwork.room != null)
 					{

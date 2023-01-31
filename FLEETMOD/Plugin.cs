@@ -131,6 +131,7 @@ namespace FLEETMOD
             gameObject.GetComponent<PLShipInfo>().ShipNameValue = Shipname;
             gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
             gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
+            gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
             MyVariables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
             {
