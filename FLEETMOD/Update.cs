@@ -25,42 +25,7 @@ namespace FLEETMOD
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.supportRichText = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.text = "<color=#ffffff>Your Admiral </color><color=#ffff00>\n" + PLServer.Instance.GetPlayerFromPlayerID(0).GetPlayerName(true) + "</color>";
-					PLInGameUI.Instance.CurrentVersionLabel.text = Plugin.myversion;
-					PLInGameUI.Instance.ControlsText.enabled = true;
-					string str = "<color=#FFFFFF>";
-					switch (PLNetworkManager.Instance.LocalPlayer.GetClassID())
-					{
-						case 0:
-							if (PhotonNetwork.isMasterClient) str = "<color=#0066FF>";
-							else str = "<color=#ffff00>";
-							break;
-						case 1:
-							str = "<color=#FFFFFF>";
-							break;
-						case 2:
-							str = "<color=#00FF00>";
-							break;
-						case 3:
-							str = "<color=#FF0000>";
-							break;
-						case 4:
-							str = "<color=#FF6600>";
-							break;
 
-					}
-					PLInGameUI.Instance.ControlsText.text = string.Concat(new object[]
-					{
-						"Server : " + PhotonNetwork.room.Name + "\n \n",
-						str + PLNetworkManager.Instance.LocalPlayer.GetPlayerName(true) + "\n \n </color>",
-						string.Concat(new object[]
-						{
-							"Players : ",
-							PhotonNetwork.room.PlayerCount,
-							" / ",
-							PhotonNetwork.room.MaxPlayers,
-							"\n\n"
-						})
-					});
 					///<summary>
 					/// Below code creates Outpost dialog for assigning captains to unmanned ships.
 					///</summary>
