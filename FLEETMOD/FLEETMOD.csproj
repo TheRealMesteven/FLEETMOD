@@ -101,7 +101,7 @@
     <Compile Include="Visuals\UpdateShipName.cs" />
     <Compile Include="UpdateSpaceScrap.cs" />
     <Compile Include="Visuals\NameOverrides.cs" />
-    <Compile Include="Warp\WarpSkipButtonClicked.cs" />
+    <Compile Include="Warp\WarpSkipButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\0Harmony.dll" />

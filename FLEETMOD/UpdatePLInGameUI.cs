@@ -92,46 +92,6 @@ namespace FLEETMOD
 							num++;
 						}
 					}
-					if (PLNetworkManager.Instance != null && PLNetworkManager.Instance.LocalPlayer != null)
-					{
-						if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0) // If the skipwarp label should appear (Host nickname as skipwarp indicates we're in warp)
-						{
-							PLGlobal.SafeLabelSetText(__instance.SkipWarpLabel, ___cSkipWarpLabel.ToString(PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true)));
-							__instance.SkipWarpLabel.enabled = true;
-						}
-						else
-						{
-							__instance.SkipWarpLabel.enabled = false;
-						}
-					}
-					else
-					{
-						__instance.SkipWarpLabel.enabled = false;
-					}
-					string a2 = "";
-					if (PLCameraSystem.Instance != null)
-					{
-						a2 = PLCameraSystem.Instance.GetModeString();
-					}
-					if (UnityEngine.Random.Range(0, 20) == 0 || PLServer.Instance == null)
-					{
-						string text = "";
-						if (__instance.ControlsText.enabled)
-						{
-							if (a2 == "LocalPawn")
-							{
-								if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp")
-								{
-									text = text + "<color=#AAAAAA><color=#ffff00>" + PLInput.Instance.GetPrimaryKeyStringForAction(PLInputBase.EInputActionName.skip_warp, true) + "</color> Skip Warp</color>\n";
-								}
-							}
-							else
-							{
-								text = "";
-							}
-						}
-						PLGlobal.SafeLabelSetText(__instance.ControlsText, text);
-					}
 				}
 			}
 		}

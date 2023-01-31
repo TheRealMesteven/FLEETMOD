@@ -210,14 +210,6 @@ namespace FLEETMOD
 					}
 					if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
 					{
-						if (PLNetworkManager.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PhotonNetwork.isMasterClient && PLServer.Instance != null && PLServer.Instance.AllPlayersLoaded() && PLEncounterManager.Instance.PlayerShip != null && Mathf.Abs((float)((long)PLServer.Instance.GetEstimatedServerMs() - (long)PLEncounterManager.Instance.PlayerShip.LastBeginWarpServerTime)) > 16000f && PhotonNetwork.player.NickName != "skipwarp")
-						{
-							PhotonNetwork.player.NickName = "skipwarp";
-						}
-						if (!PLEncounterManager.Instance.PlayerShip.InWarp && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().NickName == "skipwarp")
-						{
-							PhotonNetwork.player.NickName = "null";
-						}
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
 							if (!MyVariables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
