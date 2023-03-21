@@ -15,7 +15,7 @@ namespace FLEETMOD.ModMessages
         {
             if (!PhotonNetwork.isMasterClient && sender.sender == PhotonNetwork.masterClient)
             {
-                PulsarModLoader.Utilities.Messaging.Echo(sender.sender, $"Update RPC {Count++} recieved");
+                //PulsarModLoader.Utilities.Messaging.Echo(sender.sender, $"Update RPC {Count++} recieved");
                 DeSerializeSyncValues(arguments.Cast<byte>().ToArray());
             }
         }
