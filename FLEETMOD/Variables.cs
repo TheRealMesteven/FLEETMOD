@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PulsarModLoader.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,6 +51,8 @@ namespace FLEETMOD
             {
                 PhotonNetwork.room.MaxPlayers = Fleet.Count() * 5;
             }
+            Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SHIP COUNT CHANGE] - Update Mod Message");
+            ModMessages.ServerUpdateVariables.UpdateClients();
         }
     }
 }

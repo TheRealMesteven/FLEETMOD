@@ -39,8 +39,6 @@ namespace FLEETMOD.ModMessages
             dataStream.Position = 0;
             using (BinaryWriter writer = new BinaryWriter(dataStream))
             {
-                writer.Write(Variables.shipfriendlyfire);
-                writer.Write(Variables.recentfriendlyfire);
                 writer.Write(Variables.survivalBonusDict.Count);
                 foreach (KeyValuePair<int, int> survivalBonusPair in Variables.survivalBonusDict)
                 {
@@ -78,8 +76,6 @@ namespace FLEETMOD.ModMessages
             {
                 using (BinaryReader reader = new BinaryReader(memoryStream))
                 {
-                    Variables.shipfriendlyfire = reader.ReadBoolean();
-                    Variables.recentfriendlyfire = reader.ReadBoolean();
                     Dictionary<int, int> survivalBonus = new Dictionary<int, int>();
                     int survivalBonusCount = reader.ReadInt32();
                     for (int i = 0; i < survivalBonusCount; i++)

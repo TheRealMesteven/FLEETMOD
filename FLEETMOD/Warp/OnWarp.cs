@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using ExitGames.Client.Photon.LoadBalancing;
 using HarmonyLib;
 using PulsarModLoader.Patches;
+using PulsarModLoader.Utilities;
 using UnityEngine;
 using static PulsarModLoader.Patches.HarmonyHelpers;
 
@@ -96,6 +97,8 @@ namespace FLEETMOD.Warp
                     }
                 }
                 Variables.DialogGenerated = false;
+                Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[WARP] - Update Mod Message");
+                ModMessages.ServerUpdateVariables.UpdateClients();
 
                 // Teleport unmodded players back to their positions when warping
                 foreach (KeyValuePair<int, PlayerPos> keyValuePair in UnModdedPositions)

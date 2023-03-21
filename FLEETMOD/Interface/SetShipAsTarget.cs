@@ -81,11 +81,11 @@ namespace FLEETMOD.Interface
                 /*continue if the following evaluates true
                  *Friendly Fire recently changed state
                 */
-                if (Variables.recentfriendlyfire)
+                /*if (Variables.recentfriendlyfire)
                 {
                     PLTabMenu.Instance.OnClick_ClearTarget();
                     Variables.recentfriendlyfire = false;
-                }
+                }*/
             }
             return false;
         }

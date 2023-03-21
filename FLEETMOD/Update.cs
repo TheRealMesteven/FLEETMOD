@@ -1,6 +1,7 @@
 ﻿using System;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using PulsarModLoader.Utilities;
 using Steamworks;
 using UnityEngine;
 
@@ -15,11 +16,6 @@ namespace FLEETMOD
 			{
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
-					if (PhotonNetwork.isMasterClient)
-					{
-						ModMessages.ServerUpdateVariables.UpdateClients();
-						//if (__instance.PlayerShipIsDestroyed) __instance.PlayerShipIsDestroyed = false; // This allows retry to spawn player but issues are caused.
-					}
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
@@ -175,12 +171,14 @@ namespace FLEETMOD
 					}
 					if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
 					{
+						bool SurvivalBonusUpdate = false;
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
 							if (!Variables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
 							// if playerid doesn't exist in dictionary add playerid to dict and set hp bonus to 0
 							{
 								Variables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
+								SurvivalBonusUpdate = true;
 							}
 
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
@@ -200,7 +198,12 @@ namespace FLEETMOD
                                 });
                             }*/
                         }
-						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
+						if (SurvivalBonusUpdate)
+						{
+                            Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SURVIVAL BONUS UPDATE] - Update Mod Message");
+                            ModMessages.ServerUpdateVariables.UpdateClients();
+						}
+                        if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{

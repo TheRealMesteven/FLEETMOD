@@ -5,6 +5,7 @@ using HarmonyLib;
 using PulsarModLoader;
 using PulsarModLoader.MPModChecks;
 using PulsarModLoader.SaveData;
+using PulsarModLoader.Utilities;
 using UnityEngine;
 
 namespace FLEETMOD.Setup
@@ -78,6 +79,8 @@ namespace FLEETMOD.Setup
                 {
                     Variables.NonModded.Add(inID);
                 }
+                Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[NEW PLAYER] - Update Mod Message");
+                ModMessages.ServerUpdateVariables.UpdateClients();
             }
         }
     }

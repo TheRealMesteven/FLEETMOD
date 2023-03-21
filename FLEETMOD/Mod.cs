@@ -6,6 +6,7 @@ using System.Linq;
 using HarmonyLib;
 using PulsarModLoader;
 using PulsarModLoader.SaveData;
+using PulsarModLoader.Utilities;
 using UnityEngine;
 
 namespace FLEETMOD

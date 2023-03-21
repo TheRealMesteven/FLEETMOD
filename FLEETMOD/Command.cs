@@ -3,6 +3,7 @@ using ExitGames.Client.Photon.LoadBalancing;
 using PulsarModLoader;
 using PulsarModLoader.Chat.Commands;
 using PulsarModLoader.Chat.Commands.CommandRouter;
+using PulsarModLoader.Utilities;
 using UnityEngine;
 
 namespace FLEETMOD
@@ -295,7 +296,7 @@ namespace FLEETMOD
                 }
             }
         }
-        public class FLEETMODFriendlyFire : ChatCommand
+        /*public class FLEETMODFriendlyFire : ChatCommand
         {
             public override string[] CommandAliases()
             {
@@ -324,18 +325,19 @@ namespace FLEETMOD
                         if (Variables.shipfriendlyfire)
                         {
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE DISABLED", Color.white, 2, "" });
-                            Variables.recentfriendlyfire = true;
+                            //Variables.recentfriendlyfire = true;
                         }
                         else
                         {
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
                         }
                         Variables.shipfriendlyfire = !Variables.shipfriendlyfire;
+                        Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[FRIENDLY FIRE] - Update Mod Message");
                         ModMessages.ServerUpdateVariables.UpdateClients();
                     }
                 }
             }
-        }
+        }*/
         public class FLEETMODGetFleet : ChatCommand
         {
             public override string[] CommandAliases() => new string[] { "fleet" };

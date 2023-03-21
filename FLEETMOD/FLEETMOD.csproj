@@ -82,7 +82,6 @@
     <Compile Include="Disabled\ServerAddCrewBotPlayer.cs" />
     <Compile Include="ModMessages\ServerChangePlayerNames.cs" />
     <Compile Include="ModMessages\ServerCreateShip.cs" />
-    <Compile Include="ModMessages\HostUpdateVariables.cs" />
     <Compile Include="Setup\ResetFleetmod.cs" />
     <Compile Include="Fixes\SetPlayerAsClassID.cs" />
     <Compile Include="Interface\SetShipAsTarget.cs" />
