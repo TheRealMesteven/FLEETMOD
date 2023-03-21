@@ -44,5 +44,12 @@ namespace FLEETMOD
             }
             return false;
         }
+        public static void ReCalculateMaxPlayers()
+        {
+            if (Fleet.Count() * 5 != PhotonNetwork.room.MaxPlayers)
+            {
+                PhotonNetwork.room.MaxPlayers = Fleet.Count() * 5;
+            }
+        }
     }
 }

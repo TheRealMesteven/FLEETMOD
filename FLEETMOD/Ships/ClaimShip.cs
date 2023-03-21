@@ -70,6 +70,7 @@ namespace FLEETMOD.Ships
                         }
                     }
                 }
+                if (PhotonNetwork.isMasterClient) Variables.ReCalculateMaxPlayers();
                 return false;
             }
         }

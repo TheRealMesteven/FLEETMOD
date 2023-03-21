@@ -130,6 +130,7 @@ namespace FLEETMOD
                 0,
                 "SHIP"
             });
+            Variables.ReCalculateMaxPlayers();
         }
     }
     [HarmonyPatch(typeof(PLServer), "Start")]

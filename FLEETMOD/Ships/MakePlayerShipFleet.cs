@@ -12,6 +12,7 @@ namespace FLEETMOD.Ships
             {
                 Variables.Fleet.Add(PLEncounterManager.Instance.PlayerShip.ShipID, new List<int>());
                 PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
+                Variables.ReCalculateMaxPlayers();
             }
         }
     }
@@ -24,6 +25,7 @@ namespace FLEETMOD.Ships
             {
                 Variables.Fleet.Add(PLEncounterManager.Instance.PlayerShip.ShipID, new List<int>());
                 PLEncounterManager.Instance.PlayerShip.AutoTarget = false;
+                Variables.ReCalculateMaxPlayers();
             }
         }
     }

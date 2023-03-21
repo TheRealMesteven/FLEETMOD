@@ -88,6 +88,7 @@ namespace FLEETMOD.Ships
                     __instance.HasBeenDestroyed = true;
                 }
                 __instance.TagID = -1;
+                if (PhotonNetwork.isMasterClient) Variables.ReCalculateMaxPlayers();
             }
             return true;
         }

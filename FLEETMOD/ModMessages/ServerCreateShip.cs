@@ -34,6 +34,7 @@ namespace FLEETMOD.ModMessages
                         0,
                         "SHIP"
                     });
+                    Variables.ReCalculateMaxPlayers();
                 }
                 else
                 {
