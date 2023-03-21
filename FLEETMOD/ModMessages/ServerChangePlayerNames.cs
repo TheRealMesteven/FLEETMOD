@@ -1,7 +1,7 @@
 ﻿using System;
 using PulsarModLoader;
 
-namespace FLEETMOD
+namespace FLEETMOD.ModMessages
 {
 	internal class ServerChangePlayerNames : ModMessage
 	{

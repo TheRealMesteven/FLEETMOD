@@ -2,17 +2,14 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Ships
 {
     [HarmonyPatch(typeof(PLServer), "ClaimShip")]
     internal class ClaimShip
     {
         public static bool Prefix(PLServer __instance, int inShipID)
         {
-            if (!MyVariables.isrunningmod)
-            {
-                return true;
-            }
+            if (!MyVariables.isrunningmod) return true;
             else
             {
                 foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
@@ -22,32 +19,7 @@ namespace FLEETMOD
                         plplayer.StartingShip = null;
                     }
                 }
-                if (!PhotonNetwork.isMasterClient)
-                {/*
-                    bool ShipHasCaptain = false;
-                    if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID == -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)
-                    {
-                        foreach (PLPlayer plplayer2 in PLServer.Instance.AllPlayers)
-                        {
-                            if (plplayer2 != null && !plplayer2.IsBot && plplayer2.GetClassID() == 0)
-                            {
-                                if (plplayer2.GetPhotonPlayer().GetScore() == inShipID)
-                                {
-                                    ShipHasCaptain = true;
-                                }
-                            }
-                        }
-                        if (ShipHasCaptain == false)
-                        {
-                            if (PLNetworkManager.Instance.LocalPlayer.GetClassID() != 0)
-                            {
-                                PLNetworkManager.Instance.LocalPlayer.SetClassID(0);
-                                PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().SetScore(inShipID);
-                            }
-                        }
-                    }*/
-                    return false;
-                }
+                if (!PhotonNetwork.isMasterClient)  return false;
                 else
                 {
                     if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == 1)

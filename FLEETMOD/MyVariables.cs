@@ -41,19 +41,6 @@ namespace FLEETMOD
             }
             return -1;
         }
-        public static List<int> GetShipCrew (int inShipID)
-        {
-            List<int> Crew = null;
-            foreach (KeyValuePair<PLShipInfo, int> pair in ShipCrews)
-            {
-                PLPlayer Player = PLServer.Instance.GetPlayerFromPlayerID(pair.Value);
-                if (Player != null && pair.Key == PLEncounterManager.Instance.GetShipFromID(inShipID) && Player.TeamID == 0)
-                {
-                    Crew.Add(pair.Value);
-                }
-            }
-            return Crew;
-        }
         public static bool ShipHasCaptain (int inShipID)
         {
             if (PLServer.Instance != null && PLEncounterManager.Instance.GetShipFromID(inShipID) != null)

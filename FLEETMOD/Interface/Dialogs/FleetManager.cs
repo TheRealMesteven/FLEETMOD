@@ -84,7 +84,7 @@ namespace FLEETMOD.Interface.Dialogs
             if (PhotonNetwork.isMasterClient && currentdialog < 4) // admiral check
             {
                 currentdialog = 4;
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+                ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
                 {
                     indata,
                     newCaptainID,

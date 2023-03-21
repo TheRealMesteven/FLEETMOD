@@ -1,19 +1,21 @@
-﻿using System;
+﻿using PulsarModLoader;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HarmonyLib;
-using PulsarModLoader;
-using UnityEngine;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace FLEETMOD
-{   
+namespace FLEETMOD.ModMessages
+{
     internal class ServerUpdateVariables : ModMessage
     {
+        private static int Count = 0;
         public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
         {
             if (!PhotonNetwork.isMasterClient && sender.sender == PhotonNetwork.masterClient)
             {
+                PulsarModLoader.Utilities.Messaging.Echo(sender.sender, $"Update RPC {Count++} recieved");
                 DeSerializeSyncValues(arguments.Cast<byte>().ToArray());
             }
         }
@@ -26,7 +28,7 @@ namespace FLEETMOD
                     PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
                     if (player != null)
                     {
-                        PulsarModLoader.ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
+                        PulsarModLoader.ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
                     }
                 }
             }
@@ -121,42 +123,6 @@ namespace FLEETMOD
             {
                 PulsarModLoader.Utilities.Logger.Info($"Failed to read Serialized Values, returning null.\n{ex.Message}");
             }
-        }
-    }
-    [HarmonyPatch(typeof(PLServer), "LoginMessage")] //Initial Sync. If multiple messages exist consider making new Modmessage for initial sync
-    class LoginMessagePatch
-    {
-        static void Postfix(PhotonPlayer newPhotonPlayer)
-        {
-            if (PhotonNetwork.isMasterClient)
-            {
-                ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ActivateFleetmod", newPhotonPlayer, new object[] { });
-            }
-        }
-    }
-    [HarmonyPatch(typeof(PLServer), "Start")]
-    class StartPatch
-    { /// Initial Patch creating the dictionaries and lists.
-        static void Postfix()
-        {
-            MyVariables.ShipCrews = new Dictionary<PLShipInfo, int>();
-            MyVariables.survivalBonusDict = new Dictionary<int, int>();
-            MyVariables.Fleet = new Dictionary<int, List<int>>();
-            MyVariables.DialogGenerated = false;
-            MyVariables.Modded = new List<int>();
-            MyVariables.NonModded = new List<int>();
-            if (PhotonNetwork.isMasterClient)
-            {
-                MyVariables.UnModdedCrews = new Dictionary<int, int>();
-                foreach (PulsarMod pulsarMod in ModManager.Instance.GetAllMods())
-                {
-                    if (pulsarMod.HarmonyIdentifier() == "mod.id107.beammeup")
-                    {
-                        PulsarModLoader.Utilities.Logger.Info("Fleetmod has disabled " + pulsarMod.Name + " due to mod conflicts.");
-                        pulsarMod.Unload();
-                    }
-                }
-            }   
         }
     }
 }

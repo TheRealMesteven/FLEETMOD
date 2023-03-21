@@ -20,7 +20,7 @@ namespace FLEETMOD.Visuals
                 {
                         ___ShipNameInput.Field.text
                 });
-                ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerChangePlayerNames", PhotonTargets.MasterClient, new object[]
+                ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerChangePlayerNames", PhotonTargets.MasterClient, new object[]
                 {
                         ___ShipNameInput.Field.text,
                         PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().GetScore()

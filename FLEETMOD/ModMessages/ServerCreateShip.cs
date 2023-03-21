@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using PulsarModLoader;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.ModMessages
 {
 	internal class ServerCreateShip : ModMessage
 	{

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Ships
 {
     [HarmonyPatch(typeof(PLShipInfo), "CheckForIntruders")]
     internal class IntruderAlarm

@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Ships
 {
     [HarmonyPatch(typeof(PLShipInfoBase), "AddHostileShip")]
     internal class AddHostileShip

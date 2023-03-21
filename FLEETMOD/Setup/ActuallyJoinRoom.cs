@@ -7,7 +7,7 @@ using PulsarModLoader.MPModChecks;
 using PulsarModLoader.SaveData;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Setup
 {
     [HarmonyPatch(typeof(PLUIPlayMenu), "ActuallyJoinRoom")]
     internal class ActuallyJoinRoom
@@ -87,17 +87,6 @@ namespace FLEETMOD
         private static void Postfix()
         {
             if (PhotonNetwork.isMasterClient)
-            {
-                MyVariables.isrunningmod = true;
-            }
-        }
-    }
-    public class ActivateFleetmod : ModMessage
-    {
-        public static List<PhotonPlayer> PhotonClients;
-        public override void HandleRPC(object[] arguments, PhotonMessageInfo sender)
-        {
-            if (sender.sender == PhotonNetwork.masterClient)
             {
                 MyVariables.isrunningmod = true;
             }

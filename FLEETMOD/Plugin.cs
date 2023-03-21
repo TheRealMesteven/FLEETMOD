@@ -22,26 +22,13 @@ namespace FLEETMOD
         class MySaveData : PMLSaveData
         {
             public static Dictionary<string, string> Ships = null;
-            public override string Identifier()
-            {
-                return "Mest.FleetMod";
-            }
+            public override string Identifier() => "Mest.FleetMod";
 
             public override void LoadData(byte[] Data, uint VersionID)
             {
-                //your data should be read here
                 Ships = DeSerializeFleetShips(Data);
             }
-
-            public override byte[] SaveData()
-            {
-                //return new byte[] { };
-                
-                //your savedata should be written here as a byte array.
-                byte[] Array = SerializeFleetShips(GetFleetShips());
-                return Array;
-                
-            }
+            public override byte[] SaveData() => SerializeFleetShips(GetFleetShips());
         }
         public static List<PLShipInfo> GetFleetShips()
         {

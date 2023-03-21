@@ -17,7 +17,7 @@ namespace FLEETMOD
 				{
 					if (PhotonNetwork.isMasterClient)
 					{
-						ServerUpdateVariables.UpdateClients();
+						ModMessages.ServerUpdateVariables.UpdateClients();
 						//if (__instance.PlayerShipIsDestroyed) __instance.PlayerShipIsDestroyed = false; // This allows retry to spawn player but issues are caused.
 					}
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;

@@ -6,7 +6,7 @@ using HarmonyLib;
 using PulsarModLoader;
 using UnityEngine;
 using static PulsarModLoader.Patches.HarmonyHelpers;
-namespace FLEETMOD
+namespace FLEETMOD.Ships
 {
     [HarmonyPatch(typeof(PLPlayer), "AttemptToTransferNeutralCargo")]
     internal class AttemptToTransferNeutralCargo

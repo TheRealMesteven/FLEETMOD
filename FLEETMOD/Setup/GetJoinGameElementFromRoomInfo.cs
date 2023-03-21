@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Setup
 {
 	[HarmonyPatch(typeof(PLUIPlayMenu), "GetJoinGameElementFromRoomInfo")]
 	internal class GetJoinGameElementFromRoomInfo

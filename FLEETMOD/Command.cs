@@ -331,7 +331,7 @@ namespace FLEETMOD
                             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[] { "SHIP FRIENDLYFIRE ENABLED", Color.white, 2, "" });
                         }
                         MyVariables.shipfriendlyfire = !MyVariables.shipfriendlyfire;
-                        ServerUpdateVariables.UpdateClients();
+                        ModMessages.ServerUpdateVariables.UpdateClients();
                     }
                 }
             }

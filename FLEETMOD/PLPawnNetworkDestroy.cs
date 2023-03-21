@@ -19,8 +19,6 @@ namespace FLEETMOD
                 var playerid = __instance.GetPlayer().GetPlayerID();
                 MyVariables.survivalBonusDict[playerid] = Mathf.Clamp(MyVariables.survivalBonusDict[playerid] - 5, -5, 20);     
             }
-
-
         }
     }
 }

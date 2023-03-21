@@ -6,7 +6,7 @@ using UnityEngine;
 namespace FLEETMOD
 {
     [HarmonyPatch(typeof(PLUICreateGameMenu), "ClickEngage")]
-    internal class ClickEngage
+    internal class CreateGameMenu
     {
         public static bool Prefix(PLUICreateGameMenu __instance, ref int ___CurrentSelectedShipIndex)
         {
@@ -30,7 +30,7 @@ namespace FLEETMOD
             }
             PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
             PLNetworkManager.Instance.LocalPlayer.SetClassID(0);
-            ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+            ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
             {
                     PLNetworkManager.Instance.SelectedShipTypeID,
                     PLNetworkManager.Instance.LocalPlayer.GetPlayerID(),
