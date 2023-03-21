@@ -200,7 +200,7 @@ namespace FLEETMOD
                         }
 						if (SurvivalBonusUpdate)
 						{
-                            Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SURVIVAL BONUS UPDATE] - Update Mod Message");
+                            //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SURVIVAL BONUS UPDATE] - Update Mod Message");
                             ModMessages.ServerUpdateVariables.UpdateClients();
 						}
                         if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)

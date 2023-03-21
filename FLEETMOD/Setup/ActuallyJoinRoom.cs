@@ -79,7 +79,7 @@ namespace FLEETMOD.Setup
                 {
                     Variables.NonModded.Add(inID);
                 }
-                Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[NEW PLAYER] - Update Mod Message");
+                //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[NEW PLAYER] - Update Mod Message");
                 ModMessages.ServerUpdateVariables.UpdateClients();
             }
         }

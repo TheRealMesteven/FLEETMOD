@@ -97,7 +97,7 @@ namespace FLEETMOD.Warp
                     }
                 }
                 Variables.DialogGenerated = false;
-                Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[WARP] - Update Mod Message");
+                //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[WARP] - Update Mod Message");
                 ModMessages.ServerUpdateVariables.UpdateClients();
 
                 // Teleport unmodded players back to their positions when warping

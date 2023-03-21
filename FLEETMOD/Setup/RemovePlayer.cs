@@ -82,7 +82,7 @@ namespace FLEETMOD.Setup
                     PhotonNetwork.Destroy(inPlayer.GetPawn().gameObject);
                 }
                 PhotonNetwork.Destroy(inPlayer.gameObject);
-                Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[PLAYER LEAVE] - Update Mod Message");
+                //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[PLAYER LEAVE] - Update Mod Message");
                 ModMessages.ServerUpdateVariables.UpdateClients();
             }
             return false;

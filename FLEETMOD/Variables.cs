@@ -51,7 +51,7 @@ namespace FLEETMOD
             {
                 PhotonNetwork.room.MaxPlayers = Fleet.Count() * 5;
             }
-            Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SHIP COUNT CHANGE] - Update Mod Message");
+            //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SHIP COUNT CHANGE] - Update Mod Message");
             ModMessages.ServerUpdateVariables.UpdateClients();
         }
     }
