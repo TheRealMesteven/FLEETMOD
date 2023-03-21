@@ -3,7 +3,7 @@ using HarmonyLib;
 using PulsarModLoader;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface
 {
     [HarmonyPatch(typeof(PLUICreateGameMenu), "ClickEngage")]
     internal class CreateGameMenu

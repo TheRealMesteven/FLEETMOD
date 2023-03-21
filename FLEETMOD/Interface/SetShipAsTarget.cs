@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface
 {
     [HarmonyPatch(typeof(PLInGameUI), "SetShipAsTarget")]
     internal class SetShipAsTarget

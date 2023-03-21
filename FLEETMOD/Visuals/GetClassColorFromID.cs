@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Visuals
 {
 	[HarmonyPatch(typeof(PLPlayer), "GetClassColorFromID")]
 	internal class GetClassColorFromID

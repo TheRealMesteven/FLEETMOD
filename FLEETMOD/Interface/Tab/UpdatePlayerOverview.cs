@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface.Tab
 {
     [HarmonyPatch(typeof(PLOverviewPlayerInfoDisplay), "Update")]
     internal class UpdatePlayerOverview
@@ -12,7 +12,7 @@ namespace FLEETMOD
             if (MyVariables.isrunningmod)
             {
                 __instance.PlayerName.text = PLReadableStringManager.Instance.GetFormattedResultFromInputString(__instance.MyPlayer.GetPlayerName(true));
-                if (UpdatePLTabMenu.ChangeClassPage)
+                if (Interface.Tab.UpdatePLTabMenu.ChangeClassPage)
                 {
                     __instance.ClassName.text = PLReadableStringManager.Instance.GetFormattedResultFromInputString(__instance.MyPlayer.StartingShip.ShipNameValue.ToUpper());
                 }

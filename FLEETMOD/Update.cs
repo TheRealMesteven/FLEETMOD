@@ -39,10 +39,10 @@ namespace FLEETMOD
                         }
 					}
 					///
-					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && (UpdatePLTabMenu.CrewPage != 0 || UpdatePLTabMenu.ChangeClassPage))
+					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && (Interface.Tab.UpdatePLTabMenu.CrewPage != 0 || Interface.Tab.UpdatePLTabMenu.ChangeClassPage))
 					{
-                        UpdatePLTabMenu.CrewPage = 0;
-						UpdatePLTabMenu.ChangeClassPage = false;
+                        Interface.Tab.UpdatePLTabMenu.CrewPage = 0;
+                        Interface.Tab.UpdatePLTabMenu.ChangeClassPage = false;
 					}
 					// This is where warp range bindings occur
 					if (__instance != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null)

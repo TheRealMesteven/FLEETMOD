@@ -3,7 +3,7 @@ using HarmonyLib;
 using Steamworks;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface.Tab
 {
     [HarmonyPatch(typeof(PLOverviewPlayerInfoDisplay), "OnButtonPress")]
     internal class OnButtonPress

@@ -3,7 +3,7 @@ using ExitGames.Client.Photon.LoadBalancing;
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Setup
 {
     [HarmonyPatch(typeof(PLServer), "RemovePlayer")]
     internal class RemovePlayer

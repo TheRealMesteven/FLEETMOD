@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface.Tab
 {
     [HarmonyPatch(typeof(PLTabMenu), "Update")]
     internal class UpdatePLTabMenu

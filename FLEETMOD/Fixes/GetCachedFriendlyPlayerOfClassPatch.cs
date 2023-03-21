@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLServer), "GetCachedFriendlyPlayerOfClass", new Type[]
     {

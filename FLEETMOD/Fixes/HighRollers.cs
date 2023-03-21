@@ -6,7 +6,7 @@ using static PulsarModLoader.Patches.HarmonyHelpers;
 using static HarmonyLib.AccessTools;
 using ExitGames.Client.Photon.LoadBalancing;
 
-namespace FLEETMOD
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLHighRollersShipInfo), "OnLiarsDiceGameWin")]
     class HighRollersChips

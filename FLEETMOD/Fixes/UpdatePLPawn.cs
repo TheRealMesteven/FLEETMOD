@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-namespace FLEETMOD
+﻿using HarmonyLib;
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLPawn), "Update")]
     internal class UpdatePLPawn

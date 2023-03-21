@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLServer), "SetPlayerAsClassID")]
     internal class SetPlayerAsClassID
@@ -18,6 +18,7 @@ namespace FLEETMOD
                     if (plplayer != null && plplayer.TeamID == 0 && plplayer.GetClassID() == classID && plplayer != playerFromPlayerID && playerFromPlayerID.GetPhotonPlayer().GetScore() == 0)
                     {
                         flag3 = true;
+                        break;
                     }
                 }
                 if (!flag3)

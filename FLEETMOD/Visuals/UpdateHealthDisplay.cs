@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace FLEETMOD
 {
 	[HarmonyPatch(typeof(PLInGameUI), "Update")]
-	internal class UpdatePLInGameUI
+	internal class UpdateHealthDisplay
 	{
 		public static void Postfix(PLInGameUI __instance, ref List<PLPlayer> ___relevantPlayersForCrewStatus, ref PLCachedFormatString<string> ___cSkipWarpLabel, ref Text[] ___CrewStatusSlots_HPs, ref Text[] ___CrewStatusSlots_Names, ref Image[] ___CrewStatusSlots_BGs, ref Image[] ___CrewStatusSlots_Fills, ref Image[] ___CrewStatusSlots_TalkingImages, ref Image[] ___CrewStatusSlots_SlowFills)
 		{

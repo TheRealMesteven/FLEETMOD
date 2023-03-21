@@ -11,7 +11,7 @@ using static PulsarModLoader.Utilities.Logger;
 using static PulsarModLoader.Patches.HarmonyHelpers;
 using static System.Reflection.Emit.OpCodes;
 
-namespace FLEETMOD
+namespace FLEETMOD.Ships
 {
     [HarmonyPatch(typeof(PLSpaceScrap), "OnCollect")]
     class SpaceSrapOnCollect

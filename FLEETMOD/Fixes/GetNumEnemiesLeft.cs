@@ -1,7 +1,7 @@
 ﻿using System;
 using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLMissionObjective_ReachSectorOfType), "GetNumEnemiesLeft")]
     internal class GetNumEnemiesLeft

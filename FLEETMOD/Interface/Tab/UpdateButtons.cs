@@ -4,7 +4,7 @@ using HarmonyLib;
 using Steamworks;
 using UnityEngine;
 
-namespace FLEETMOD
+namespace FLEETMOD.Interface.Tab
 {
     [HarmonyPatch(typeof(PLOverviewPlayerInfoDisplay), "UpdateButtons")]
     internal class UpdateButtons
@@ -72,7 +72,7 @@ namespace FLEETMOD
                 ___ButtonsActiveTypes.Clear();
                 if (__instance.MyPlayer != null)
                 {
-                    if (UpdatePLTabMenu.ChangeClassPage)
+                    if (Interface.Tab.UpdatePLTabMenu.ChangeClassPage)
                     {
                         ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_PILOT);
                         ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_SCI);

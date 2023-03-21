@@ -1,7 +1,6 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
 
-namespace FLEETMOD
+namespace FLEETMOD.Fixes
 {
     [HarmonyPatch(typeof(PLServerClassInfo), "OnPhotonSerializeView")]
     internal class OnPhotonSerializeView
