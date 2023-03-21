@@ -23,12 +23,12 @@ namespace FLEETMOD.ModMessages
         {
             if (PLEncounterManager.Instance.PlayerShip != null)
             {
-                foreach (int PlayerID in MyVariables.Modded)
+                foreach (int PlayerID in Variables.Modded)
                 {
                     PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
                     if (player != null)
                     {
-                        PulsarModLoader.ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
+                        PulsarModLoader.ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
                     }
                 }
             }
@@ -39,16 +39,16 @@ namespace FLEETMOD.ModMessages
             dataStream.Position = 0;
             using (BinaryWriter writer = new BinaryWriter(dataStream))
             {
-                writer.Write(MyVariables.shipfriendlyfire);
-                writer.Write(MyVariables.recentfriendlyfire);
-                writer.Write(MyVariables.survivalBonusDict.Count);
-                foreach (KeyValuePair<int, int> survivalBonusPair in MyVariables.survivalBonusDict)
+                writer.Write(Variables.shipfriendlyfire);
+                writer.Write(Variables.recentfriendlyfire);
+                writer.Write(Variables.survivalBonusDict.Count);
+                foreach (KeyValuePair<int, int> survivalBonusPair in Variables.survivalBonusDict)
                 {
                     writer.Write(survivalBonusPair.Key);
                     writer.Write(survivalBonusPair.Value);
                 }
-                writer.Write(MyVariables.Fleet.Count);
-                foreach (KeyValuePair<int, List<int>> FleetPair in MyVariables.Fleet)
+                writer.Write(Variables.Fleet.Count);
+                foreach (KeyValuePair<int, List<int>> FleetPair in Variables.Fleet)
                 {
                     writer.Write(FleetPair.Key);
                     writer.Write(FleetPair.Value.Count);
@@ -57,13 +57,13 @@ namespace FLEETMOD.ModMessages
                         writer.Write(FleetCrewMember);
                     }
                 }
-                writer.Write(MyVariables.Modded.Count);
-                foreach (int ModdedID in MyVariables.Modded)
+                writer.Write(Variables.Modded.Count);
+                foreach (int ModdedID in Variables.Modded)
                 {
                     writer.Write(ModdedID);
                 }
-                writer.Write(MyVariables.NonModded.Count);
-                foreach (int NonModdedID in MyVariables.NonModded)
+                writer.Write(Variables.NonModded.Count);
+                foreach (int NonModdedID in Variables.NonModded)
                 {
                     writer.Write(NonModdedID);
                 }
@@ -78,8 +78,8 @@ namespace FLEETMOD.ModMessages
             {
                 using (BinaryReader reader = new BinaryReader(memoryStream))
                 {
-                    MyVariables.shipfriendlyfire = reader.ReadBoolean();
-                    MyVariables.recentfriendlyfire = reader.ReadBoolean();
+                    Variables.shipfriendlyfire = reader.ReadBoolean();
+                    Variables.recentfriendlyfire = reader.ReadBoolean();
                     Dictionary<int, int> survivalBonus = new Dictionary<int, int>();
                     int survivalBonusCount = reader.ReadInt32();
                     for (int i = 0; i < survivalBonusCount; i++)
@@ -88,7 +88,7 @@ namespace FLEETMOD.ModMessages
                         int Value = reader.ReadInt32();
                         survivalBonus.Add(Key, Value);
                     }
-                    MyVariables.survivalBonusDict = survivalBonus;
+                    Variables.survivalBonusDict = survivalBonus;
                     Dictionary<int, List<int>> Fleet = new Dictionary<int, List<int>>();
                     int FleetCount = reader.ReadInt32();
                     for (int i = 0; i < FleetCount; i++)
@@ -102,21 +102,21 @@ namespace FLEETMOD.ModMessages
                         }
                         Fleet.Add(ShipID, Crew);
                     }
-                    MyVariables.Fleet = Fleet;
+                    Variables.Fleet = Fleet;
                     List<int> Modded = new List<int>();
                     int ModdedCount = reader.ReadInt32();
                     for (int i = 0; i < ModdedCount; i++)
                     {
                         Modded.Add(reader.ReadInt32());
                     }
-                    MyVariables.Modded = Modded;
+                    Variables.Modded = Modded;
                     List<int> NonModded = new List<int>();
                     int NonModdedCount = reader.ReadInt32();
                     for (int i = 0; i < NonModdedCount; i++)
                     {
                         NonModded.Add(reader.ReadInt32());
                     }
-                    MyVariables.NonModded = NonModded;
+                    Variables.NonModded = NonModded;
                 }
             }
             catch (Exception ex)

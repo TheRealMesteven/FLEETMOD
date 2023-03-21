@@ -12,7 +12,7 @@ namespace FLEETMOD.Disabled
     {
         public static bool Prefix()
         {
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
             {
                 PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD - Disabled Load", PhotonTargets.All);
                 return false;
@@ -25,7 +25,7 @@ namespace FLEETMOD.Disabled
     {
         public static bool Prefix()
         {
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
             {
                 PulsarModLoader.Utilities.Messaging.Notification("FLEETMOD - Disabled Retry", PhotonTargets.All);
                 return false;

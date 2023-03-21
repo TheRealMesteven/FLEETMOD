@@ -15,7 +15,7 @@ namespace FLEETMOD.Visuals
         /// </summary>
         public static bool Prefix(PLPawn __instance, ref string __result)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             __result = "";
             if (__instance.MyPlayer != null)
             {

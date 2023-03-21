@@ -10,7 +10,7 @@ namespace FLEETMOD.Setup
     {
         public static bool Prefix(PLServer __instance, ref PLPlayer inPlayer)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (inPlayer != null)
             {
                 PLServer.Instance.photonView.RPC("LogoutMessage", PhotonTargets.All, new object[]
@@ -57,18 +57,18 @@ namespace FLEETMOD.Setup
                 }*/
                 PLServer.Instance.ClearPlayerData(inPlayer);
                 PLServer.Instance.AllPlayers.Remove(inPlayer);
-                MyVariables.survivalBonusDict.Remove(inPlayer.GetPlayerID());//Removing player from healthBonus dictonary on leave
-                if (MyVariables.UnModdedCrews.ContainsKey(inPlayer.GetPlayerID()))
+                Variables.survivalBonusDict.Remove(inPlayer.GetPlayerID());//Removing player from healthBonus dictonary on leave
+                if (Variables.UnModdedCrews.ContainsKey(inPlayer.GetPlayerID()))
                 {
-                    MyVariables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
+                    Variables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
                 }
-                if (MyVariables.Modded.Contains(inPlayer.GetPlayerID()))
+                if (Variables.Modded.Contains(inPlayer.GetPlayerID()))
                 {
-                    MyVariables.Modded.Remove(inPlayer.GetPlayerID());
+                    Variables.Modded.Remove(inPlayer.GetPlayerID());
                 }
-                if (MyVariables.NonModded.Contains(inPlayer.GetPlayerID()))
+                if (Variables.NonModded.Contains(inPlayer.GetPlayerID()))
                 {
-                    MyVariables.NonModded.Remove(inPlayer.GetPlayerID());
+                    Variables.NonModded.Remove(inPlayer.GetPlayerID());
                 }
                 /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
                 {

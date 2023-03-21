@@ -42,7 +42,7 @@ namespace FLEETMOD.Interface.Dialogs
                 currentdialog = 1;
                 this.DialogTextLeft += "\nAdmiral, who will be the captain of the new ship?";
                 this.m_AllChoices.Clear();
-                foreach (int moddedid in MyVariables.Modded)
+                foreach (int moddedid in Variables.Modded)
                 {
                     PLPlayer possibleCaptain = PLServer.Instance.GetPlayerFromPlayerID(moddedid);
                     if (possibleCaptain != null && possibleCaptain.GetClassID() != 0)
@@ -84,14 +84,14 @@ namespace FLEETMOD.Interface.Dialogs
             if (PhotonNetwork.isMasterClient && currentdialog < 4) // admiral check
             {
                 currentdialog = 4;
-                ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+                ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
                 {
                     indata,
                     newCaptainID,
                     PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
                 });
                 GameObject.Destroy(this.gameObject);
-                MyVariables.DialogGenerated = false;
+                Variables.DialogGenerated = false;
             }
         }
         ///
@@ -107,7 +107,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.DialogTextLeft += "\nAdmiral, what ship requires a Captain?";
                 foreach (PLShipInfo possibleShip in PLEncounterManager.Instance.AllShips.Values)
                 {
-                    if (possibleShip != null && possibleShip.TagID == -23 && !MyVariables.ShipHasCaptain(possibleShip.ShipID))
+                    if (possibleShip != null && possibleShip.TagID == -23 && !Variables.ShipHasCaptain(possibleShip.ShipID))
                     {
                         this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(RCSShipDefine), possibleShip.ShipID));
                     }
@@ -132,7 +132,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.m_AllChoices.Clear();
                 currentdialog = 3;
                 this.DialogTextLeft += "\nAdmiral, who will be the captain of the ship?";
-                foreach (int moddedid in MyVariables.Modded)
+                foreach (int moddedid in Variables.Modded)
                 {
                     PLPlayer possibleCaptain = PLServer.Instance.GetPlayerFromPlayerID(moddedid);
                     if (possibleCaptain != null && possibleCaptain.GetClassID() != 0)
@@ -156,7 +156,7 @@ namespace FLEETMOD.Interface.Dialogs
                     0
                 });
                 GameObject.Destroy(this.gameObject);
-                MyVariables.DialogGenerated = false;
+                Variables.DialogGenerated = false;
             }
         }
         ///
@@ -174,7 +174,7 @@ namespace FLEETMOD.Interface.Dialogs
                 {
                     if (possibleShip != null)
                     {
-                        if (possibleShip.TagID == -23 && MyVariables.GetShipCaptain(possibleShip.ShipID) != 0)
+                        if (possibleShip.TagID == -23 && Variables.GetShipCaptain(possibleShip.ShipID) != 0)
                         {
                             this.m_AllChoices.Add(new PLHailChoice_SimpleCustomData(possibleShip.ShipNameValue, new PLHailChoiceDelegateData(SSCrewReassignment), possibleShip.ShipID));
                         }
@@ -205,7 +205,7 @@ namespace FLEETMOD.Interface.Dialogs
                 }
                 //ShipStorage.StoreShip(indata);
                 GameObject.Destroy(this.gameObject);
-                MyVariables.DialogGenerated = false;
+                Variables.DialogGenerated = false;
             }
         }
         /// 
@@ -237,7 +237,7 @@ namespace FLEETMOD.Interface.Dialogs
                 this.DialogTextLeft += "\nAlright Admiral, we are currently withdrawing the ship from your personal hanger.";
                 //ShipLoading.LoadShip(indata, true);
                 GameObject.Destroy(this.gameObject);
-                MyVariables.DialogGenerated = false;
+                Variables.DialogGenerated = false;
             }
         }
         /// 
@@ -245,7 +245,7 @@ namespace FLEETMOD.Interface.Dialogs
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ExitButton()
         {
-            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Cancel", new PLHailChoiceDelegate((authority, local) => { if (PhotonNetwork.isMasterClient) GameObject.Destroy(this.gameObject); MyVariables.DialogGenerated = false; })));
+            this.m_AllChoices.Add(new PLHailChoice_SimpleCustom("Cancel", new PLHailChoiceDelegate((authority, local) => { if (PhotonNetwork.isMasterClient) GameObject.Destroy(this.gameObject); Variables.DialogGenerated = false; })));
         }
 
         private string DialogTextLeft = "Good evening Admiral, what can we do for you today?";

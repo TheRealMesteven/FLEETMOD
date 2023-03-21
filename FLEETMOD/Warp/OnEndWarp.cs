@@ -9,15 +9,15 @@ namespace FLEETMOD.Warp
     {
         public static bool Prefix(PLShipInfoBase __instance)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip == __instance as PLShipInfo)
             {
                 // Store the locations of NonModded Players for Teleporting
                 Dictionary<int, PlayerPos> UnModdedPositions = new Dictionary<int, PlayerPos>(); // PlayerID, PlayerPos
-                foreach (int playerid in MyVariables.NonModded)
+                foreach (int playerid in Variables.NonModded)
                 {
                     PLPlayer plplayer = PLServer.Instance.GetPlayerFromPlayerID(playerid);
-                    if (plplayer != null && MyVariables.UnModdedCrews.ContainsKey(playerid))
+                    if (plplayer != null && Variables.UnModdedCrews.ContainsKey(playerid))
                     {
                         PlayerPos Position = new PlayerPos
                         {
@@ -30,7 +30,7 @@ namespace FLEETMOD.Warp
                 }
 
                 // Skip warp for ALL fleet ships
-                foreach (int plshipid in MyVariables.Fleet.Keys)
+                foreach (int plshipid in Variables.Fleet.Keys)
                 {
                     PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(plshipid);
                     if (plshipInfoBase != null && plshipInfoBase.InWarp && plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != __instance)
@@ -44,11 +44,11 @@ namespace FLEETMOD.Warp
                 // Create the FleetManager Dialog
                 if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor"))
                 {
-                    if (MyVariables.DialogGenerated != true)
+                    if (Variables.DialogGenerated != true)
                     {
                         var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
                         go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
-                        MyVariables.DialogGenerated = true;
+                        Variables.DialogGenerated = true;
                     }
                 }
 

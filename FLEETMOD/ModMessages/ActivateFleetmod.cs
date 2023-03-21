@@ -14,7 +14,7 @@ namespace FLEETMOD.ModMessages
         {
             if (sender.sender == PhotonNetwork.masterClient)
             {
-                MyVariables.isrunningmod = true;
+                Variables.isrunningmod = true;
             }
         }
     }

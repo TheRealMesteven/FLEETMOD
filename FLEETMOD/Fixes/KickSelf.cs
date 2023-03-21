@@ -8,7 +8,7 @@ namespace FLEETMOD.Fixes
     {
         public static bool Prefix(PhotonMessageInfo pmi)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (pmi.sender.IsMasterClient)
             {
                 PLNetworkManager.Instance.StartCoroutine(PLNetworkManager.Instance.AddErrorMsgMenu("You have been kicked from the game!", 1f));

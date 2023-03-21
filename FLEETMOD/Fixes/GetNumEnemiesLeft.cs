@@ -8,7 +8,7 @@ namespace FLEETMOD.Fixes
     {
         public static bool Prefix(ref int __result)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             int num = 0;
             foreach (PLShipInfoBase plshipInfoBase in PLEncounterManager.Instance.AllShips.Values)
             {

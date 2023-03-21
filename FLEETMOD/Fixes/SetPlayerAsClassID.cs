@@ -8,7 +8,7 @@ namespace FLEETMOD.Fixes
     {
         public static bool Prefix(int playerID, int classID)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(playerID);
             if (playerFromPlayerID != null)
             {

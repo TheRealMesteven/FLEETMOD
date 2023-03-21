@@ -64,7 +64,7 @@
     <Compile Include="Ships\Internal_AttemptBlindJump.cs" />
     <Compile Include="Warp\JumpBtnClick.cs" />
     <Compile Include="Fixes\KickSelf.cs" />
-    <Compile Include="MyVariables.cs" />
+    <Compile Include="Variables.cs" />
     <Compile Include="Warp\NetworkToggleWarpCharge.cs" />
     <Compile Include="Warp\OnButtonClick.cs" />
     <Compile Include="Interface\Tab\OnButtonPress.cs" />
@@ -73,7 +73,7 @@
     <Compile Include="Fixes\CreateDefaultItems.cs" />
     <Compile Include="Warp\OnWarp.cs" />
     <Compile Include="Fixes\PLPawnNetworkDestroy.cs" />
-    <Compile Include="Plugin.cs" />
+    <Compile Include="Mod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup\RemovePlayer.cs" />
     <Compile Include="Fixes\SafeLabelSetText.cs" />

@@ -13,7 +13,7 @@ namespace FLEETMOD.Ships
     {
         public static void Postfix(ref ObscuredFloat ___m_WarpRange, PLShipStats __instance)
         {
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
             {
                 if (PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 3f)
                 {

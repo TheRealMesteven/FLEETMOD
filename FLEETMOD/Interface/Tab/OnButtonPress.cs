@@ -29,7 +29,7 @@ namespace FLEETMOD.Interface.Tab
         }
         public static void Prefix(PLOverviewPlayerInfoDisplay __instance, ref PLTabMenuPlayerInfoButton inButton, ref float ___LastButtonPressProcessTime, ref float ___cached_LastUpdatedPlayerInfoTime)
         {
-            if (!MyVariables.isrunningmod) return;
+            if (!Variables.isrunningmod) return;
             if (Time.unscaledTime - ___LastButtonPressProcessTime < 0.1f || !(!PLNetworkManager.IsActiveMenuOpen() && PLTabMenu.Instance.TabMenuActive && inButton.m_Label.gameObject.activeSelf)) return;
                 int num = -1;
                 switch (inButton.m_Label.text)

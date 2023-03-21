@@ -10,12 +10,12 @@ namespace FLEETMOD.ModMessages
         {
             if (PhotonNetwork.isMasterClient && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null)
             {
-                PulsarModLoader.ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", sender.sender, new object[]{
-                    MyVariables.shipfriendlyfire,
-                    MyVariables.recentfriendlyfire,
-                    MyVariables.survivalBonusDict, // Sending healthBonus dictionary from host to clients
-                    MyVariables.Modded,
-                    MyVariables.NonModded,
+                PulsarModLoader.ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", sender.sender, new object[]{
+                    Variables.shipfriendlyfire,
+                    Variables.recentfriendlyfire,
+                    Variables.survivalBonusDict, // Sending healthBonus dictionary from host to clients
+                    Variables.Modded,
+                    Variables.NonModded,
                 });
             }
         }

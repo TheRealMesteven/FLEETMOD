@@ -12,7 +12,7 @@ namespace FLEETMOD.Interface
         {
             Debug.unityLogger.logEnabled = false;
             if (PLServer.Instance == null || !PLServer.Instance.GameHasStarted) return true;
-            if (PLServer.Instance.GameHasStarted && PhotonNetwork.isMasterClient && MyVariables.Fleet.Count == 0) return true;
+            if (PLServer.Instance.GameHasStarted && PhotonNetwork.isMasterClient && Variables.Fleet.Count == 0) return true;
             PLMusic.PostEvent("play_sx_playermenu_click_major", PLGlobal.Instance.gameObject);
 
             if (___CurrentSelectedShipIndex >= 3 && ___CurrentSelectedShipIndex <= 11)
@@ -30,7 +30,7 @@ namespace FLEETMOD.Interface
             }
             PLNetworkManager.Instance.MainMenu.CloseActiveMenu();
             PLNetworkManager.Instance.LocalPlayer.SetClassID(0);
-            ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+            ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
             {
                     PLNetworkManager.Instance.SelectedShipTypeID,
                     PLNetworkManager.Instance.LocalPlayer.GetPlayerID(),

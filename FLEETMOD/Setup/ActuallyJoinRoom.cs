@@ -31,23 +31,23 @@ namespace FLEETMOD.Setup
                     PLNetworkManager.Instance.ClearSteamAuthSession(num);
                     PLNetworkManager.Instance.SetSteamAuthTicket(num);
                 }
-                if ((string)room.CustomProperties["Ship_Type"] == Plugin.myversion)
+                if ((string)room.CustomProperties["Ship_Type"] == Mod.myversion)
                 {
-                    MyVariables.isrunningmod = false;
+                    Variables.isrunningmod = false;
                     PLNetworkManager.Instance.JoinRoom(room);
                     PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
                     PLLoader.Instance.IsWaitingOnNetwork = true;
                 }
                 if (!room.CustomProperties["Ship_Type"].ToString().Contains("FLEETMOD"))
                 {
-                    MyVariables.isrunningmod = false;
+                    Variables.isrunningmod = false;
                     PLNetworkManager.Instance.JoinRoom(room);
                     PLNetworkManager.Instance.StartCoroutine("ServerWaitForNetwork");
                     PLLoader.Instance.IsWaitingOnNetwork = true;
                 }
-                if ((string)room.CustomProperties["Ship_Type"] != Plugin.myversion && room.CustomProperties["Ship_Type"].ToString().Contains("."))
+                if ((string)room.CustomProperties["Ship_Type"] != Mod.myversion && room.CustomProperties["Ship_Type"].ToString().Contains("."))
                 {
-                    PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("Sorry, This Server Is Running FleetMod Version " + (string)room.CustomProperties["Ship_Type"] + "\n You Have Version " + Plugin.myversion));
+                    PLNetworkManager.Instance.MainMenu.AddActiveMenu(new PLErrorMessageMenu("Sorry, This Server Is Running FleetMod Version " + (string)room.CustomProperties["Ship_Type"] + "\n You Have Version " + Mod.myversion));
                 }
                 return false;
             }
@@ -70,13 +70,13 @@ namespace FLEETMOD.Setup
                 {
                     return;
                 }
-                if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Plugin.harmonyIden))
+                if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Mod.harmonyIden))
                 {
-                    MyVariables.Modded.Add(inID);
+                    Variables.Modded.Add(inID);
                 }
                 else
                 {
-                    MyVariables.NonModded.Add(inID);
+                    Variables.NonModded.Add(inID);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace FLEETMOD.Setup
         {
             if (PhotonNetwork.isMasterClient)
             {
-                MyVariables.isrunningmod = true;
+                Variables.isrunningmod = true;
             }
         }
     }

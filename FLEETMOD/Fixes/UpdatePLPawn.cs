@@ -10,7 +10,7 @@ namespace FLEETMOD.Fixes
         {
             if (__instance.GetPlayer() != null && __instance.GetPlayer().GetPlayerID() != -1)
             {
-                MyVariables.MySurvivalBonus = MyVariables.survivalBonusDict[__instance.GetPlayer().GetPlayerID()];
+                Variables.MySurvivalBonus = Variables.survivalBonusDict[__instance.GetPlayer().GetPlayerID()];
                 float num10 = 100f;
                 if (__instance.GetPlayer().RaceID == 2)
                 {
@@ -28,7 +28,7 @@ namespace FLEETMOD.Fixes
                 float value2 = num11;
                 if (__instance.GetPlayer().GetClassID() < 5)
                 {
-                    num11 += MyVariables.MySurvivalBonus * 5f;
+                    num11 += Variables.MySurvivalBonus * 5f;
                 }
                 if (__instance.MaxHealth != num11)
                 {

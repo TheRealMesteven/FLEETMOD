@@ -9,7 +9,7 @@ namespace FLEETMOD.Ships
     {
         public static bool Prefix(PLServer __instance, int inShipID)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             else
             {
                 foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
@@ -36,7 +36,7 @@ namespace FLEETMOD.Ships
                     }
                     else
                     {
-                        if (MyVariables.Fleet.Count < MyVariables.shipcount)
+                        if (Variables.Fleet.Count < Variables.shipcount)
                         {
                             if (PLEncounterManager.Instance.GetShipFromID(inShipID).TagID != -23 && PLEncounterManager.Instance.GetShipFromID(inShipID).TeamID == -1)
                             {

@@ -15,7 +15,7 @@ namespace FLEETMOD.Ships
         /// </summary>
         public static bool Prefix(PLShipInfoBase __instance)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (!__instance.HasBeenDestroyed && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
             {
                 if (PhotonNetwork.isMasterClient && __instance.GetIsPlayerShip())
@@ -44,14 +44,14 @@ namespace FLEETMOD.Ships
                             plplayer.StartingShip = PLNetworkManager.Instance.LocalPlayer.StartingShip;
                         }
                     }
-                    MyVariables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
-                    MyVariables.Fleet.Remove(__instance.ShipID);
+                    Variables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
+                    Variables.Fleet.Remove(__instance.ShipID);
                 }
                 if (PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance as PLShipInfo)
                 {
                     PulsarModLoader.Utilities.Logger.Info($"[FMDS] Fleetmod Admiral Ship Destroyed");
                     PLShipInfo NewAdmiralShip = null;
-                    foreach (int FleetID in MyVariables.Fleet.Keys)
+                    foreach (int FleetID in Variables.Fleet.Keys)
                     {
                         PLShipInfo Fleetship = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(FleetID);
                         if (Fleetship != null && !Fleetship.GetHasBeenDestroyed() && Fleetship != __instance)
@@ -82,9 +82,9 @@ namespace FLEETMOD.Ships
                                 plplayer.StartingShip = NewAdmiralShip;
                             }
                         }
-                        MyVariables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
+                        Variables.Fleet[PhotonNetwork.player.GetScore()].AddRange(OldShipCrew);
                     }
-                    MyVariables.Fleet.Remove(__instance.ShipID);
+                    Variables.Fleet.Remove(__instance.ShipID);
                     __instance.HasBeenDestroyed = true;
                 }
                 __instance.TagID = -1;

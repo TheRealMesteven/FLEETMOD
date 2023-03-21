@@ -100,7 +100,7 @@ namespace FLEETMOD.Ships
 
         public static void Fix(int NetID)
         {
-            ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.SensorDishCollectScrap", PhotonTargets.MasterClient, new object[]
+            ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.SensorDishCollectScrap", PhotonTargets.MasterClient, new object[]
             {
                 NetID,
                 PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.ShipID

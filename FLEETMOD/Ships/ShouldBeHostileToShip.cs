@@ -8,7 +8,7 @@ namespace FLEETMOD.Ships
 	{
 		public static bool Prefix(PLShipInfoBase __instance, PLShipInfoBase inShip)
 		{
-			if (!MyVariables.isrunningmod) return true;
+			if (!Variables.isrunningmod) return true;
             return !(inShip == __instance || (inShip.GetIsPlayerShip() && __instance.GetIsPlayerShip()));
 		}
 	}

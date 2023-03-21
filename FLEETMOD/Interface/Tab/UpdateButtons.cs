@@ -63,7 +63,7 @@ namespace FLEETMOD.Interface.Tab
 
         public static bool Prefix(PLOverviewPlayerInfoDisplay __instance, ref List<EPlayerButtonType2> ___ButtonsActiveTypes)
         {
-            if (!MyVariables.isrunningmod || PLNetworkManager.Instance.LocalPlayer == null)
+            if (!Variables.isrunningmod || PLNetworkManager.Instance.LocalPlayer == null)
             {
                 return true;
             }

@@ -12,7 +12,7 @@ namespace FLEETMOD.Interface.Tab
         public static bool ChangeClassPage = false;
         public static void Postfix(PLTabMenu __instance)
         {
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
             {
                 if (__instance != null && PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLNetworkManager.Instance.LocalPlayer.PlayerLifeTime > 3f)
                 {

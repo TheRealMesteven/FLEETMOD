@@ -11,7 +11,7 @@ namespace FLEETMOD.Ships
     {
         public static bool Prefix(PLRepairDepot __instance, ref PLSensorObjectString[] ___SensorStrings)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             __instance.TargetShip = null;
             float num = 50f;
             if (PLEncounterManager.Instance.GetCPEI() != null && __instance.MySensorObject != null)

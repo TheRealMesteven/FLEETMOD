@@ -9,7 +9,7 @@ namespace FLEETMOD.Visuals
 	{
 		public static bool Prefix(int inID, ref Color __result)
 		{
-			if (!MyVariables.isrunningmod) return true;
+			if (!Variables.isrunningmod) return true;
 			else
 			{
 				switch (inID)

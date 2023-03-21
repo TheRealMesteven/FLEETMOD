@@ -9,7 +9,7 @@ namespace FLEETMOD.Interface
     {
         public static bool Prefix(PLSpaceTarget target)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             /*continue if the following evaluates true
                      *&&
                      **Player Ship Instance != null
@@ -31,7 +31,7 @@ namespace FLEETMOD.Interface
                  ****Friendly Fire == True
                          *Local Player is Captain
                          */
-                if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) == null || (PLEncounterManager.Instance.PlayerShip == PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) || !PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() || (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && MyVariables.shipfriendlyfire))) && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
+                if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) == null || (PLEncounterManager.Instance.PlayerShip == PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID) || !PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() || (PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && Variables.shipfriendlyfire))) && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
                 {
                     PLEncounterManager.Instance.PlayerShip.CaptainTargetedSpaceTargetID = target.SpaceTargetID;
                     PLEncounterManager.Instance.PlayerShip.LastCaptainTargetedShipIDLocallyChangedTime = Time.time;
@@ -55,7 +55,7 @@ namespace FLEETMOD.Interface
                  **Local Player NOT flying ship
                  *FriendlyFire != True
                 */
-                if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && !MyVariables.shipfriendlyfire)
+                if ((PLEncounterManager.Instance.GetShipFromID(target.SpaceTargetID).GetIsPlayerShip() && !PLNetworkManager.Instance.LocalPlayer.OnPlanet && PLNetworkManager.Instance.LocalPlayer.GetPawn().CurrentShip.MyShipControl.ShipInfo.GetCurrentShipControllerPlayerID() != PLNetworkManager.Instance.LocalPlayer.GetPlayerID()) && !Variables.shipfriendlyfire)
                 {
                     /*continue if the following evaluates true
                      *!
@@ -81,10 +81,10 @@ namespace FLEETMOD.Interface
                 /*continue if the following evaluates true
                  *Friendly Fire recently changed state
                 */
-                if (MyVariables.recentfriendlyfire)
+                if (Variables.recentfriendlyfire)
                 {
                     PLTabMenu.Instance.OnClick_ClearTarget();
-                    MyVariables.recentfriendlyfire = false;
+                    Variables.recentfriendlyfire = false;
                 }
             }
             return false;

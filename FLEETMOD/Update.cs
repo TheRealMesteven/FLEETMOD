@@ -11,7 +11,7 @@ namespace FLEETMOD
 	{
 		public static void Postfix(PLServer __instance)
 		{
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
 			{
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
@@ -31,9 +31,9 @@ namespace FLEETMOD
 					///</summary>
 					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor") || PLServer.GetCurrentSector().Name.Contains("Fluffy"))
 					{
-						if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
+						if (Variables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
-                            MyVariables.DialogGenerated = true;
+                            Variables.DialogGenerated = true;
                             var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
                             go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
                         }
@@ -177,10 +177,10 @@ namespace FLEETMOD
 					{
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							if (!MyVariables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
+							if (!Variables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
 							// if playerid doesn't exist in dictionary add playerid to dict and set hp bonus to 0
 							{
-								MyVariables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
+								Variables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
 							}
 
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
@@ -233,7 +233,7 @@ namespace FLEETMOD
 						if (PLEncounterManager.Instance.PlayerShip != null)
 						{
 							hashtable.Add("Ship_Name", PLEncounterManager.Instance.PlayerShip.ShipNameValue);
-							hashtable.Add("Ship_Type", Plugin.myversion);
+							hashtable.Add("Ship_Type", Mod.myversion);
 						}
 						else
 						{

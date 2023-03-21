@@ -12,7 +12,7 @@ namespace FLEETMOD.Fixes
         // Rework to get Crew Friendly Player Of Class?
         public static bool Prefix(PLServer __instance, ref int inClass)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (inClass == 0) return PLServer.Instance.GetPlayerFromPlayerID(0);
             else
             {

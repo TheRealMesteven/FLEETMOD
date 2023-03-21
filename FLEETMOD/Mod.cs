@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace FLEETMOD
 {
-    public class Plugin : PulsarMod
+    public class Mod : PulsarMod
     {
-        public override string Version => Plugin.myversion;
+        public override string Version => Mod.myversion;
         public override string Author => "Mest, Dragon, Mikey, Badryuiner, Rayman";
         public override string Name => "FleetMod";
         public override string HarmonyIdentifier() => harmonyIden;
@@ -30,6 +30,7 @@ namespace FLEETMOD
             }
             public override byte[] SaveData() => SerializeFleetShips(GetFleetShips());
         }
+
         public static List<PLShipInfo> GetFleetShips()
         {
             List<PLShipInfo> Ships = new List<PLShipInfo>();
@@ -42,6 +43,7 @@ namespace FLEETMOD
             }
             return Ships;
         }
+
         public static byte[] SerializeFleetShips(List<PLShipInfo> shipInfos)
         {
             MemoryStream dataStream = new MemoryStream();
@@ -70,6 +72,7 @@ namespace FLEETMOD
             }
             return dataStream.ToArray();
         }
+
         public static Dictionary<string, string> DeSerializeFleetShips(byte[] byteData)
         {
             MemoryStream memoryStream = new MemoryStream(byteData);
@@ -119,7 +122,7 @@ namespace FLEETMOD
             gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
             gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
             gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
-            MyVariables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
+            Variables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
             {
                 "The " + Shipname + " Has Joined!",
@@ -134,9 +137,9 @@ namespace FLEETMOD
     {
         public static void Postfix()
         {
-            if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient)
+            if (Variables.isrunningmod && PhotonNetwork.isMasterClient)
             {
-                PLServer.Instance.StartCoroutine(Plugin.SpawnFleetShips());
+                PLServer.Instance.StartCoroutine(Mod.SpawnFleetShips());
             }
         }
     }

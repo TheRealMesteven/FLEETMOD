@@ -12,7 +12,7 @@ namespace FLEETMOD.Setup
         /// </summary>
         public static bool Prefix(ref float ___m_Lifetime, ref bool ___HasDoneSetup)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             ___m_Lifetime += Time.deltaTime;
             if (___m_Lifetime > 1f && !___HasDoneSetup && PLNetworkManager.Instance.LocalPlayer != null && PLEncounterManager.Instance.GetCPEI() != null)
             {

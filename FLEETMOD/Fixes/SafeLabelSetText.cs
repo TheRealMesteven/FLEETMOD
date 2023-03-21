@@ -13,7 +13,7 @@ namespace FLEETMOD.Fixes
     {
         public static bool Prefix(ref Text go, ref string text)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (go != null && go.text != text && text != null)
             {
                 if (text.Contains("*"))

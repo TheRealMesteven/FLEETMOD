@@ -13,17 +13,17 @@ namespace FLEETMOD.Fixes
     {
         public static void Postfix(PLHighRollersShipInfo __instance, PLPlayer player, PLLiarsDiceGame game)
         {
-            if (!MyVariables.isrunningmod) return;
+            if (!Variables.isrunningmod) return;
             if (player != null && player.StartingShip != null)
             {
-                if (player.StartingShip != PLEncounterManager.Instance.PlayerShip && MyVariables.Fleet.ContainsKey(player.StartingShip.ShipID) && Array.IndexOf<PLLiarsDiceGame>(__instance.SmallGames, game) != -1)
+                if (player.StartingShip != PLEncounterManager.Instance.PlayerShip && Variables.Fleet.ContainsKey(player.StartingShip.ShipID) && Array.IndexOf<PLLiarsDiceGame>(__instance.SmallGames, game) != -1)
                 {
                     __instance.CrewChips++;
                 }
                 if (game == __instance.BigGame)
                 {
                     __instance.FinalGameAvailable = false;
-                    if (player.StartingShip != PLEncounterManager.Instance.PlayerShip && MyVariables.Fleet.ContainsKey(player.StartingShip.ShipID))
+                    if (player.StartingShip != PLEncounterManager.Instance.PlayerShip && Variables.Fleet.ContainsKey(player.StartingShip.ShipID))
                     {
                         PLServer.Instance.CollectFragment(3);
                     }

@@ -13,7 +13,7 @@ namespace FLEETMOD.Ships
         /// </summary>
         public static bool Prefix(int inShipID)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID != inShipID && PhotonNetwork.isMasterClient)
             {
                 PLNetworkManager.Instance.LocalPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]

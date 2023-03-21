@@ -15,7 +15,7 @@ namespace FLEETMOD.Setup
         {
             if (PhotonNetwork.isMasterClient)
             {
-                ModMessage.SendRPC(Plugin.harmonyIden, "FLEETMOD.ModMessages.ActivateFleetmod", newPhotonPlayer, new object[] { });
+                ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ActivateFleetmod", newPhotonPlayer, new object[] { });
             }
         }
     }
@@ -24,14 +24,14 @@ namespace FLEETMOD.Setup
     { /// Initial Patch creating the dictionaries and lists.
         static void Postfix()
         {
-            MyVariables.survivalBonusDict = new Dictionary<int, int>();
-            MyVariables.Fleet = new Dictionary<int, List<int>>();
-            MyVariables.DialogGenerated = false;
-            MyVariables.Modded = new List<int>();
-            MyVariables.NonModded = new List<int>();
+            Variables.survivalBonusDict = new Dictionary<int, int>();
+            Variables.Fleet = new Dictionary<int, List<int>>();
+            Variables.DialogGenerated = false;
+            Variables.Modded = new List<int>();
+            Variables.NonModded = new List<int>();
             if (PhotonNetwork.isMasterClient)
             {
-                MyVariables.UnModdedCrews = new Dictionary<int, int>();
+                Variables.UnModdedCrews = new Dictionary<int, int>();
                 foreach (PulsarMod pulsarMod in ModManager.Instance.GetAllMods())
                 {
                     if (pulsarMod.HarmonyIdentifier() == "mod.id107.beammeup")

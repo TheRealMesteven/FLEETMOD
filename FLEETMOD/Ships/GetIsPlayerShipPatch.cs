@@ -8,7 +8,7 @@ namespace FLEETMOD.Ships
     {
         public static bool Prefix(PLShipInfoBase __instance, ref bool __result)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (__instance.TagID == -23)
             {
                 __result = true;

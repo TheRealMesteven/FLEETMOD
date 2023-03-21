@@ -18,7 +18,7 @@ namespace FLEETMOD.Ships
         public static bool Prefix(int inCurrentShipID, int inNetID, PLPlayer __instance)
         {
 
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PLEncounterManager.Instance != null)
             {
                 PLShipInfo plshipInfo = PLEncounterManager.Instance.GetShipFromID(inCurrentShipID) as PLShipInfo; // ? Gets current ship player is on

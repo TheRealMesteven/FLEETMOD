@@ -7,7 +7,7 @@ namespace FLEETMOD.Fixes
     {
         public static bool Prefix(PLServerClassInfo __instance, ref int ___m_ClassID)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PhotonNetwork.isMasterClient && ___m_ClassID != -1 && PLServer.Instance != null && PLEncounterManager.Instance.PlayerShip != null && __instance.ClassLockerInventory.AllItems.Count <= 1)
             {
                 int num = (PLEncounterManager.Instance.PlayerShip.FactionID == 1) ? 1 : 0;
