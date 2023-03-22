@@ -71,6 +71,7 @@ namespace FLEETMOD.Setup
                 {
                     Variables.NonModded.Remove(inPlayer.GetPlayerID());
                 }
+                Variables.Fleet[inPlayer.GetPhotonPlayer().GetScore()].Remove(inPlayer.GetPlayerID());
                 /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
                 {
                     MyVariables.BriggedCrew.Remove(inPlayer.GetPlayerID());

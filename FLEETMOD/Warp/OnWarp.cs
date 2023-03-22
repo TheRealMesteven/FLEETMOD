@@ -151,4 +151,24 @@ namespace FLEETMOD.Warp
             return PatchBySequence(instructions, targetSequence, injectedSequence, patchMode: PatchMode.REPLACE, checkMode: CheckMode.NONNULL, showDebugOutput: true);
         }
     }
+    /* PLShipControl - Rework this bit to change 'a' to the desired ship positions
+     if (plshipInfo != null)
+						{
+							if (plshipInfo.WarpObjectAlpha < 0.999f)
+							{
+								this._rigidbody.AddForce(vector.normalized * 600f * Time.fixedDeltaTime);
+							}
+							else
+							{
+								Vector3 a = Vector3.zero;
+								if (PLEncounterManager.Instance.GetCPEI() != null)
+								{
+									a = PLEncounterManager.Instance.GetCPEI().GetPlayerStartLoc();
+								}
+								Vector3 vector2 = a - this._rigidbody.position;
+								this._rigidbody.AddForce(vector2.normalized * Mathf.Clamp(vector2.magnitude * 0.5f, 0f, 800f) * Time.fixedDeltaTime, ForceMode.VelocityChange);
+							}
+						}
+     *
+    */
 }

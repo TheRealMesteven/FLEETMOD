@@ -68,10 +68,8 @@ namespace FLEETMOD.Setup
             PLPlayer playerAtID = __instance.GetPlayerFromPlayerID(inPlayerID);
             if (playerAtID != null && PhotonNetwork.isMasterClient)
             {
-                if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Mod.harmonyIden))
-                {
-                    Variables.Modded.Add(inPlayerID);
-                }
+                if (playerAtID == PLNetworkManager.Instance.LocalPlayer) Variables.Modded.Add(inPlayerID);
+                else if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Mod.harmonyIden)) Variables.Modded.Add(inPlayerID);
                 else
                 {
                     Variables.NonModded.Add(inPlayerID);
