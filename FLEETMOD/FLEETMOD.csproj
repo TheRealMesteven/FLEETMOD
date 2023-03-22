@@ -99,6 +99,7 @@
     <Compile Include="Fixes\UpdatePLPawn.cs" />
     <Compile Include="Ships\RepairDepotPatch.cs" />
     <Compile Include="Interface\Tab\UpdatePLTabMenu.cs" />
+    <Compile Include="Warp\RemoveDuplicateVisuals.cs" />
     <Compile Include="Warp\UpdatePLWarpDriveScreen.cs" />
     <Compile Include="Disabled\UpdateRaceSectors.cs" />
     <Compile Include="Visuals\UpdateShipName.cs" />

@@ -218,7 +218,7 @@ namespace FLEETMOD
                 }
             }
         }
-        public class FLEETMODForceChangeClass : ChatCommand
+        /*public class FLEETMODForceChangeClass : ChatCommand
         {
             public override string[] CommandAliases()
             {
@@ -249,16 +249,10 @@ namespace FLEETMOD
                             PlayerID,
                             ClassID
                 });
-                PLServer.Instance.GetPlayerFromPlayerID(PlayerID).photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
-                {
-                            PLEncounterManager.Instance.GetShipFromID(ShipID).MyTLI.SubHubID,
-                            0
-                });
-                PLServer.Instance.GetPlayerFromPlayerID(PlayerID).StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
                 PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetPhotonPlayer().SetScore(ShipID); // Update Score
                 PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetPlayerName() + ", you are now a " + PLServer.Instance.GetPlayerFromPlayerID(PlayerID).GetClassName() + " onboard the " + PLServer.Instance.GetPlayerFromPlayerID(PlayerID).StartingShip.ShipNameValue + "!");
             }
-        }
+        }*/
         internal class FLEETMODBeamMeUp : PublicCommand
         {
             public override string[] CommandAliases()
