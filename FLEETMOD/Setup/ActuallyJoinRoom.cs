@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using HarmonyLib;
 using PulsarModLoader;
 using PulsarModLoader.MPModChecks;
@@ -59,27 +60,25 @@ namespace FLEETMOD.Setup
             }
         }
     }
-    [HarmonyPatch(typeof(PLServer), "StartPlayer")]
-    internal class StartPlayer
+    [HarmonyPatch(typeof(PLServer), "NotifyPlayerStart")]
+    internal class NotifyPlayerStart
     {
-        private static void Postfix(PLServer __instance, int inID)
+        private static void Postfix(PLServer __instance, int inPlayerID)
         {
-            PLPlayer playerAtID = __instance.GetPlayerFromPlayerID(inID);
+            PLPlayer playerAtID = __instance.GetPlayerFromPlayerID(inPlayerID);
             if (playerAtID != null && PhotonNetwork.isMasterClient)
             {
-                if (playerAtID == PLNetworkManager.Instance.LocalPlayer)
-                {
-                    return;
-                }
                 if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Mod.harmonyIden))
                 {
-                    Variables.Modded.Add(inID);
+                    Variables.Modded.Add(inPlayerID);
                 }
                 else
                 {
-                    Variables.NonModded.Add(inID);
+                    Variables.NonModded.Add(inPlayerID);
                 }
                 //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[NEW PLAYER] - Update Mod Message");
+                PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(inPlayerID);
+                Variables.Fleet[playerAtID.GetPhotonPlayer().GetScore()].Add(inPlayerID);
                 ModMessages.ServerUpdateVariables.UpdateClients();
             }
         }

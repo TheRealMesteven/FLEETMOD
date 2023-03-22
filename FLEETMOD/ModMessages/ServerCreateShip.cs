@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using PulsarModLoader;
 using UnityEngine;
 
@@ -25,8 +26,7 @@ namespace FLEETMOD.ModMessages
                     gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
                     gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
                     Variables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
-                    playerFromPlayerID.GetPhotonPlayer().SetScore(gameObject.GetComponent<PLShipInfo>().ShipID);
-                    playerFromPlayerID.SetClassID(0);
+                    Variables.ChangeShip((int)arguments[1], gameObject.GetComponent<PLShipInfo>().ShipID, 0);
                     PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
                     {
                         "The " + (string)arguments[2] + " Has Joined!",
@@ -34,7 +34,6 @@ namespace FLEETMOD.ModMessages
                         0,
                         "SHIP"
                     });
-                    Variables.ReCalculateMaxPlayers();
                 }
                 else
                 {

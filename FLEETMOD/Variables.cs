@@ -1,7 +1,9 @@
-﻿using PulsarModLoader.Utilities;
+﻿using ExitGames.Client.Photon.LoadBalancing;
+using PulsarModLoader.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static LocomotionTeleport;
 
 namespace FLEETMOD
 {
@@ -25,6 +27,15 @@ namespace FLEETMOD
         public static Dictionary<int /*PlayerID*/ , /*ShipID*/ int> UnModdedCrews;
         // Dictionary that stores <playerID,shipID> on host side, to teleport unmodded crews to correct ship.
 
+        public static void ChangeShip (int PlayerID, int ShipID, int ClassID = -1)
+        {
+            PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
+            Fleet[pLPlayer.GetPhotonPlayer().GetScore()].Remove(PlayerID);
+            Fleet[ShipID].Add(PlayerID);
+            if (ClassID != -1) pLPlayer.SetClassID(ClassID);
+            pLPlayer.GetPhotonPlayer().SetScore(ShipID);
+            ModMessages.ServerUpdateVariables.UpdateClients();
+        }
         public static int GetShipCaptain (int inShipID)
         {
             foreach (PLPlayer Player in PLServer.Instance.AllPlayers)

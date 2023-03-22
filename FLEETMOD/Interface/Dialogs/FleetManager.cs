@@ -1,4 +1,5 @@
 ﻿using PulsarModLoader;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -148,8 +149,7 @@ namespace FLEETMOD.Interface.Dialogs
             if (PhotonNetwork.isMasterClient && currentdialog < 4) // admiral check
             {
                 currentdialog = 4;
-                PLServer.Instance.GetPlayerFromPlayerID(indata).SetClassID(0);
-                PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().SetScore(newShipID);
+                Variables.ChangeShip(indata, newShipID, 0);
                 PLServer.Instance.GetPlayerFromPlayerID(indata).photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
                 {
                     (PLEncounterManager.Instance.GetShipFromID(PLServer.Instance.GetPlayerFromPlayerID(indata).GetPhotonPlayer().GetScore()) as PLShipInfo).MyTLI.SubHubID,
@@ -190,12 +190,13 @@ namespace FLEETMOD.Interface.Dialogs
                 this.m_AllChoices.Clear();
                 this.DialogTextLeft += "\nAlright Admiral, we are currently storing the ship for your future use.";
                 currentdialog = 2;
-                foreach (PLPlayer pLPlayer in PLServer.Instance.AllPlayers)
+                int ShipID = PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore();
+                foreach (int PlayerID in Variables.Fleet[indata])
                 {
+                    PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
                     if (pLPlayer != null && pLPlayer.TeamID == 0 && pLPlayer.GetPhotonPlayer().GetScore() == indata)
                     {
-                        pLPlayer.SetClassID(1);
-                        pLPlayer.GetPhotonPlayer().SetScore(PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().GetScore());
+                        Variables.ChangeShip(PlayerID, ShipID, 1);
                         pLPlayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
                         {
                             (PLEncounterManager.Instance.GetShipFromID(pLPlayer.GetPhotonPlayer().GetScore()) as PLShipInfo).MyTLI.SubHubID,

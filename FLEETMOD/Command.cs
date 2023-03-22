@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using Crosstales.UI;
 using ExitGames.Client.Photon.LoadBalancing;
 using PulsarModLoader;
 using PulsarModLoader.Chat.Commands;
@@ -167,7 +170,7 @@ namespace FLEETMOD
                             return;
                         }
                     }
-                    else 
+                    else
                     {
                         ClassID = Player.GetClassID();
                         switch (args[1].ToLower().Substring(0, 1)) // ClassID is not an integer
@@ -204,18 +207,13 @@ namespace FLEETMOD
                     {
                         Variables.UnModdedCrews.Add(Player.GetPlayerID(), ShipID); // Adds to UnModded Crew dictionary (Holds PlayerID and ShipID)
                     }
-                    PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[] // Assigns Class
+                    Player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
                     {
-                            Player.GetPlayerID(),
-                            ClassID
-                    });
-                        Player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[] // Teleport to ship
-                        {
                             PLEncounterManager.Instance.GetShipFromID(ShipID).MyTLI.SubHubID,
                             0
-                        });
-                        Player.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
-                        Player.GetPhotonPlayer().SetScore(ShipID); // Update Score
+                    });
+                    Player.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
+                    Variables.ChangeShip(Player.GetPlayerID(), ShipID, ClassID);
                     PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, Player.GetPlayerName() + ", you are now a " + Player.GetClassName() + " onboard the " + Player.StartingShip.ShipNameValue + "!");
                 }
             }
@@ -384,13 +382,47 @@ namespace FLEETMOD
             public override void Execute(string arguments)
             {
                 PLPlayer Local = PLNetworkManager.Instance.LocalPlayer;
-                PulsarModLoader.Utilities.Messaging.Echo(Local, $"Non-Modded Count: {Variables.NonModded.Count}");
+                Messaging.Echo(Local, $"Non-Modded Count: {Variables.NonModded.Count}");
                 foreach (int pLPlayerID in Variables.NonModded)
                 {
                     PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(pLPlayerID);
                     if (pLPlayer != null)
                     {
-                        PulsarModLoader.Utilities.Messaging.Echo(Local, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                        Messaging.Echo(Local, $"Modded Contains: {pLPlayer.GetPlayerName()}");
+                    }
+                }
+            }
+        }
+        public class FLEETMODGetCrews : ChatCommand
+        {
+            public override string[] CommandAliases() => new string[] { "getcrews" };
+            public override string Description() => "DEBUG Lists Player Crews";
+            public string UsageExample() => "/" + this.CommandAliases()[0];
+            public override void Execute(string arguments)
+            {
+                PLPlayer Local = PLNetworkManager.Instance.LocalPlayer;
+                foreach (int Ship in Variables.Fleet.Keys)
+                {
+                    PLShipInfo shipInfo = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(Ship);
+                    if (shipInfo != null)
+                    {
+                        Messaging.Echo(Local, $"Fleet Contains: {shipInfo.ShipNameValue}");
+                    }
+                    else
+                    {
+                        Messaging.Echo(Local, $"Null ShipID: {Ship}");
+                    }
+                    foreach (int PlayerID in Variables.Fleet[Ship])
+                    {
+                        PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
+                        if (pLPlayer != null)
+                        {
+                            Messaging.Echo(Local, $"- {pLPlayer.GetPlayerName()}");
+                        }
+                        else
+                        {
+                            Messaging.Echo(Local, $"- PlayerID : {PlayerID}");
+                        }
                     }
                 }
             }

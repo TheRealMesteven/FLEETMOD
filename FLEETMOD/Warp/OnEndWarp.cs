@@ -38,7 +38,7 @@ namespace FLEETMOD.Warp
                         plshipInfoBase.SkipWarp();
                         plshipInfoBase.InWarp = false;
                         plshipInfoBase.WarpChargeStage = EWarpChargeStage.E_WCS_COLD_START;
-                    }
+                    }   
                 }
 
                 // Create the FleetManager Dialog
