@@ -1,27 +1,43 @@
-# Fleetmod (In Progress)
-Originally designed by Mikey, taken over by Mest with assistance from Dragon & Badryuiner.
+# Fleetmod
+```yaml
+Created by Mest with assistance from Dragon, Rayman and Badryuiner.
 Wikipedia Page : https://pulsarlostcolony.fandom.com/wiki/Fleet_Mod
 
 This is a mod for Pulsar Lost Colony, using the Pulsar Mod Loader
 this plugin permits multiple crewed ships in one game, unfortunately without
 individual warping, the mod creates a Fleet of player controlled ships.
 
-Currently, the officially released varient is "FLEETMOD" in the main branch, Pre-release
-version 1.6.1 this copy of the plugin permits non-modded clients on the admiral ship to 
-function as crew and modded-clients with the same copy of the FLEETMOD plugin to command 
-and crew additional ships.
+```
 
-The unofficially released varient is "FLEETMOD-REWRITE" in the secondary branch, version 0.0.1
-that copy of the plugin only permits modded clients to join and control ships, providing a
-more stable experience of the mod aswell as additional features permitted from having coding
-on both host and client of the server. Due to the sheer amount of code to rewrite with Fleetmod, 
-the Modders have resorted to merging the rewrite with the original and rewriting it from the
-inside out.
-THE "FLEETMOD-REWRITE" IS NOT FULLY FUNCTIONAL AND SO IS UNADVISED FOR PLAYTHROUGHS EXCEPT IF
-EXPERIMENTING / TESTING FOR THE DEVELOPMENT TEAM.
+```yaml
+Fleetmod v1.7.1
+```
+```diff
+Getting Started (Captain):
+To create a new ship or assign a captain to a ship:
+- Ensure you have 1+ Fleet-modded players
+- Ensure you are at Outpost 448, W.D. Hub, The Estate, Cornelia, The Burrow, The Harbour or a Fluffy Biscuit Station. 
+> Admiral uses the 'Fleet Manager' on the Comms.
 
+Getting Started (Crew):
+To change class or ship:
+- Ensure the ship has a Captain!
+> Open TAB
+> Press '/'
+> Select from the Captain which ship to crew and the role.
 
-
-# Completed Goals 
-- [x] Completed Clean-up (13/03/21)
-- [x] Pre-release Version 1.6.1 (19/12/2021 -> 05/01/2022)
+Known Issues:
+- Captains can sometimes not be properly assigned their ships in the backend. Will only affect Ship Renaming.
+- Ships that are Piloted when exiting warp collide with the host ship. No damage is caused due to brief godmode.
+- Additional HP from surviving warp or using a revitalising syringe is not added to the players.
+- Umbra Campaign and Ship will cause issues.
+- Host exiting game will load forever.
+- Sometimes scrap pickup can break in a sector. In this case, use the sensor dish.
+- Sometimes additional ships cannot probe research materials.
+- Sometimes if a crew ship is destroyed, players will see 'No Atrium'. This is only a visual bug!
+- Ships that are not detected by the Admiral ship will have the ship name 'Ship Name'
+- Locker names are of the last player to join in that class.
+- Picked up components go to the Admiral ship.
+- Warp range frequently does not increment properly.
+- EXOTIC COMPONENTS and BETTER FRAGMENTS are NOT supported!
+```
