@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using ExitGames.Client.Photon.LoadBalancing;
 using HarmonyLib;
 using PulsarModLoader.Patches;
+using PulsarModLoader.Utilities;
 using UnityEngine;
 using static PulsarModLoader.Patches.HarmonyHelpers;
 
@@ -15,11 +16,11 @@ namespace FLEETMOD.Warp
     {
         public static bool Prefix(PLShipInfoBase __instance)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip == __instance as PLShipInfo)
             {
                 Dictionary<int, PlayerPos> UnModdedPositions = new Dictionary<int, PlayerPos>(); // PlayerID, PlayerPos
-                foreach (int plshipID in MyVariables.Fleet.Keys)
+                foreach (int plshipID in Variables.Fleet.Keys)
                 {
                     PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(plshipID);
                     if (plshipInfoBase != null && !plshipInfoBase.InWarp && plshipInfoBase != __instance)
@@ -30,7 +31,7 @@ namespace FLEETMOD.Warp
                             {
                                 // Only teleport player back to ship if not on PlayerShip
                                 PLTeleportationLocationInstance CurrentTLI = PLNetworkManager.Instance.LocalPlayer.MyCurrentTLI;
-                                if (CurrentTLI == null || CurrentTLI.MyShipInfo == null || !MyVariables.Fleet.ContainsKey(CurrentTLI.MyShipInfo.ShipID))
+                                if (CurrentTLI == null || CurrentTLI.MyShipInfo == null || !Variables.Fleet.ContainsKey(CurrentTLI.MyShipInfo.ShipID))
                                 {
                                     plplayer.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
                                     {
@@ -40,7 +41,7 @@ namespace FLEETMOD.Warp
                                 }
 
                                 // Store the locations of NonModded Players for Teleporting
-                                if (MyVariables.UnModdedCrews.ContainsKey(plplayer.GetPlayerID()))
+                                if (Variables.UnModdedCrews.ContainsKey(plplayer.GetPlayerID()))
                                 {
                                     PlayerPos Position = new PlayerPos
                                     {
@@ -52,9 +53,9 @@ namespace FLEETMOD.Warp
                                 }
 
                                 // Update Health Bonus On Warp
-                                if (MyVariables.Modded.Contains(plplayer.GetPlayerID()))
+                                if (Variables.Modded.Contains(plplayer.GetPlayerID()))
                                 {
-                                    MyVariables.survivalBonusDict[plplayer.GetPlayerID()] = Mathf.Clamp(MyVariables.survivalBonusDict[plplayer.GetPlayerID()] + 1, -5, 20);
+                                    Variables.survivalBonusDict[plplayer.GetPlayerID()] = Mathf.Clamp(Variables.survivalBonusDict[plplayer.GetPlayerID()] + 1, -5, 20);
                                 }
                             }
                         }
@@ -95,7 +96,9 @@ namespace FLEETMOD.Warp
                         plshipInfoBase.AlertLevel = 0;
                     }
                 }
-                MyVariables.DialogGenerated = false;
+                Variables.DialogGenerated = false;
+                //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[WARP] - Update Mod Message");
+                ModMessages.ServerUpdateVariables.UpdateClients();
 
                 // Teleport unmodded players back to their positions when warping
                 foreach (KeyValuePair<int, PlayerPos> keyValuePair in UnModdedPositions)
@@ -148,4 +151,24 @@ namespace FLEETMOD.Warp
             return PatchBySequence(instructions, targetSequence, injectedSequence, patchMode: PatchMode.REPLACE, checkMode: CheckMode.NONNULL, showDebugOutput: true);
         }
     }
+    /* PLShipControl - Rework this bit to change 'a' to the desired ship positions
+     if (plshipInfo != null)
+						{
+							if (plshipInfo.WarpObjectAlpha < 0.999f)
+							{
+								this._rigidbody.AddForce(vector.normalized * 600f * Time.fixedDeltaTime);
+							}
+							else
+							{
+								Vector3 a = Vector3.zero;
+								if (PLEncounterManager.Instance.GetCPEI() != null)
+								{
+									a = PLEncounterManager.Instance.GetCPEI().GetPlayerStartLoc();
+								}
+								Vector3 vector2 = a - this._rigidbody.position;
+								this._rigidbody.AddForce(vector2.normalized * Mathf.Clamp(vector2.magnitude * 0.5f, 0f, 800f) * Time.fixedDeltaTime, ForceMode.VelocityChange);
+							}
+						}
+     *
+    */
 }

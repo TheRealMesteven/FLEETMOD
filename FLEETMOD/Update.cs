@@ -1,6 +1,7 @@
 ﻿using System;
 using ExitGames.Client.Photon;
 using HarmonyLib;
+using PulsarModLoader.Utilities;
 using Steamworks;
 using UnityEngine;
 
@@ -11,15 +12,10 @@ namespace FLEETMOD
 	{
 		public static void Postfix(PLServer __instance)
 		{
-            if (MyVariables.isrunningmod)
+            if (Variables.isrunningmod)
 			{
 				if (__instance != null && __instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLEncounterManager.Instance.PlayerShip != null)
 				{
-					if (PhotonNetwork.isMasterClient)
-					{
-						ServerUpdateVariables.UpdateClients();
-						//if (__instance.PlayerShipIsDestroyed) __instance.PlayerShipIsDestroyed = false; // This allows retry to spawn player but issues are caused.
-					}
                     PLEncounterManager.Instance.PlayerShip.TagID = -23;
 					PLInGameUI.Instance.CurrentOrdersLabel.enabled = true;
 					PLInGameUI.Instance.CurrentOrdersLabel.resizeTextForBestFit = true;
@@ -31,18 +27,18 @@ namespace FLEETMOD
 					///</summary>
 					if (PLServer.GetCurrentSector().Name.Contains("W.D. HUB") || PLServer.GetCurrentSector().Name.Contains("Outpost 448") || PLServer.GetCurrentSector().Name.Contains("The Estate") || PLServer.GetCurrentSector().Name.Contains("Cornelia Station") || PLServer.GetCurrentSector().Name.Contains("The Burrow") || PLServer.GetCurrentSector().Name.Contains("The Harbor") || PLServer.GetCurrentSector().Name.Contains("Fluffy"))
 					{
-						if (MyVariables.DialogGenerated != true && PhotonNetwork.isMasterClient)
+						if (Variables.DialogGenerated != true && PhotonNetwork.isMasterClient)
                         {
-                            MyVariables.DialogGenerated = true;
+                            Variables.DialogGenerated = true;
                             var go = new UnityEngine.GameObject("FleetManager_GO"); // TODO: Maybe create one BIG GameObject for all Dialogs?
                             go.AddComponent<Interface.Dialogs.FleetManager>(); // Also TODO: Rename local vars...
                         }
 					}
 					///
-					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && (UpdatePLTabMenu.CrewPage != 0 || UpdatePLTabMenu.ChangeClassPage))
+					if (PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && !PLTabMenu.Instance.TabMenuActive && (Interface.Tab.UpdatePLTabMenu.CrewPage != 0 || Interface.Tab.UpdatePLTabMenu.ChangeClassPage))
 					{
-                        UpdatePLTabMenu.CrewPage = 0;
-						UpdatePLTabMenu.ChangeClassPage = false;
+                        Interface.Tab.UpdatePLTabMenu.CrewPage = 0;
+                        Interface.Tab.UpdatePLTabMenu.ChangeClassPage = false;
 					}
 					// This is where warp range bindings occur
 					if (__instance != null && !PhotonNetwork.isMasterClient && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && PLEncounterManager.Instance.PlayerShip != null)
@@ -175,12 +171,14 @@ namespace FLEETMOD
 					}
 					if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
 					{
+						bool SurvivalBonusUpdate = false;
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							if (!MyVariables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
+							if (!Variables.survivalBonusDict.ContainsKey(plplayer.GetPlayerID()))
 							// if playerid doesn't exist in dictionary add playerid to dict and set hp bonus to 0
 							{
-								MyVariables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
+								Variables.survivalBonusDict.Add(plplayer.GetPlayerID(), 0);
+								SurvivalBonusUpdate = true;
 							}
 
 							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer.PlayerLifeTime > 5f && plplayer.GetPhotonPlayer().GetScore() != plplayer.StartingShip.ShipID && PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo != null && Time.time - (PLEncounterManager.Instance.GetShipFromID(plplayer.GetPhotonPlayer().GetScore()) as PLShipInfo).LastAIAutoYellowAlertSetupTime > 2f && !plplayer.GetPhotonPlayer().IsMasterClient && !plplayer.IsBot)
@@ -200,7 +198,12 @@ namespace FLEETMOD
                                 });
                             }*/
                         }
-						if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
+						if (SurvivalBonusUpdate)
+						{
+                            //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[SURVIVAL BONUS UPDATE] - Update Mod Message");
+                            ModMessages.ServerUpdateVariables.UpdateClients();
+						}
+                        if (!PLNetworkManager.Instance.IsTyping && Input.GetKeyDown(KeyCode.KeypadMinus) && PLServer.Instance.ClientHasFullStarmap)
 						{
 							PLServer.Instance.photonView.RPC("NetworkBeginWarp", PhotonTargets.All, new object[]
 							{
@@ -210,79 +213,6 @@ namespace FLEETMOD
 								-1
 							});
 						}
-					}
-					if (PhotonNetwork.isMasterClient && Time.time - __instance.LobbyPropertiesUpdateLastTime > 0.5f && PhotonNetwork.room != null)
-					{
-						__instance.LobbyPropertiesUpdateLastTime = Time.time;
-						int num = 0;
-						for (int i = 0; i < __instance.AllPlayers.Count; i++)
-						{
-							PLPlayer plplayer3 = __instance.AllPlayers[i];
-							if (plplayer3 != null && plplayer3.IsBot && plplayer3.TeamID == 0)
-							{
-								num++;
-							}
-						}
-						Hashtable hashtable = new Hashtable();
-						hashtable.Add("CurrentPlayersPlusBots", PhotonNetwork.room.PlayerCount + num);
-						hashtable.Add("Private", PLNetworkManager.Instance.IsPrivateGame);
-						if (PLGlobal.Instance.Galaxy != null && PLGlobal.Instance.Galaxy.GenerationSettings != null)
-						{
-							hashtable.Add("GenSettings", PLGlobal.Instance.Galaxy.GenerationSettings.CreateDataString());
-						}
-						if (PLEncounterManager.Instance.PlayerShip != null)
-						{
-							hashtable.Add("Ship_Name", PLEncounterManager.Instance.PlayerShip.ShipNameValue);
-							hashtable.Add("Ship_Type", Plugin.myversion);
-						}
-						else
-						{
-							hashtable.Add("Ship_Name", PhotonNetwork.room.CustomProperties["Ship_Name"]);
-							hashtable.Add("Ship_Type", PhotonNetwork.room.CustomProperties["Ship_Type"]);
-						}
-						if (PhotonNetwork.room.CustomProperties.ContainsKey("SteamServerID"))
-						{
-							hashtable.Add("SteamServerID", PhotonNetwork.room.CustomProperties["SteamServerID"]);
-							CSteamID steamID = SteamUser.GetSteamID();
-							string text = steamID.m_SteamID.ToString() + ",";
-							foreach (PhotonPlayer photonPlayer in PhotonNetwork.playerList)
-							{
-								if (photonPlayer != null && photonPlayer.SteamID != CSteamID.Nil && photonPlayer.SteamID != steamID)
-								{
-									text = text + photonPlayer.SteamID.m_SteamID.ToString() + ",";
-								}
-							}
-							hashtable.Add("PlayerSteamIDs", text);
-						}
-						bool flag46 = hashtable.Count != PhotonNetwork.room.CustomProperties.Count;
-						if (!flag46)
-						{
-							foreach (object obj in hashtable.Keys)
-							{
-								string text2 = (string)obj;
-								if (PhotonNetwork.room.CustomProperties[text2].ToString() != hashtable[text2].ToString())
-								{
-									flag46 = true;
-									break;
-								}
-							}
-						}
-						if (flag46)
-						{
-							PhotonNetwork.room.SetCustomProperties(hashtable, null, false);
-						}
-					}
-					if (Time.time - PLServer.Instance.LobbyPropertiesUpdateLastTime > 0.2f && PhotonNetwork.room != null)
-					{
-						int num2 = 0;
-						foreach (PLShipInfoBase plshipInfoBase2 in PLEncounterManager.Instance.AllShips.Values)
-						{
-							if (plshipInfoBase2 != null && plshipInfoBase2.GetIsPlayerShip())
-							{
-								num2++;
-							}
-						}
-						PhotonNetwork.room.MaxPlayers = num2 * 5;
 					}
 				}
 			}

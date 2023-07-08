@@ -15,7 +15,7 @@ namespace FLEETMOD.Visuals
         /// </summary>
         public static void Postfix(List<PLInGameUI.DisplayShipRightInfo> ___AllDisplayRightShipRightInfos)
         {
-            if (!MyVariables.isrunningmod) return;
+            if (!Variables.isrunningmod) return;
             if (PLEncounterManager.Instance.PlayerShip != null && PLServer.Instance != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
             {
                 for (int i = 0; i < ___AllDisplayRightShipRightInfos.Count; i++)
@@ -41,7 +41,7 @@ namespace FLEETMOD.Visuals
                         else
                         {
                             displayShipRightInfo.NameLabel.color = Color.green;
-                            PLPlayer Captain = PLServer.Instance.GetPlayerFromPlayerID(MyVariables.GetShipCaptain(displayShipRightInfo.Ship.ShipID));
+                            PLPlayer Captain = PLServer.Instance.GetPlayerFromPlayerID(Variables.GetShipCaptain(displayShipRightInfo.Ship.ShipID));
                             if (Captain != null)
                             {
                                 displayShipRightInfo.TitleLabel.enabled = true;

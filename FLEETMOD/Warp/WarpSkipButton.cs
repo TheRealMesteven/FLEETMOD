@@ -12,7 +12,7 @@ namespace FLEETMOD.Warp
         // Skips Warp when F8 Pressed
         public static bool Prefix()
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             if (PLServer.Instance.GetPlayerFromPlayerID(0).GetPhotonPlayer().NickName == "skipwarp" && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
             {
                 PLServer.Instance.GetPlayerFromPlayerID(0).StartingShip.photonView.RPC("SkipWarp", PhotonTargets.All, Array.Empty<object>());
@@ -26,7 +26,7 @@ namespace FLEETMOD.Warp
         // Sets Admirals Nickname (Synced with all Clients) to skipwarp to allow Non-Admirals to know when they can skip warp
         public static void Postfix(PLServer __instance)
         {
-            if (!MyVariables.isrunningmod || __instance == null || PLNetworkManager.Instance == null || PLEncounterManager.Instance == null) return;
+            if (!Variables.isrunningmod || __instance == null || PLNetworkManager.Instance == null || PLEncounterManager.Instance == null) return;
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip != null && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GameHasStarted)
             {
                 if (PLServer.Instance.AllPlayersLoaded() && Mathf.Abs((float)((long)PLServer.Instance.GetEstimatedServerMs() - (long)PLEncounterManager.Instance.PlayerShip.LastBeginWarpServerTime)) > 16000f && PhotonNetwork.player.NickName != "skipwarp")
@@ -46,7 +46,7 @@ namespace FLEETMOD.Warp
         // Display Skip Warp Label to all Captains
         public static void Postfix(PLInGameUI __instance, ref List<PLPlayer> ___relevantPlayersForCrewStatus, ref PLCachedFormatString<string> ___cSkipWarpLabel, ref Text[] ___CrewStatusSlots_HPs, ref Text[] ___CrewStatusSlots_Names, ref Image[] ___CrewStatusSlots_BGs, ref Image[] ___CrewStatusSlots_Fills, ref Image[] ___CrewStatusSlots_TalkingImages, ref Image[] ___CrewStatusSlots_SlowFills)
         {
-            if (!MyVariables.isrunningmod || PLServer.Instance == null || PLNetworkManager.Instance == null || PLNetworkManager.Instance.LocalPlayer == null) return;
+            if (!Variables.isrunningmod || PLServer.Instance == null || PLNetworkManager.Instance == null || PLNetworkManager.Instance.LocalPlayer == null) return;
             if (PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted() && PLServer.Instance.GetPlayerFromPlayerID(0) != null)
             {
                 // If the skipwarp label should appear (Host nickname as skipwarp indicates we're in warp and can skip)

@@ -12,7 +12,7 @@ namespace FLEETMOD.Warp
         /// </summary>
         public static bool Prefix(PLWarpDriveScreen __instance)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
 
             // Gets the Targetted Sector, if no course is plotted, uses Admiral ships targetting
             int WarpTarget = -1;
@@ -32,7 +32,7 @@ namespace FLEETMOD.Warp
             // Get the status of each Fleetship, indicating if they can warp or not.
             // (In future, could be improved to allow ship warping if all targets aligned to the same location)
             bool CantWarp = false;
-            foreach (int pLShipID in MyVariables.Fleet.Keys)
+            foreach (int pLShipID in Variables.Fleet.Keys)
             {
                 PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(pLShipID);
                 if (plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != null && (

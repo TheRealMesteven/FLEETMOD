@@ -15,7 +15,7 @@ namespace FLEETMOD.Warp
         /// </summary>
         public static void Postfix(PLWarpDriveScreen __instance, ref UISprite ___JumpComputerPanel, ref UISprite ___WarpDrivePanel, ref UISprite ___m_BlockingTargetOnboardPanel, ref UILabel ___m_JumpButtonLabel, ref UILabel ___BlindJumpBtnLabel, ref UILabel ___BlindJumpWarning, ref UISprite ___BlindJumpBtn, ref float ___TargetAlpha_WarpPanel, ref UILabel ___m_JumpButtonLabelTop, ref UILabel ___m_BlockingTargetOnboardPanelTitle, ref UIPanel ___m_JumpButtonMask, ref UIPanel[] ___ChargeStage_BarMask, ref UILabel[] ___ChargeStage_Label, string[] ___ChargeStage_Name)
         {
-            if (!MyVariables.isrunningmod || __instance == null) return;
+            if (!Variables.isrunningmod || __instance == null) return;
             int WarpIssue = 0; // 0 = Can Warp | 1 = Unaligned | 2 = Uncharged | 3 = Unfueled
             string WarpShip = "";
             bool CurrentShip = false;
@@ -38,7 +38,7 @@ namespace FLEETMOD.Warp
             // Ensure the issue checks start with the Local Player Ship
             List<int> keys = new List<int>();
             keys.Add(PLEncounterManager.Instance.PlayerShip.ShipID);
-            keys.AddRange(MyVariables.Fleet.Keys.ToList());
+            keys.AddRange(Variables.Fleet.Keys.ToList());
 
             // Workout if a ship has an issue preventing warp
             foreach (int pLShipID in keys)

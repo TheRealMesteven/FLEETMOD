@@ -13,8 +13,8 @@ namespace FLEETMOD.Warp
         /// </summary>
         public static bool Prefix(int shipID, int playerID)
         {
-            if (!MyVariables.isrunningmod) return true;
-            if (MyVariables.NonModded.Contains(playerID)) return false;
+            if (!Variables.isrunningmod) return true;
+            if (Variables.NonModded.Contains(playerID)) return false;
 
             // Notify Players of Warp
             PLServer.Instance.photonView.RPC("AddNotification", PhotonTargets.All, new object[]

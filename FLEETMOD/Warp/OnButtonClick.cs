@@ -9,7 +9,7 @@ namespace FLEETMOD.Warp
 		public static bool Prefix(UIWidget inButton)
 		{
             // Only permit Admiral to Click BlindJump / Self Destruct button
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
 			return !(!PhotonNetwork.isMasterClient && !(inButton.name == "Jump"));
 		}
 	}

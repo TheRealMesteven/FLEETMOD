@@ -9,13 +9,13 @@ namespace FLEETMOD.Warp
     {
         public static bool Prefix(PLServer __instance, int inShipID, int inWarpCharge, PhotonMessageInfo pmi)
         {
-            if (!MyVariables.isrunningmod) return true;
+            if (!Variables.isrunningmod) return true;
             PLShipInfoBase shipFromID = PLEncounterManager.Instance.GetShipFromID(inShipID);
             PLPlayer playerForPhotonPlayer = PLServer.GetPlayerForPhotonPlayer(pmi.sender);
             if (shipFromID != null && playerForPhotonPlayer != null && playerForPhotonPlayer.TeamID == 0 && !playerForPhotonPlayer.IsBot)
             {
                 // Allow Non-Modded Clients to interact with warp aside from Engaging / Skipping
-                if (MyVariables.NonModded.Contains(playerForPhotonPlayer.GetPlayerID()) && (shipFromID.WarpChargeStage == EWarpChargeStage.E_WCS_READY || shipFromID.WarpChargeStage == EWarpChargeStage.E_WCS_ACTIVE))
+                if (Variables.NonModded.Contains(playerForPhotonPlayer.GetPlayerID()) && (shipFromID.WarpChargeStage == EWarpChargeStage.E_WCS_READY || shipFromID.WarpChargeStage == EWarpChargeStage.E_WCS_ACTIVE))
                 {
                     PLServer.Instance.photonView.RPC("AddNotification", pmi.sender, new object[]
                     {
@@ -31,9 +31,9 @@ namespace FLEETMOD.Warp
                 if (PhotonNetwork.isMasterClient && shipFromID.WarpChargeStage != (EWarpChargeStage)inWarpCharge && shipFromID.GetIsPlayerShip())
                 {
                     int CaptainID = PLNetworkManager.Instance.LocalPlayerID;
-                    if (MyVariables.ShipHasCaptain(inShipID))
+                    if (Variables.ShipHasCaptain(inShipID))
                     {
-                        CaptainID = MyVariables.GetShipCaptain(inShipID);
+                        CaptainID = Variables.GetShipCaptain(inShipID);
                     }
                     PLPlayer cachedFriendlyPlayerOfClass = PLServer.Instance.GetPlayerFromPlayerID(CaptainID);
                     if (cachedFriendlyPlayerOfClass != null && playerForPhotonPlayer != cachedFriendlyPlayerOfClass)
