@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModMessages\ActivateFleetmod.cs" />
+    <Compile Include="ModMessages\RequestToSpawnBot.cs" />
     <Compile Include="Visuals\CustomProperties.cs" />
     <Compile Include="Ships\AboutToBeDestroyed.cs" />
     <Compile Include="Setup\ActuallyJoinRoom.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Setup\RemovePlayer.cs" />
     <Compile Include="Fixes\SafeLabelSetText.cs" />
     <Compile Include="Visuals\ScreenColourPatch.cs" />
-    <Compile Include="Disabled\ServerAddCrewBotPlayer.cs" />
+    <Compile Include="Fixes\ServerAddCrewBotPlayer.cs" />
     <Compile Include="ModMessages\ServerChangePlayerNames.cs" />
     <Compile Include="ModMessages\ServerCreateShip.cs" />
     <Compile Include="Setup\ResetFleetmod.cs" />
@@ -148,6 +149,10 @@
     </Reference>
     <Reference Include="com.rlabrecque.steamworks.net">
       <HintPath>D:\SteamLibrary\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CrewAILibraryBuild">
+      <HintPath>D:\SteamLibrary\steamapps\common\PULSARLostColony\PULSAR_LostColony_Data\Managed\CrewAILibraryBuild.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Photon3Unity3D, Version=4.1.6.10, Culture=neutral, processorArchitecture=MSIL">
