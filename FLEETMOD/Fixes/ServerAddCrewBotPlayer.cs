@@ -15,7 +15,7 @@ namespace FLEETMOD.Fixes
             if (PLNetworkManager.Instance != null && PLNetworkManager.Instance.CurrentGame != null && PLNetworkManager.Instance.LocalPlayer != null)
             {
                 if (!PhotonNetwork.isMasterClient) ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.RequestToSpawnBot", PhotonNetwork.masterClient, new object[] { inClass });
-                else if (AbleToAddBotPlayer(PhotonNetwork.masterClient, inClass, out int PlayerID)) AddCrewBotPlayer(PlayerID, inClass);
+                else if (AbleToAddBotPlayer(PhotonNetwork.masterClient, inClass, out int PlayerID)) AddCrewBotPlayer(PLNetworkManager.Instance.LocalPlayer, PlayerID, inClass);
             }
             return false;
         }
@@ -26,9 +26,8 @@ namespace FLEETMOD.Fixes
             return true;
         }
 
-        internal static void AddCrewBotPlayer(int PlayerID, int inClass)
+        internal static void AddCrewBotPlayer(PLPlayer pLPlayer, int PlayerID, int inClass)
         {
-            PLPlayer pLPlayer = PLNetworkManager.Instance.LocalPlayer;
             if (pLPlayer.StartingShip == null) return;
             PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, $"Spawning Bot With PlayerID {PlayerID}");
             PLPlayer component = PhotonNetwork.Instantiate("NetworkPrefabs/PLPlayer", Vector3.zero, Quaternion.identity, 0, null).GetComponent<PLPlayer>();
