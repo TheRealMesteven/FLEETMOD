@@ -8,3 +8,5 @@ Also probably should remove the keybind menu changing and replace with drop down
 ## Small Issues / Notes
 - AI can warp regardless of all ships lined up.
 - Bot Notifications Alert As Admiral
+- On Warp AI on additional ships die
+- Cant Access Bot Inventories

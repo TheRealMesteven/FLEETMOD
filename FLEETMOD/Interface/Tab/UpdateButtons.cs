@@ -55,7 +55,7 @@ namespace FLEETMOD.Interface.Tab
                         return "To Brig";
                     }
                     */
-                    return "";
+                    return "Remove Bot";
                 case EPlayerButtonType2.E_KICK:
                     return "Kick";
                 case EPlayerButtonType2.E_MUTE:
@@ -96,12 +96,10 @@ namespace FLEETMOD.Interface.Tab
                     }
                     else
                     {
-                        /*
-                        if (PhotonNetwork.isMasterClient && __instance.MyPlayer != PLNetworkManager.Instance.LocalPlayer)
+                        if (__instance.MyPlayer.IsBot && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0 && (PhotonNetwork.isMasterClient || PLNetworkManager.Instance.LocalPlayer.StartingShip == __instance.MyPlayer.StartingShip))
                         {
                             ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_REMOVE_BOT);
                         }
-                        */
                         if (SteamManager.Initialized && __instance.MyPlayer.SteamIDIsVisible && __instance.MyPlayer.GetPhotonPlayer() != null && __instance.MyPlayer.GetPhotonPlayer().SteamID != CSteamID.Nil)
                         {
                             ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_FRIEND);

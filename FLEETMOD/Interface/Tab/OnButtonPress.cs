@@ -58,11 +58,15 @@ namespace FLEETMOD.Interface.Tab
                 case "Add EngBot":
                     num = 8;
                     break;
+                case "Remove Bot":
+                    num = 9;
+                    break;
                 default:
                     break;
             }
             if (num > 0 && num < 5) ChangeClass(__instance, num, inButton.m_Label.text);
             else if (num > 4 && num < 9) PLServer.Instance.ServerAddCrewBotPlayer(num - 4);
+            else if (num == 9) PLServer.Instance.photonView.RPC("ServerRemoveCrewBotPlayer", PhotonTargets.MasterClient, new object[] { __instance.MyPlayer.GetPlayerID() });
             /*
             if (inButton.m_Label.text == "To Brig")
             {
