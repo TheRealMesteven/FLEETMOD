@@ -28,7 +28,7 @@ namespace FLEETMOD.ModMessages
                     PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
                     if (player != null)
                     {
-                        PulsarModLoader.ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
+                        ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerUpdateVariables", player.GetPhotonPlayer(), SerializeSyncValues().Cast<object>().ToArray());
                     }
                 }
             }

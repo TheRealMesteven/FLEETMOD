@@ -18,12 +18,20 @@ namespace FLEETMOD.Interface.Tab
                 case EPlayerButtonType2.E_VIEW_ITEMS:
                     return "Items";
                 case EPlayerButtonType2.E_ADD_BOT_PILOT:
-                    return "Pilot";
+                    return "Add PiBot";
                 case EPlayerButtonType2.E_ADD_BOT_SCI:
-                    return "Science";
+                    return "Add SciBot";
                 case EPlayerButtonType2.E_ADD_BOT_WEAP:
-                    return "Weapons";
+                    return "Add WeapBot";
                 case EPlayerButtonType2.E_ADD_BOT_ENG:
+                    return "Add EngBot";
+                case EPlayerButtonType2.E_CHANGE_TO_PILOT:
+                    return "Pilot";
+                case EPlayerButtonType2.E_CHANGE_TO_SCI:
+                    return "Science";
+                case EPlayerButtonType2.E_CHANGE_TO_WEAP:
+                    return "Weapons";
+                case EPlayerButtonType2.E_CHANGE_TO_ENG:
                     return "Engineer";
                 case EPlayerButtonType2.E_ADD_FRIEND:
                     if (!SteamManager.Initialized || __instance.MyPlayer.GetPhotonPlayer() == null || !(__instance.MyPlayer.GetPhotonPlayer().SteamID != CSteamID.Nil) || !(__instance.MyPlayer != PLNetworkManager.Instance.LocalPlayer))
@@ -74,6 +82,13 @@ namespace FLEETMOD.Interface.Tab
                 {
                     if (Interface.Tab.UpdatePLTabMenu.ChangeClassPage)
                     {
+                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_CHANGE_TO_PILOT);
+                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_CHANGE_TO_SCI);
+                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_CHANGE_TO_WEAP);
+                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_CHANGE_TO_ENG);
+                    }
+                    else if (__instance.MyPlayer == PLNetworkManager.Instance.LocalPlayer && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
+                    {
                         ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_PILOT);
                         ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_SCI);
                         ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_WEAP);
@@ -95,7 +110,7 @@ namespace FLEETMOD.Interface.Tab
                         {
                             ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_MUTE);
                         }
-                        if (!__instance.MyPlayer.IsBot && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().IsMasterClient && __instance.MyPlayer.GetPhotonPlayer() != null && !__instance.MyPlayer.GetPhotonPlayer().IsMasterClient)
+                        if (!__instance.MyPlayer.IsBot && PLNetworkManager.Instance.LocalPlayer.GetPhotonPlayer().IsMasterClient && __instance.MyPlayer.GetPhotonPlayer() != null && !__instance.MyPlayer.GetPhotonPlayer().IsMasterClient)
                         {
                             ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_KICK);
                         }

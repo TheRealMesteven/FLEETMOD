@@ -1,0 +1,13 @@
+﻿# AI Implementation Issues
+Need to do a lot of Tab Menu reworking for bots as they require lots of buttons.
+Potentially make the Bot page its own menu or make the tab menu scrollable so you can see each player on crew and kick them when desired.
+Also probably should remove the keybind menu changing and replace with drop down where Auto targetting is or a custom page selector.
+## Big Issues / Notes
+- Host Ship AI break (Dont know what to do and end up standing in teleporter or restarting ship or mass pumping fuel) with multiple Captains. Not multiple ships.
+- Having TWO AI crews makes them think there is an intruder and thus they patrol the ship rather than doing their duties.
+- Other Ship having AI ONLY makes them think there is an intruder and thus they patrol the ship rather than doing their duties.
+- Secondary Captain Breaks? 
+(Ship on planet teleporters is the Admiral Ship, Top Right UI shows main ship in green, others white with no banners on any and sometimes have frozen mission accepted text.)
+- Sometimes on joining it doesnt sync in.
+## Small Issues / Notes
+- AI can warp regardless of all ships lined up.
