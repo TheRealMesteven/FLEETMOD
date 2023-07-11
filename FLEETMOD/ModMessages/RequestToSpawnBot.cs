@@ -1,4 +1,4 @@
-﻿using FLEETMOD.Fixes;
+﻿using FLEETMOD.Bot;
 using PulsarModLoader;
 
 namespace FLEETMOD.ModMessages

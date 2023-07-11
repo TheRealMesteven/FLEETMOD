@@ -1,10 +1,8 @@
-﻿using System;
-using ExitGames.Client.Photon.LoadBalancing;
-using HarmonyLib;
+﻿using HarmonyLib;
 using PulsarModLoader;
 using UnityEngine;
 
-namespace FLEETMOD.Fixes
+namespace FLEETMOD.Bot
 {
     [HarmonyPatch(typeof(PLServer), "ServerAddCrewBotPlayer")]
     internal class ServerAddCrewBotPlayer

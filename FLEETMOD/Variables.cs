@@ -40,6 +40,7 @@ namespace FLEETMOD
         {
             foreach (PLPlayer Player in PLServer.Instance.AllPlayers)
             {
+                if (Player.IsBot) continue;
                 if (Player != null && Player.TeamID == 0 && Player.GetPhotonPlayer().GetScore() == inShipID && Player.GetClassID() == 0)
                         return Player.GetPlayerID();
             }
