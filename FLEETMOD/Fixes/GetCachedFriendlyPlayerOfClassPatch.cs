@@ -18,7 +18,7 @@ namespace FLEETMOD.Fixes
             {
                 foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
                 {
-                    if (plplayer != null && !plplayer.IsBot && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && plplayer.StartingShip == PLNetworkManager.Instance.LocalPlayer.StartingShip && plplayer.StartingShip != null && plplayer.GetClassID() == inClass && inClass != 0 && __instance != null)
+                    if (plplayer != null && PLNetworkManager.Instance.LocalPlayer != null && PLNetworkManager.Instance.LocalPlayer.StartingShip != null && plplayer.StartingShip == PLNetworkManager.Instance.LocalPlayer.StartingShip && plplayer.StartingShip != null && plplayer.GetClassID() == inClass && inClass != 0 && __instance != null)
                     {
                         return plplayer;
                     }

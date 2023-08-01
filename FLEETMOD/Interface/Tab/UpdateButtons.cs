@@ -89,10 +89,10 @@ namespace FLEETMOD.Interface.Tab
                     }
                     else if (__instance.MyPlayer == PLNetworkManager.Instance.LocalPlayer && PLNetworkManager.Instance.LocalPlayer.GetClassID() == 0)
                     {
-                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_PILOT);
-                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_SCI);
-                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_WEAP);
-                        ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_ENG);
+                        if (!PLServer.Instance.GetCachedFriendlyPlayerOfClass(1)) ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_PILOT);
+                        if (!PLServer.Instance.GetCachedFriendlyPlayerOfClass(2)) ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_SCI);
+                        if (!PLServer.Instance.GetCachedFriendlyPlayerOfClass(3)) ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_WEAP);
+                        if (!PLServer.Instance.GetCachedFriendlyPlayerOfClass(4)) ___ButtonsActiveTypes.Add(EPlayerButtonType2.E_ADD_BOT_ENG);
                     }
                     else
                     {

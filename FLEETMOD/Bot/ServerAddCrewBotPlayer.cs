@@ -35,6 +35,7 @@ namespace FLEETMOD.Bot
             component.IsBot = true;
             component.TeamID = 0;
             component.StartingShip = pLPlayer.StartingShip;
+            //Variables.Fleet[component.StartingShip.ShipID].Add(PlayerID);
             component.SetSubHubAndTTIID(pLPlayer.StartingShip.MyTLI.SubHubID, 0);
             component.OnPlanet = false;
             switch (inClass)
