@@ -67,7 +67,7 @@ namespace FLEETMOD
                         string DataString = shipInfo.MyStats.CreateDataString();
                         PulsarModLoader.Utilities.Logger.Info($"[FLEETMOD] - Save {DataString}");
                         writer.Write(DataString);
-                        PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"[FLEETMOD] Saved {shipInfo.ShipName}");
+                        //PulsarModLoader.Utilities.Messaging.Echo(PhotonNetwork.masterClient, $"[FLEETMOD] Saved {shipInfo.ShipName}");
                     }
                 }
             }
