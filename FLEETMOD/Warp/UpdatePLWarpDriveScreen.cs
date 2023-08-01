@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace FLEETMOD.Warp
     [HarmonyPatch(typeof(PLWarpDriveScreen), "Update")]
     internal class UpdatePLWarpDriveScreen
     {
+        protected static MethodInfo CanActivateWarpDriveInfo = AccessTools.Method(typeof(PLWarpDriveScreen), "CanActivateWarpDrive");
         /// <summary>
         /// Change what the WarpDriveScreen parameters display
         /// (Self Destruct, Warp Button etc)
@@ -16,9 +18,6 @@ namespace FLEETMOD.Warp
         public static void Postfix(PLWarpDriveScreen __instance, ref UISprite ___JumpComputerPanel, ref UISprite ___WarpDrivePanel, ref UISprite ___m_BlockingTargetOnboardPanel, ref UILabel ___m_JumpButtonLabel, ref UILabel ___BlindJumpBtnLabel, ref UILabel ___BlindJumpWarning, ref UISprite ___BlindJumpBtn, ref float ___TargetAlpha_WarpPanel, ref UILabel ___m_JumpButtonLabelTop, ref UILabel ___m_BlockingTargetOnboardPanelTitle, ref UIPanel ___m_JumpButtonMask, ref UIPanel[] ___ChargeStage_BarMask, ref UILabel[] ___ChargeStage_Label, string[] ___ChargeStage_Name)
         {
             if (!Variables.isrunningmod || __instance == null) return;
-            int WarpIssue = 0; // 0 = Can Warp | 1 = Unaligned | 2 = Uncharged | 3 = Unfueled
-            string WarpShip = "";
-            bool CurrentShip = false;
 
             // Gets the Targetted Sector, if no course is plotted, uses Admiral ships targetting
             int WarpTarget = -1;
@@ -32,43 +31,6 @@ namespace FLEETMOD.Warp
                 if (AdmiralShip != null)
                 {
                     WarpTarget = AdmiralShip.WarpTargetID;
-                }
-            }
-
-            // Ensure the issue checks start with the Local Player Ship
-            List<int> keys = new List<int>();
-            keys.Add(PLEncounterManager.Instance.PlayerShip.ShipID);
-            keys.AddRange(Variables.Fleet.Keys.ToList());
-
-            // Workout if a ship has an issue preventing warp
-            foreach (int pLShipID in keys)
-            {
-                PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(pLShipID);
-                if (plshipInfoBase != null)
-                {
-                    CurrentShip = plshipInfoBase == __instance.MyScreenHubBase.OptionalShipInfo;
-                    WarpShip = plshipInfoBase.ShipNameValue;
-                    if (WarpTarget != -1 && plshipInfoBase.WarpTargetID != WarpTarget)
-                    {
-                        WarpIssue = 1;
-                        break;
-                    }
-                    if (plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY)
-                    {
-                        WarpIssue = 2;
-                        break;
-                    }
-                    if (plshipInfoBase.NumberOfFuelCapsules < 1)
-                    {
-                        WarpIssue = 3;
-                        break;
-                    }
-                    PLShipInfo pLShipInfo = (PLShipInfo)plshipInfoBase;
-                    if (pLShipInfo != null && (pLShipInfo.BlockingCombatTargetOnboard || pLShipInfo.HasVirusOfType(EVirusType.WARP_DISABLE)))
-                    {
-                        WarpIssue = 4;
-                        break;
-                    }
                 }
             }
 
@@ -90,7 +52,6 @@ namespace FLEETMOD.Warp
             }
             else
             {
-
                 // Admiral Destruct Ship || Warp-Target Display
                 if (PhotonNetwork.isMasterClient)
                 {
@@ -159,36 +120,22 @@ namespace FLEETMOD.Warp
                 case EWarpChargeStage.E_WCS_READY:
                     {
                         ___TargetAlpha_WarpPanel = 0.3f;
-                        if (!__instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip() || PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, true) > 0.5f || (CurrentShip && WarpIssue == 4))
-                        {
+                        KeyValuePair<bool, string> OtherShipStatus = CanActivateWarp.OthersCanActivateWarp(__instance.MyScreenHubBase.OptionalShipInfo.ShipID);
+                        if (__instance.MyScreenHubBase.OptionalShipInfo.BlockingCombatTargetOnboard || __instance.MyScreenHubBase.OptionalShipInfo.HasVirusOfType(EVirusType.WARP_DISABLE) || PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, __instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip()) > 0.5f)
                             ___m_JumpButtonLabel.text = "Not Responding";
-                        }
+                        else if (WarpTarget == -1) ___m_JumpButtonLabel.text = "No Target Sector";
+                        else if (__instance.MyScreenHubBase.OptionalShipInfo.NumberOfFuelCapsules < 1) ___m_JumpButtonLabel.text = "No Fuel";
+                        else if (__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != WarpTarget) ___m_JumpButtonLabel.text = $"Align to {WarpTarget}";
+                        else if (!OtherShipStatus.Key) ___m_JumpButtonLabel.text = OtherShipStatus.Value;
                         else
                         {
-                            if (WarpIssue == 2)
+                            PLSectorInfo sectorWithID = PLServer.GetSectorWithID(__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID);
+                            if (sectorWithID != null)
                             {
-                                ___m_JumpButtonLabel.text = $"Prep the {WarpShip}";
+                                if (sectorWithID.VisualIndication == ESectorVisualIndication.COMET) ___m_JumpButtonLabel.text = "Jump to Comet";
+                                else ___m_JumpButtonLabel.text = "Jump to " + sectorWithID.Name;
                             }
-                            else if (WarpIssue == 3)
-                            {
-                                ___m_JumpButtonLabel.text = CurrentShip ? "No Fuel" : $"No Fuel on the {WarpShip}";
-                            }
-                            else if (WarpTarget == -1)
-                            {
-                                ___m_JumpButtonLabel.text = "No Target Sector";
-                            }
-                            else if (__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1 && WarpIssue == 0)
-                            {
-                                ___m_JumpButtonLabel.text = $"Warp to Sector {__instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID}";
-                            }
-                            else if (WarpIssue == 4)
-                            {
-                                ___m_JumpButtonLabel.text = $"{WarpShip} is Not Responding";
-                            }
-                            else
-                            {
-                                ___m_JumpButtonLabel.text = CurrentShip ? $"Align to {WarpTarget}" : $"Align {WarpShip} to {WarpTarget}";
-                            }
+                            else ___m_JumpButtonLabel.text = "Jump to " + __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID.ToString();
                         }
                         break;
                     }

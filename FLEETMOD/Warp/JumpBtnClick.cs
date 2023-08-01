@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using HarmonyLib;
 
@@ -7,44 +8,13 @@ namespace FLEETMOD.Warp
     [HarmonyPatch(typeof(PLWarpDriveScreen), "JumpBtnClick")]
     internal class JumpBtnClick
     {
+        protected static MethodInfo CanActivateWarpDriveInfo = AccessTools.Method(typeof(PLWarpDriveScreen), "CanActivateWarpDrive");
         /// <summary>
         /// Patch to ensure Fleet cannot warp if Unaligned / Uncharged / Unfueled
         /// </summary>
         public static bool Prefix(PLWarpDriveScreen __instance)
         {
             if (!Variables.isrunningmod) return true;
-
-            // Gets the Targetted Sector, if no course is plotted, uses Admiral ships targetting
-            int WarpTarget = -1;
-            if (PLStarmap.Instance != null && PLStarmap.Instance.CurrentShipPath != null && PLStarmap.Instance.CurrentShipPath.Count > 1)
-            {
-                WarpTarget = PLStarmap.Instance.CurrentShipPath[1].ID;
-            }
-            else
-            {
-                PLShipInfoBase AdmiralShip = PLEncounterManager.Instance.GetShipFromID(PhotonNetwork.masterClient.GetScore());
-                if (AdmiralShip != null)
-                {
-                    WarpTarget = AdmiralShip.WarpTargetID;
-                }
-            }
-
-            // Get the status of each Fleetship, indicating if they can warp or not.
-            // (In future, could be improved to allow ship warping if all targets aligned to the same location)
-            bool CantWarp = false;
-            foreach (int pLShipID in Variables.Fleet.Keys)
-            {
-                PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(pLShipID);
-                if (plshipInfoBase.GetIsPlayerShip() && plshipInfoBase != null && (
-                WarpTarget == -1 || plshipInfoBase.WarpTargetID != WarpTarget || plshipInfoBase.WarpChargeStage != EWarpChargeStage.E_WCS_READY || plshipInfoBase.NumberOfFuelCapsules < 1 
-                || ((PLShipInfo)plshipInfoBase != null && (((PLShipInfo)plshipInfoBase).BlockingCombatTargetOnboard || ((PLShipInfo)plshipInfoBase).HasVirusOfType(EVirusType.WARP_DISABLE)))
-                ))
-                {
-                    CantWarp = true;
-                    break;
-                }
-            }
-
             // Detect changes in the screen and sync to everyone
             if (__instance.MyScreenHubBase.OptionalShipInfo.GetIsPlayerShip())
             {
@@ -62,8 +32,7 @@ namespace FLEETMOD.Warp
                         break;
                     case EWarpChargeStage.E_WCS_READY:
                         {
-                            if (!CantWarp && __instance.MyScreenHubBase.OptionalShipInfo.WarpTargetID != -1
-                                && PLBeaconInfo.GetBeaconStatAdditive(EBeaconType.E_WARP_DISABLE, true) < 0.5f)
+                            if ((bool)CanActivateWarpDriveInfo.Invoke(__instance, null))
                             {
                                 ChangeState = true;
                                 if (PLNetworkManager.Instance.LocalPlayer != null)
