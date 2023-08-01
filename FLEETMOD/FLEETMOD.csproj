@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot\BotPriorityPatches.cs" />
+    <Compile Include="Warp\CanActivateWarp.cs" />
     <Compile Include="Bot\ShipInfoIntruderCheck.cs" />
     <Compile Include="ModMessages\ActivateFleetmod.cs" />
     <Compile Include="ModMessages\RequestToSpawnBot.cs" />

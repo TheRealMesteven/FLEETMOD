@@ -20,35 +20,38 @@ namespace FLEETMOD.Setup
                 });
 
                 //int num = 0;
-                if (inPlayer.GetPhotonPlayer().GetScore() > 0 && inPlayer.StartingShip != null && !inPlayer.StartingShip.HasBeenDestroyed && inPlayer.GetClassID() == 0)
+                if (!inPlayer.IsBot)
                 {
-                    PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                    if (inPlayer.GetPhotonPlayer().GetScore() > 0 && inPlayer.StartingShip != null && !inPlayer.StartingShip.HasBeenDestroyed && inPlayer.GetClassID() == 0)
                     {
+                        PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                        {
                             $"{inPlayer.StartingShip.ShipNameValue}\n has lost her Captain",
                             Color.green,
                             0,
                             "SHIP"
-                    });
-                    /*foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
-                    {
-                        if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer != inPlayer && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetClassID() != 0 && plplayer.GetPhotonPlayer().GetScore() == inPlayer.GetPhotonPlayer().GetScore() && !plplayer.IsBot)
+                        });
+                        /*foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
                         {
-                            num++;
-                            PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
+                            if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer != inPlayer && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetClassID() != 0 && plplayer.GetPhotonPlayer().GetScore() == inPlayer.GetPhotonPlayer().GetScore() && !plplayer.IsBot)
                             {
-                                plplayer.GetPlayerID(),
-                                0
-                            });
-                            PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
-                            {
-                                plplayer.GetPlayerName(false) + " \n is now the Captain",
-                                Color.green,
-                                0,
-                                "SHIP"
-                            });
-                            break;
-                        }
-                    }*/
+                                num++;
+                                PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
+                                {
+                                    plplayer.GetPlayerID(),
+                                    0
+                                });
+                                PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
+                                {
+                                    plplayer.GetPlayerName(false) + " \n is now the Captain",
+                                    Color.green,
+                                    0,
+                                    "SHIP"
+                                });
+                                break;
+                            }
+                        }*/
+                    }
                 }
 
                 /*if (PhotonNetwork.isMasterClient && num == 0 && inPlayer.StartingShip != PLNetworkManager.Instance.LocalPlayer.StartingShip && inPlayer.GetClassID() == 0)
@@ -71,7 +74,7 @@ namespace FLEETMOD.Setup
                 {
                     Variables.NonModded.Remove(inPlayer.GetPlayerID());
                 }
-                Variables.Fleet[inPlayer.GetPhotonPlayer().GetScore()].Remove(inPlayer.GetPlayerID());
+                if (!inPlayer.IsBot) Variables.Fleet[inPlayer.GetPhotonPlayer().GetScore()].Remove(inPlayer.GetPlayerID());
                 /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
                 {
                     MyVariables.BriggedCrew.Remove(inPlayer.GetPlayerID());
