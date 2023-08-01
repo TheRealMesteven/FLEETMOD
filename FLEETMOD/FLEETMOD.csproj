@@ -126,7 +126,7 @@
     <Content Include="Lib\UnityEngine.InputLegacyModule.dll" />
     <Content Include="Lib\UnityEngine.TextRenderingModule.dll" />
     <Content Include="Lib\UnityEngine.UI.dll" />
-    <Content Include="Notes.txt" />
+    <None Include="CHANGES.md" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
