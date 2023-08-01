@@ -49,6 +49,20 @@ namespace FLEETMOD.Visuals
 		{
 			PLPlayer pLPlayer = __instance.LocalPlayer;
             string text = __instance.CurrentChatText.Replace("[&%~[C", "").Replace(" ]&%~]", "");
+            if (!Variables.isrunningmod)
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, string.Concat(new object[]
+                {
+                    "[&%~[C",
+                    $"{pLPlayer.GetClassID().ToString()}",
+                    " ",
+                    pLPlayer.GetPlayerName(false),
+                    " <",
+                    $"{pLPlayer.GetClassName()}",
+                    "> ]&%~]: ",
+                    text
+                }));
+            }
             PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, string.Concat(new object[]
             {
                 "[&%~[C",
