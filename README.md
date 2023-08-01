@@ -36,7 +36,7 @@ Known Issues:
 - Sometimes additional ships cannot probe research materials.
 - Sometimes if a crew ship is destroyed, players will see 'No Atrium'. This is only a visual bug!
 - Ships that are not detected by the Admiral ship will have the ship name 'Ship Name'
-- Locker names are of the last player to join in that class.
+- Captains Locker Name is of Host.
 - Picked up components go to the Admiral ship.
 - Warp range frequently does not increment properly.
 - EXOTIC COMPONENTS and BETTER FRAGMENTS are NOT supported!
