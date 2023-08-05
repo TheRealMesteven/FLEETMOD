@@ -9,6 +9,8 @@ Interface
 - Fuel Transfer Comms
 - Ship Sell Comms
 - Ship Purchase Comms
+- Hireable Drone Escorts
+- Add to / Merge ship cargos
 ```
 ```yaml
 Bots
@@ -27,4 +29,6 @@ General
 - Fix Scrap Pickup (Breaks when drones are present)
 - Fix Ship Warp Positioning (Bring to within x meters of host ship)
 - Test/Fix Commands
+- Fix Warp Range Syncing
+- Fix Pawn Component Pickup (Picks up to Host Ship Currently)
 ```
