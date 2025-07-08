@@ -67,8 +67,8 @@ namespace FLEETMOD.Interface.Tab
             ShipGrid.name = "ShipGrid";
             ShipScrollContent = ShipGrid.GetComponent<RectTransform>();
 
-            RectTransform shipScrollViewRect = shipScrollView.GetComponent<RectTransform>();
-            shipScrollViewRect.sizeDelta = new Vector2(600, 300);
+            shipScrollView.GetComponent<RectTransform>().sizeDelta = new Vector2(UpdateLabels.totalWidth, 300);
+            shipScrollView.GetComponent<ScrollRect>().verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
         }
 
         public static Transform FindDeepChild(Transform parent, string name, int depth = 3)
@@ -113,6 +113,11 @@ namespace FLEETMOD.Interface.Tab
         }
 
         private static List<ShipDisplay> allSDs = new List<ShipDisplay>();
+        internal static float totalWidth = 600f;
+        static float nameWidth = 210f;
+        static float descWidth = 210f;
+        static float rankStartX = 140f;
+        static float rankSpacing = 20f;
         private static void UpdateTDs()
         {
             if (!Variables.isrunningmod) return;
@@ -134,7 +139,7 @@ namespace FLEETMOD.Interface.Tab
                         Button button = gameObject.AddComponent<Button>();
                         ColorBlock colorBlock = default(ColorBlock);
                         colorBlock.normalColor = Color.black;
-                        colorBlock.highlightedColor = PLPlayer.GetClassColorFromID(0) * 0.5f;
+                        colorBlock.highlightedColor = PLPlayer.GetClassColorFromID(-1) * 0.5f;
                         colorBlock.selectedColor = colorBlock.highlightedColor;
                         colorBlock.pressedColor = Color.black;
                         colorBlock.colorMultiplier = 1f;
@@ -143,44 +148,49 @@ namespace FLEETMOD.Interface.Tab
                         {
                             PressSD(sd);
                         });
+
                         gameObject.transform.SetParent(ChangeTabMenuDisplay.ShipGrid);
                         gameObject.transform.localRotation = Quaternion.identity;
                         gameObject.transform.localScale = Vector3.one;
-                        sd.BG.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 730f);
-                        sd.BG.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 50f);
+                        sd.BG.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, totalWidth);
+                        sd.BG.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 45f);
                         sd.BG.sprite = PLTabMenu.Instance.TalentBGSprite;
                         sd.BG.type = Image.Type.Sliced;
                         sd.BG.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+
+                        // Name Label
                         GameObject gameObject2 = new GameObject();
                         sd.Name = gameObject2.AddComponent<Text>();
                         gameObject2.transform.SetParent(gameObject.transform);
                         gameObject2.transform.localRotation = Quaternion.identity;
                         gameObject2.transform.localScale = Vector3.one;
-                        gameObject2.transform.localPosition = new Vector3(-220f, 0f);
-                        gameObject2.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 250f);
+                        gameObject2.transform.localPosition = new Vector3(-totalWidth / 2f + nameWidth / 2f + 10f, 0f);
+                        gameObject2.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, nameWidth);
                         gameObject2.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 45f);
-                        gameObject2.transform.localPosition = new Vector3(-220f, 0f);
                         sd.Name.color = Color.white;
                         sd.Name.alignment = TextAnchor.MiddleLeft;
                         sd.Name.font = PLGlobal.Instance.MainFont;
                         sd.Name.resizeTextForBestFit = true;
                         sd.Name.resizeTextMaxSize = 8;
                         sd.Name.resizeTextMaxSize = 24;
+
+                        // Desc Label
                         GameObject gameObject3 = new GameObject();
                         sd.Desc = gameObject3.AddComponent<Text>();
                         gameObject3.transform.SetParent(gameObject.transform);
                         gameObject3.transform.localRotation = Quaternion.identity;
                         gameObject3.transform.localScale = Vector3.one;
-                        gameObject3.transform.localPosition = new Vector3(40f, 0f);
-                        gameObject3.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 250f);
+                        gameObject3.transform.localPosition = new Vector3(0, 0f);
+                        gameObject3.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, descWidth);
                         gameObject3.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 45f);
-                        gameObject3.transform.localPosition = new Vector3(40f, 0f);
                         sd.Desc.color = Color.white * 0.8f;
                         sd.Desc.alignment = TextAnchor.MiddleLeft;
                         sd.Desc.font = PLGlobal.Instance.MainFont;
                         sd.Desc.resizeTextForBestFit = true;
                         sd.Desc.resizeTextMaxSize = 8;
                         sd.Desc.resizeTextMaxSize = 14;
+
+                        // Rank Icons
                         sd.Ranks = new Image[maxPlayers];
                         for (int j = 0; j < maxPlayers; j++)
                         {
@@ -188,12 +198,12 @@ namespace FLEETMOD.Interface.Tab
                             gameObject4.transform.SetParent(gameObject.transform);
                             gameObject4.transform.localRotation = Quaternion.identity;
                             gameObject4.transform.localScale = Vector3.one;
-                            gameObject4.transform.localPosition = new Vector3(200f + (float)j * 30f, 0f);
+                            float xPos = rankStartX + j * rankSpacing;
+                            gameObject4.transform.localPosition = new Vector3(xPos, 0f);
                             sd.Ranks[j] = gameObject4.AddComponent<Image>();
                             sd.Ranks[j].sprite = PLTabMenu.Instance.TalentRankSprite;
-                            gameObject4.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 24f);
-                            gameObject4.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 24f);
-                            gameObject4.transform.localPosition = new Vector3(200f + (float)j * 30f, 0f);
+                            gameObject4.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 20f);
+                            gameObject4.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 20f);
                         }
                         sd.BG.gameObject.layer = 5;
                         foreach (object obj in sd.BG.transform)
@@ -210,7 +220,7 @@ namespace FLEETMOD.Interface.Tab
                     PLShipInfoBase ship = PLEncounterManager.Instance.GetShipFromID(shipID);
                     sd.Name.text = PLLocalize.Localize(ship.ShipNameValue, false);
                     PLPlayer Captain = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, ship);
-                    sd.Desc.text = PLLocalize.Localize($"A {ship.GetShipTypeName()} which is Captained by {(Captain == null ? "No-one" : Captain.GetPlayerName(false) )}", false);
+                    sd.Desc.text = PLLocalize.Localize($"{ship.GetShipTypeName()} which is Captained by {(Captain == null ? "No-one" : Captain.GetPlayerName(false) )}", false);
                     sd.Available = true;
                     if (Variables.Fleet[shipID].Count >= 5)
                     {
