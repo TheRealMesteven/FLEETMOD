@@ -12,31 +12,35 @@ namespace FLEETMOD.Interface.Tab
     [HarmonyPatch(typeof(PLServer), "Start")]
     internal class ChangeTabMenuDisplay
     {
-        public static Text TabDescription;
+        internal static bool Executed = false;
+        internal static Text TabDescription;
+        internal static GameObject TargetShipBG;
+        internal static GameObject HomePageDescription;
         public static void Postfix()
         {
+            if (Executed) return;
             Transform CREW_Tab = FindDeepChild(PLTabMenu.Instance.gameObject.transform, "CREW_Tab", 5);
             Transform Home = CREW_Tab.Find("Home"); // Main Page
             Transform CrewSettings = CREW_Tab.Find("CrewSettings"); // Captain Page
 
             // Disable Targetting UI
-            Home.Find("TargetShipBG").gameObject.SetActive(!Variables.isrunningmod);
-
-            PulsarModLoader.Utilities.Logger.Info($"[Fleetmod] 5 - {Variables.isrunningmod}");
+            TargetShipBG = Home.Find("TargetShipBG").gameObject;
 
             // Add Descriptive Text
             Transform descriptionLabel = CrewSettings.Find("CrewPermissionsLabel");
-            Transform newLabel = GameObject.Instantiate(descriptionLabel, Home);
-            newLabel.position = descriptionLabel.position;
-            newLabel.localPosition = newLabel.localPosition - new Vector3(0,30f);
-            newLabel.rotation = descriptionLabel.rotation;
-            newLabel.localScale = descriptionLabel.localScale;
-            newLabel.name = "FleetPageDescriptionLabel";
-            newLabel.parent = Home;
-            Text description = newLabel.GetComponent<Text>();
+            Transform newDescriptionLabel = GameObject.Instantiate(descriptionLabel, Home);
+            newDescriptionLabel.position = descriptionLabel.position;
+            newDescriptionLabel.localPosition = newDescriptionLabel.localPosition - new Vector3(0,30f);
+            newDescriptionLabel.rotation = descriptionLabel.rotation;
+            newDescriptionLabel.localScale = descriptionLabel.localScale;
+            newDescriptionLabel.name = "FleetPageDescriptionLabel";
+            newDescriptionLabel.parent = Home;
+            Text description = newDescriptionLabel.GetComponent<Text>();
             description.supportRichText = true;
             TabDescription = description;
-            newLabel.gameObject.SetActive(Variables.isrunningmod);
+            HomePageDescription = newDescriptionLabel.gameObject;
+
+            Executed = true;
         }
 
         public static Transform FindDeepChild(Transform parent, string name, int depth = 3)
@@ -61,10 +65,14 @@ namespace FLEETMOD.Interface.Tab
     {
         public static void Postfix()
         {
-            if (ChangeTabMenuDisplay.TabDescription != null)
+            if (PLServer.Instance != null && ChangeTabMenuDisplay.Executed)
             {
+                ChangeTabMenuDisplay.TargetShipBG.SetActive(!Variables.isrunningmod);
+                ChangeTabMenuDisplay.HomePageDescription.SetActive(Variables.isrunningmod);
+
                 PLPlayer player = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
-                ChangeTabMenuDisplay.TabDescription.text = $"Your ship is the {player.StartingShip.ShipNameValue}\nCaptained by {player.GetPlayerName(false)}\n\nChange class or ship with the Fleet tab in the top right.";
+                PLPlayer localplayer = PLNetworkManager.Instance.LocalPlayer;
+                ChangeTabMenuDisplay.TabDescription.text = $"Your ship is {(localplayer.StartingShip == null ? "missing!" : $"the {localplayer.StartingShip.ShipNameValue}")}\nYour Captain is {(player == null ? "No-one" : $"{player.GetPlayerName(false)}")}\n\nChange class or ship with the Fleet tab in the top right.";
             }
         }
     }
