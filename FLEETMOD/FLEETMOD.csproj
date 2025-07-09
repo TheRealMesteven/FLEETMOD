@@ -58,7 +58,6 @@
     <Compile Include="Command.cs" />
     <Compile Include="Warp\CPEI_HandleActivateWarpDrive.cs" />
     <Compile Include="Disabled\EnemyClaimShip.cs" />
-    <Compile Include="Interface\Tab\EPlayerButtonType2.cs" />
     <Compile Include="Fixes\GetCachedFriendlyPlayerOfClassPatch.cs" />
     <Compile Include="Visuals\GetClassColorFromID.cs" />
     <Compile Include="Ships\GetIsPlayerShipPatch.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Variables.cs" />
     <Compile Include="Warp\NetworkToggleWarpCharge.cs" />
     <Compile Include="Warp\OnButtonClick.cs" />
-    <Compile Include="Interface\Tab\OnButtonPress.cs" />
     <Compile Include="Ships\CollectScrap.cs" />
     <Compile Include="Warp\OnEndWarp.cs" />
     <Compile Include="Fixes\CreateDefaultItems.cs" />
@@ -97,13 +95,11 @@
     <Compile Include="Visuals\TeamMessage.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="Visuals\UpdateAllRightShips.cs" />
-    <Compile Include="Interface\Tab\UpdateButtons.cs" />
-    <Compile Include="Interface\Tab\UpdatePlayerOverview.cs" />
+    <Compile Include="Interface\Tab\PatchPlayerSection.cs" />
     <Compile Include="Setup\AutoSpawnPlayers.cs" />
     <Compile Include="Visuals\UpdateHealthDisplay.cs" />
     <Compile Include="Fixes\UpdatePLPawn.cs" />
     <Compile Include="Ships\RepairDepotPatch.cs" />
-    <Compile Include="Interface\Tab\UpdatePLTabMenu.cs" />
     <Compile Include="Warp\RemoveDuplicateVisuals.cs" />
     <Compile Include="Warp\UpdatePLWarpDriveScreen.cs" />
     <Compile Include="Disabled\UpdateRaceSectors.cs" />

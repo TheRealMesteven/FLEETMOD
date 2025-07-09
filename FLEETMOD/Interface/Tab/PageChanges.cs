@@ -23,6 +23,7 @@ namespace FLEETMOD.Interface.Tab
         internal static GameObject ShipList;
         internal static Transform ShipGrid;
         internal static RectTransform ShipScrollContent;
+        internal static Transform ChangeClass;
         public static void Postfix()
         {
             UpdateLabels.Executed = false;
@@ -40,7 +41,7 @@ namespace FLEETMOD.Interface.Tab
             Transform descriptionLabel = CrewSettings.Find("CrewPermissionsLabel");
             Transform newDescriptionLabel = GameObject.Instantiate(descriptionLabel, Home);
             newDescriptionLabel.position = descriptionLabel.position;
-            newDescriptionLabel.localPosition = newDescriptionLabel.localPosition - new Vector3(0,30f);
+            newDescriptionLabel.localPosition = newDescriptionLabel.localPosition;
             newDescriptionLabel.rotation = descriptionLabel.rotation;
             newDescriptionLabel.localScale = descriptionLabel.localScale;
             newDescriptionLabel.name = "FleetPageDescriptionLabel";
@@ -49,9 +50,33 @@ namespace FLEETMOD.Interface.Tab
             description.supportRichText = true;
             TabDescription = description;
             HomePageDescription = newDescriptionLabel.gameObject;
+            newDescriptionLabel.GetComponent<RectTransform>().sizeDelta = new Vector2(520, 160);
+            TabDescription.alignment = TextAnchor.MiddleCenter;
 
             // Hide the Player list
             PlayerList = Home.Find("Players").gameObject;
+
+            // Add Change Class Buttons
+            Transform PlayerFive = PlayerList.transform.Find("PlayerFive");
+            ChangeClass = GameObject.Instantiate(PlayerFive, PlayerList.transform);
+            ChangeClass.position = PlayerFive.position;
+            ChangeClass.localPosition = PlayerFive.localPosition;
+            ChangeClass.rotation = PlayerFive.rotation;
+            ChangeClass.localScale = PlayerFive.localScale;
+            ChangeClass.name = "FleetPageChangeClass";
+            ChangeClass.parent = Home;
+            /*PLOverviewPlayerInfoDisplay PlayerInfo = ChangeClass.GetComponent<PLOverviewPlayerInfoDisplay>();
+            OverviewFleetInfoDisplay FleetInfo = ChangeClass.gameObject.AddComponent<OverviewFleetInfoDisplay>();
+            FleetInfo.Buttons.Concat(PlayerInfo.Buttons);
+            UnityEngine.Object.Destroy(PlayerInfo);
+            for (int i = 2; i < 6; i++)
+            {
+                GameObject button = ChangeClass.GetChild(i).gameObject;
+                UnityEngine.Object.Destroy(button.GetComponent<PLTabMenuPlayerInfoButton>());
+                FleetInfoDisplayButton FleetInfoButton = ChangeClass.gameObject.AddComponent<FleetInfoDisplayButton>();
+                FleetInfo.Buttons.Append(FleetInfoButton);
+            }*/
+
 
             // Add Ship List
             Transform scrollView = Talents.Find("Scroll View");
@@ -102,11 +127,37 @@ namespace FLEETMOD.Interface.Tab
                     ChangeTabMenuDisplay.TargetShipBG.SetActive(!Variables.isrunningmod);
                     ChangeTabMenuDisplay.HomePageDescription.SetActive(Variables.isrunningmod);
                     ChangeTabMenuDisplay.PlayerList.SetActive(!Variables.isrunningmod);
+                    ChangeTabMenuDisplay.ChangeClass.gameObject.SetActive(Variables.isrunningmod);
                 }
 
-                PLPlayer player = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
+                if (PLNetworkManager.Instance.LocalPlayer == null || !PLNetworkManager.Instance.LocalPlayer.GetHasStarted()) return;
+
+                // Primary Description
+                PLPlayer admiral = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
                 PLPlayer localplayer = PLNetworkManager.Instance.LocalPlayer;
-                ChangeTabMenuDisplay.TabDescription.text = $"Your ship is {(localplayer.StartingShip == null ? "missing!" : $"the {localplayer.StartingShip.ShipNameValue}")}\nYour Captain is {(player == null ? "No-one" : $"{player.GetPlayerName(false)}")}\n\nChange class or ship with the Fleet tab in the top right.";
+                PLPlayer captain = null;
+                if (localplayer.StartingShip != null) captain = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, localplayer.StartingShip);
+                string description =
+    "You are a " + localplayer.GetClassName() +
+    (localplayer.GetPawn() == null ? "" : (localplayer.GetPawn().CurrentShip == null ? ", planetside" : " onboard " + (localplayer.GetPawn().CurrentShip == localplayer.StartingShip ? "your ship" : "the " + localplayer.GetPawn().CurrentShip.ShipNameValue))) + "\n" +
+    (localplayer.StartingShip == null ? "You do not currently have a ship" : "Your ship is the " + localplayer.StartingShip.ShipNameValue + ", an " + localplayer.StartingShip.GetShipTypeName()) +
+    (admiral == null || admiral == localplayer ? "" : " in " + admiral.GetPlayerName(false) + "'s Fleet") +
+    "\n\n";
+
+                // Secondary Description
+                if (localplayer.GetClassID() == 0)
+                {
+                    if (localplayer == admiral)
+                    {
+                        description += "Your Fleet ships are listed below. To allow them to be crewed, you must assign a captain to them when at a station.\n";
+                    }
+                    description += "As a Captain, you cannot abandon your ship.";
+                }
+                else
+                {
+                    description += "As a Crew Member, you can change ships by selecting a ship below and change class with the buttons at the bottom.";
+                }
+                ChangeTabMenuDisplay.TabDescription.text = description;               
 
                 UpdateTDs();
             }
@@ -301,6 +352,7 @@ namespace FLEETMOD.Interface.Tab
 
         public static void PressSD(ShipDisplay inTD)
         {
+            PLMusic.PostEvent("play_titlemenu_ui_click", PLTabMenu.Instance.gameObject);
             PLTabMenu.Instance.TimedErrorMsg = PLLocalize.Localize("Fleet says hello", false);
             return;
             /*PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(TalentsListSelectedPlayerID);

@@ -10,3 +10,20 @@ Also probably should remove the keybind menu changing and replace with drop down
 - Bot Notifications Alert As Admiral
 - On Warp AI on additional ships die
 - Cant Access Bot Inventories
+
+## Recent
+- Tab menu changes to make cargo be all the ship cargo(s)
+- Player list button to view all players
+- Changes to send item menu
+- Change ship implementation
+- Option for Admiral+/Captains to change ships
+- Option for Captain to resign
+- Option for Crew to Become Captain without comms
+- Share/Link Fleet Comms
+
+## Balances?
+- Make non-captained ships use the main ship fuel but not have to be warped.
+
+## Need to do
+- Fix Captain commands
+- Add in races again

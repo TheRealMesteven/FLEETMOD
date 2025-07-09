@@ -40,7 +40,7 @@ namespace FLEETMOD.Ships
                     {
                         (PLEncounterManager.Instance.GetShipFromID(inID) as PLShipInfo).MyStats.AddShipComponent(PLWare.CreateFromHash(1, (int)PLShipComponent.createHashFromInfo((int)componentFromNetID.ActualSlotType, componentFromNetID.SubType, componentFromNetID.Level, 0, 12)) as PLShipComponent, -1, ESlotType.E_COMP_CARGO);
                         plshipInfo.MyStats.RemoveShipComponentByNetID(inNetID); // It adds the component to the ship and removes the component from the current ship player is on
-                        PLPlayer cachedFriendlyPlayerOfClass = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0);
+                        PLPlayer cachedFriendlyPlayerOfClass = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, __instance.StartingShip);
                         PLServer.Instance.photonView.RPC("AddNotification", cachedFriendlyPlayerOfClass.GetPhotonPlayer(), new object[]
                         {
                                 __instance.GetPlayerName(false)+" has sent "+PLShipComponent.CreateShipComponentFromHash((int)PLShipComponent.createHashFromInfo((int)componentFromNetID.ActualSlotType, componentFromNetID.SubType, componentFromNetID.Level, 0, 12), null).GetItemName()+" to "+PLEncounterManager.Instance.GetShipFromID(__instance.GetPhotonPlayer().GetScore()).ShipName,
