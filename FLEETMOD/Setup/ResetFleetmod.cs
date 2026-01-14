@@ -32,6 +32,7 @@ namespace FLEETMOD.Setup
             if (PhotonNetwork.isMasterClient)
             {
                 Variables.UnModdedCrews = new Dictionary<int, int>();
+                Variables.BotCrews = new Dictionary<int, int>();
                 foreach (PulsarMod pulsarMod in ModManager.Instance.GetAllMods())
                 {
                     if (pulsarMod.HarmonyIdentifier() == "mod.id107.beammeup")

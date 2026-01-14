@@ -61,20 +61,35 @@ namespace FLEETMOD.Setup
                 }*/
                 PLServer.Instance.ClearPlayerData(inPlayer);
                 PLServer.Instance.AllPlayers.Remove(inPlayer);
-                Variables.survivalBonusDict.Remove(inPlayer.GetPlayerID());//Removing player from healthBonus dictonary on leave
-                if (Variables.UnModdedCrews.ContainsKey(inPlayer.GetPlayerID()))
+                int playerID = inPlayer.GetPlayerID();
+                Variables.survivalBonusDict.Remove(playerID);//Removing player from healthBonus dictonary on leave
+                int ship = -1;
+                if (!inPlayer.IsBot)
                 {
-                    Variables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
+                    ship = inPlayer.GetPhotonPlayer().GetScore();
+                    if (Variables.UnModdedCrews.ContainsKey(playerID))
+                    {
+                        Variables.UnModdedCrews.Remove(playerID);
+                    }
+                    if (Variables.Modded.Contains(playerID))
+                    {
+                        Variables.Modded.Remove(playerID);
+                    }
+                    if (Variables.NonModded.Contains(playerID))
+                    {
+                        Variables.NonModded.Remove(playerID);
+                    }
                 }
-                if (Variables.Modded.Contains(inPlayer.GetPlayerID()))
+                else
                 {
-                    Variables.Modded.Remove(inPlayer.GetPlayerID());
+                    if (Variables.BotCrews.ContainsKey(playerID))
+                    {
+                        ship = Variables.BotCrews[playerID];
+                        Variables.Fleet[ship].Remove(playerID);
+                        Variables.BotCrews.Remove(playerID);
+                    }
                 }
-                if (Variables.NonModded.Contains(inPlayer.GetPlayerID()))
-                {
-                    Variables.NonModded.Remove(inPlayer.GetPlayerID());
-                }
-                if (!inPlayer.IsBot) Variables.Fleet[inPlayer.GetPhotonPlayer().GetScore()].Remove(inPlayer.GetPlayerID());
+                if (Variables.Fleet.ContainsKey(ship)) Variables.Fleet[ship].Remove(playerID);
                 /*if (MyVariables.BriggedCrew.Contains(inPlayer.GetPlayerID()))
                 {
                     MyVariables.BriggedCrew.Remove(inPlayer.GetPlayerID());

@@ -20,6 +20,7 @@ namespace FLEETMOD.Warp
             if (PhotonNetwork.isMasterClient && PLEncounterManager.Instance.PlayerShip == __instance as PLShipInfo)
             {
                 Dictionary<int, PlayerPos> UnModdedPositions = new Dictionary<int, PlayerPos>(); // PlayerID, PlayerPos
+                Dictionary<int, PlayerPos> BotPositions = new Dictionary<int, PlayerPos>(); // PlayerID, PlayerPos
                 foreach (int plshipID in Variables.Fleet.Keys)
                 {
                     PLShipInfoBase plshipInfoBase = PLEncounterManager.Instance.GetShipFromID(plshipID);
@@ -40,16 +41,33 @@ namespace FLEETMOD.Warp
                                     });
                                 }
 
-                                // Store the locations of NonModded Players for Teleporting
-                                if (Variables.UnModdedCrews.ContainsKey(plplayer.GetPlayerID()))
+                                if (!plplayer.IsBot)
                                 {
-                                    PlayerPos Position = new PlayerPos
+                                    // Store the locations of NonModded Players for Teleporting
+                                    if (Variables.UnModdedCrews.ContainsKey(plplayer.GetPlayerID()))
                                     {
-                                        pos = plplayer.GetPawn().transform.position,
-                                        hubid = plplayer.MyCurrentTLI.SubHubID,
-                                        ttiid = plplayer.TTIID
-                                    };
-                                    UnModdedPositions.Add(plplayer.GetPlayerID(), Position);
+                                        PlayerPos Position = new PlayerPos
+                                        {
+                                            pos = plplayer.GetPawn().transform.position,
+                                            hubid = plplayer.MyCurrentTLI.SubHubID,
+                                            ttiid = plplayer.TTIID
+                                        };
+                                        UnModdedPositions.Add(plplayer.GetPlayerID(), Position);
+                                    }
+                                }
+                                else
+                                {
+                                    // Store the locations of Bot Players for Teleporting
+                                    if (Variables.BotCrews.ContainsKey(plplayer.GetPlayerID()))
+                                    {
+                                        PlayerPos Position = new PlayerPos
+                                        {
+                                            pos = plplayer.GetPawn().transform.position,
+                                            hubid = plplayer.MyCurrentTLI.SubHubID,
+                                            ttiid = plplayer.TTIID
+                                        };
+                                        BotPositions.Add(plplayer.GetPlayerID(), Position);
+                                    }
                                 }
 
                                 // Update Health Bonus On Warp
@@ -102,6 +120,19 @@ namespace FLEETMOD.Warp
 
                 // Teleport unmodded players back to their positions when warping
                 foreach (KeyValuePair<int, PlayerPos> keyValuePair in UnModdedPositions)
+                {
+                    PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(keyValuePair.Key);
+                    player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
+                    {
+                                keyValuePair.Value.hubid,
+                                keyValuePair.Value.ttiid
+                    });
+                    player.photonView.RPC("RecallPawnToPos", PhotonTargets.All, new object[]
+                    {
+                                keyValuePair.Value.pos
+                    });
+                }
+                foreach (KeyValuePair<int, PlayerPos> keyValuePair in BotPositions)
                 {
                     PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(keyValuePair.Key);
                     player.photonView.RPC("NetworkTeleportToSubHub", PhotonTargets.All, new object[]
