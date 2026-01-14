@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using HarmonyLib;
 using PulsarModLoader;
@@ -8,6 +9,7 @@ using PulsarModLoader.MPModChecks;
 using PulsarModLoader.SaveData;
 using PulsarModLoader.Utilities;
 using UnityEngine;
+using VLB;
 
 namespace FLEETMOD.Setup
 {
@@ -74,9 +76,9 @@ namespace FLEETMOD.Setup
                 {
                     Variables.NonModded.Add(inPlayerID);
                 }
-                //Messaging.Echo(PLNetworkManager.Instance.LocalPlayer, "[NEW PLAYER] - Update Mod Message");
-                PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(inPlayerID);
-                Variables.Fleet[playerAtID.GetPhotonPlayer().GetScore()].Add(inPlayerID);
+                int shipToAssign = Variables.Fleet.Keys.ToList().FirstOrDefault();
+                Variables.Fleet[shipToAssign].Add(inPlayerID);
+                playerAtID.GetPhotonPlayer().SetScore(shipToAssign);
                 ModMessages.ServerUpdateVariables.UpdateClients();
             }
         }
