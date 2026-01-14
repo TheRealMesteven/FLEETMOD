@@ -34,6 +34,8 @@ namespace FLEETMOD.Interface.Tab
         internal static Text FLEET_ShipRole;
         internal static Text FLEET_ShipPlayerLeft;
         internal static Text FLEET_ShipPlayerRight;
+        internal static GameObject FLEET_EquipButton;
+        internal static GameObject FLEET_DiscardButton;
         public static void Postfix()
         {
             UpdateLabels.Executed = false;
@@ -127,6 +129,32 @@ namespace FLEETMOD.Interface.Tab
             FLEET_ShipRole = CompInfo.GetChild(4).GetComponent<Text>();
             FLEET_ShipPlayerRight = CompInfo.GetChild(6).GetComponent<Text>();
             FLEET_ShipPlayerLeft = CompInfo.GetChild(7).GetComponent<Text>();
+            FLEET_EquipButton = CompInfo.GetChild(8).gameObject;
+            FLEET_EquipButton.transform.GetChild(0).GetComponent<Text>().text = "Join Crew";
+            EventTrigger Equip = FLEET_EquipButton.GetComponent<EventTrigger>();
+            Equip.triggers.Clear();
+            EventTrigger.Entry equip_entry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerClick
+            };
+            equip_entry.callback.AddListener((BaseEventData data) =>
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Equip Button Clicked");
+            });
+            Equip.triggers.Add(equip_entry);
+            FLEET_DiscardButton = CompInfo.GetChild(9).gameObject;
+            FLEET_DiscardButton.transform.GetChild(0).GetComponent<Text>().text = "Destroy Ship";
+            EventTrigger Discard = FLEET_DiscardButton.GetComponent<EventTrigger>();
+            Discard.triggers.Clear();
+            EventTrigger.Entry discard_entry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerClick
+            };
+            discard_entry.callback.AddListener((BaseEventData data) =>
+            {
+                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Discard Button Clicked");
+            });
+            Discard.triggers.Add(discard_entry);
             GameObject.Destroy(CompInfo.GetChild(5).gameObject);
         }
 
