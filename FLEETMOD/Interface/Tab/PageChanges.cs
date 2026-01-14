@@ -26,6 +26,7 @@ namespace FLEETMOD.Interface.Tab
         internal static Transform ChangeClass;
 
         internal static GameObject CrewPage;
+        internal static Transform ComponentDisplay;
         internal static Transform FLEET_ShipDisplay;
         internal static Text FLEET_ShipName;
         internal static Text FLEET_ShipType;
@@ -109,7 +110,7 @@ namespace FLEETMOD.Interface.Tab
             Transform BGRight = FindDeepChild(PLTabMenu.Instance.gameObject.transform, "BGRight", 5);
             CrewPage = BGRight.Find("CREW").gameObject;
 
-            Transform ComponentDisplay = BGRight.Find("SHIP");
+            ComponentDisplay = BGRight.Find("SHIP");
             FLEET_ShipDisplay = GameObject.Instantiate(ComponentDisplay, BGRight);
             FLEET_ShipDisplay.position = ComponentDisplay.position;
             FLEET_ShipDisplay.localPosition = ComponentDisplay.position;
@@ -225,12 +226,14 @@ namespace FLEETMOD.Interface.Tab
                 }
                 else
                 {
+                    ChangeTabMenuDisplay.FLEET_ShipDisplay.position = ChangeTabMenuDisplay.ComponentDisplay.position;
                     ChangeTabMenuDisplay.FLEET_ShipDisplay.gameObject.SetActive(true);
                     ChangeTabMenuDisplay.FLEET_ShipName.text = Ship.ShipNameValue;
                     ChangeTabMenuDisplay.FLEET_ShipType.text = Ship.GetShipTypeName();
                     ChangeTabMenuDisplay.FLEET_ShipDesc.text = "Fleetmod ship";
-                    ChangeTabMenuDisplay.FLEET_ShipPlayerLeft.text = "Role";
-                    ChangeTabMenuDisplay.FLEET_ShipPlayerRight.text = "Name";
+                    ChangeTabMenuDisplay.FLEET_ShipRole.text = "Class Name";
+                    ChangeTabMenuDisplay.FLEET_ShipPlayerLeft.text = "Player Name";
+                    ChangeTabMenuDisplay.FLEET_ShipPlayerRight.text = "Extra";
                 }
             }
 
