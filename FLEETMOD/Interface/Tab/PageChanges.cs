@@ -24,6 +24,7 @@ namespace FLEETMOD.Interface.Tab
         internal static GameObject CrewPage;
         internal static Transform ComponentDisplay;
         internal static Transform FLEET_ShipDisplay;
+        internal static Transform shipScrollView;
         internal static Text FLEET_ShipName;
         internal static Text FLEET_ShipType;
         internal static Text FLEET_ShipDesc;
@@ -88,7 +89,7 @@ namespace FLEETMOD.Interface.Tab
 
             // Add Ship List
             Transform scrollView = Talents.Find("Scroll View");
-            Transform shipScrollView = GameObject.Instantiate(scrollView, Home);
+            shipScrollView = GameObject.Instantiate(scrollView, Home);
             shipScrollView.position = PlayerList.transform.position; //-0.078 -399.4167 17.7626
             shipScrollView.localPosition = PlayerList.transform.position + new Vector3(-7f, -76f); // 40.1707 -74.8114 -109.4851
             shipScrollView.rotation = scrollView.rotation;
@@ -192,6 +193,7 @@ namespace FLEETMOD.Interface.Tab
                 ChangeTabMenuDisplay.ChangeClass.gameObject.SetActive(Variables.isrunningmod);
                 ChangeTabMenuDisplay.CrewPage.SetActive(true);
                 ChangeTabMenuDisplay.FLEET_ShipDisplay.gameObject.SetActive(false);
+                ChangeTabMenuDisplay.shipScrollView.gameObject.SetActive(Variables.isrunningmod);
             }
 
             if (!Variables.isrunningmod || PLNetworkManager.Instance.LocalPlayer == null || !PLNetworkManager.Instance.LocalPlayer.GetHasStarted()) return;

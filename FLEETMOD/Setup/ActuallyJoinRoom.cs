@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
+﻿using FLEETMOD.Interface.Tab;
 using HarmonyLib;
-using PulsarModLoader;
-using PulsarModLoader.MPModChecks;
-using PulsarModLoader.SaveData;
-using PulsarModLoader.Utilities;
-using UnityEngine;
-using VLB;
+using System.Linq;
 
 namespace FLEETMOD.Setup
 {
@@ -91,6 +82,10 @@ namespace FLEETMOD.Setup
             if (PhotonNetwork.isMasterClient)
             {
                 Variables.isrunningmod = true;
+            }
+            else
+            {
+                ChangeTabMenuDisplay.Postfix(); // Used to start the ChangeTabMenu alterations for non-masterclient.
             }
         }
     }
