@@ -1,11 +1,7 @@
-﻿using FLEETMOD.Fixes;
-using HarmonyLib;
-using System;
+﻿using HarmonyLib;
+using PulsarModLoader;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -139,7 +135,10 @@ namespace FLEETMOD.Interface.Tab
             };
             equip_entry.callback.AddListener((BaseEventData data) =>
             {
-                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Equip Button Clicked");
+                ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ChangeShip", PhotonTargets.MasterClient, new object[]
+                {
+                    UpdateLabels.ShipID
+                });
             });
             Equip.triggers.Add(equip_entry);
             FLEET_DiscardButton = CompInfo.GetChild(9).gameObject;
@@ -152,7 +151,8 @@ namespace FLEETMOD.Interface.Tab
             };
             discard_entry.callback.AddListener((BaseEventData data) =>
             {
-                PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, "Discard Button Clicked");
+                PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID).DestroySelf(PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID));
+                UnityEngine.Object.Destroy(PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID).gameObject);
             });
             Discard.triggers.Add(discard_entry);
             GameObject.Destroy(CompInfo.GetChild(5).gameObject);
@@ -219,18 +219,20 @@ namespace FLEETMOD.Interface.Tab
 (localplayer.StartingShip == null ? "You do not currently have a ship" : "Your ship is the " + localplayer.StartingShip.ShipNameValue + ", an " + localplayer.StartingShip.GetShipTypeName()) +
 (admiral == null || admiral == localplayer ? "" : " in " + admiral.GetPlayerName(false) + "'s Fleet") +
 "\n\n";
-
             // Secondary Description
             if (localplayer.GetClassID() == 0)
             {
                 if (localplayer == admiral)
                 {
+                    if (!ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(true);
                     description += "Your Fleet ships are listed below. To allow them to be crewed, you must assign a captain to them when at a station.\n";
                 }
+                if (ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(false);
                 description += "As a Captain, you cannot abandon your ship.";
             }
             else
             {
+                if (ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(false);
                 description += "As a Crew Member, you can change ships by selecting a ship below and change class with the buttons at the bottom.";
             }
             ChangeTabMenuDisplay.TabDescription.text = description;

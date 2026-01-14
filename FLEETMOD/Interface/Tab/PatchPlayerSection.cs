@@ -112,7 +112,7 @@ namespace FLEETMOD.Interface.Tab
             }
             switch (args[0][0])
             {
-                case 'A': PLServer.Instance.ServerAddCrewBotPlayer(ClassID); break;
+                case 'A': Bot.ServerAddCrewBotPlayer.AddCrewBotPlayer(PLNetworkManager.Instance.LocalPlayer, PLServer.Instance.GetLowestAvailablePlayerID(), ClassID); break; //PLServer.Instance.ServerAddCrewBotPlayer(ClassID); break;
                 case 'R': PLServer.Instance.photonView.RPC("ServerRemoveCrewBotPlayer", PhotonTargets.MasterClient, new object[] { PLServer.Instance.GetCachedFriendlyPlayerOfClass(ClassID, PLNetworkManager.Instance.LocalPlayer.StartingShip).GetPlayerID() }); break;
                 case 'B': ChangeClass(__instance, ClassID); break;
             }

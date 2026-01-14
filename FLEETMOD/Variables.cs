@@ -2,8 +2,6 @@
 using PulsarModLoader.CustomGUI;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using static LocomotionTeleport;
 using static UnityEngine.GUILayout;
 
 namespace FLEETMOD
@@ -33,10 +31,20 @@ namespace FLEETMOD
         public static void ChangeShip(int PlayerID, int ShipID, int ClassID = -1)
         {
             PLPlayer pLPlayer = PLServer.Instance.GetPlayerFromPlayerID(PlayerID);
-            Fleet[pLPlayer.GetPhotonPlayer().GetScore()].Remove(PlayerID);
-            Fleet[ShipID].Add(PlayerID);
+            int startingShip = pLPlayer.GetPhotonPlayer().GetScore();
+            if (Fleet.ContainsKey(startingShip) && Fleet[startingShip].Contains(PlayerID)) Fleet[startingShip].Remove(PlayerID);
+            if (Fleet.ContainsKey(ShipID)) Fleet[ShipID].Add(PlayerID);
             if (ClassID != -1) pLPlayer.SetClassID(ClassID);
             pLPlayer.GetPhotonPlayer().SetScore(ShipID);
+            PLShipInfo newShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID);
+            pLPlayer.StartingShip = newShip;
+            if (pLPlayer.GetPlayerID() == 0 && newShip != null)
+            {
+                PLShipInfo oldShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(startingShip);
+                if (oldShip != null) oldShip.TeamID = 1;
+                newShip.TeamID = 0;
+                PLEncounterManager.Instance.PlayerShip = newShip;
+            }
             ModMessages.ServerUpdateVariables.UpdateClients();
         }
         public static int GetShipCaptain(int inShipID)
@@ -80,7 +88,9 @@ namespace FLEETMOD
                 Label("Running Mod: " + isrunningmod);
                 Label("Friendly Fire: " + shipfriendlyfire);
                 Label("Godmode: " + shipgodmode);
+                if (PLEncounterManager.Instance != null && PLEncounterManager.Instance.PlayerShip != null) Label($"Playership: [{PLEncounterManager.Instance.PlayerShip.ShipID}] {PLEncounterManager.Instance.PlayerShip.ShipNameValue}");
                 EndHorizontal();
+                if (PLServer.Instance == null) return;
                 FlexibleSpace();
                 foreach (var Ship in Fleet)
                 {
@@ -108,6 +118,7 @@ namespace FLEETMOD
                         Label($"Fleet Contains: [{Ship.Key}] n/a");
                     }
                 }
+                if (!PhotonNetwork.isMasterClient) return;
                 FlexibleSpace();
                 BeginHorizontal();
                 BeginVertical();
@@ -126,6 +137,12 @@ namespace FLEETMOD
                         if (shipInfoBase2 != null)
                         {
                             Label($" spawnship:{shipInfoBase2.ShipNameValue}");
+                        }
+                        PLShipInfoBase shipInfoBase = PLNetworkManager.Instance.LocalPlayer.StartingShip;
+                        if (shipInfoBase != null)
+                        {
+                            Label($" startid:{shipInfoBase.ShipID}");
+                            Label($" startship:{shipInfoBase.ShipNameValue}");
                         }
                         if (Button("Create FleetShip"))
                         {
@@ -153,10 +170,10 @@ namespace FLEETMOD
                         if (UnModdedCrews.TryGetValue(k, out int ShipID))
                         {
                             Label($" shipid:{ShipID}");
-                            PLShipInfoBase shipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
-                            if (shipInfoBase != null)
+                            PLShipInfoBase shipInfoBase3 = PLEncounterManager.Instance.GetShipFromID(ShipID);
+                            if (shipInfoBase3 != null)
                             {
-                                Label($" ship:{shipInfoBase.ShipNameValue}");
+                                Label($" ship:{shipInfoBase3.ShipNameValue}");
                             }
                         }
                         int score = pLPlayer.GetPhotonPlayer().GetScore();
@@ -165,6 +182,12 @@ namespace FLEETMOD
                         if (shipInfoBase2 != null)
                         {
                             Label($" spawnship:{shipInfoBase2.ShipNameValue}");
+                        }
+                        PLShipInfoBase shipInfoBase = PLNetworkManager.Instance.LocalPlayer.StartingShip;
+                        if (shipInfoBase != null)
+                        {
+                            Label($" startid:{shipInfoBase.ShipID}");
+                            Label($" startship:{shipInfoBase.ShipNameValue}");
                         }
                         if (Button("Create FleetShip"))
                         {

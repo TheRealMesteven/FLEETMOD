@@ -45,10 +45,6 @@ namespace FLEETMOD.Setup
                             PLNetworkManager.Instance.LocalPlayer.GetPlayerID()
                     });
                 }
-                if (PLServer.Instance.GameHasStarted && PLNetworkManager.Instance.LocalPlayer.GetHasStarted())
-                {
-                    PhotonNetwork.player.SetScore(PLEncounterManager.Instance.PlayerShip.ShipID);
-                }
             }
             if (!PhotonNetwork.isMasterClient && ___m_Lifetime > 2f && PLEncounterManager.Instance.GetCPEI() != null && PLNetworkManager.Instance.LocalPlayer != null && PLServer.Instance.GameHasStarted)
             {

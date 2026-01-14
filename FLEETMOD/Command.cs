@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using Crosstales.UI;
-using ExitGames.Client.Photon.LoadBalancing;
-using PulsarModLoader;
-using PulsarModLoader.Chat.Commands;
+﻿using PulsarModLoader;
 using PulsarModLoader.Chat.Commands.CommandRouter;
 using PulsarModLoader.Utilities;
-using UnityEngine;
 
 namespace FLEETMOD
 {
@@ -212,8 +205,11 @@ namespace FLEETMOD
                             PLEncounterManager.Instance.GetShipFromID(ShipID).MyTLI.SubHubID,
                             0
                     });
-                    Player.StartingShip = (PLShipInfo)PLEncounterManager.Instance.GetShipFromID(ShipID); // Set Starting Ship
-                    Variables.ChangeShip(Player.GetPlayerID(), ShipID, ClassID);
+                    ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ChangeShip", PhotonTargets.MasterClient, new object[]
+                    {
+                        ShipID,
+                        ClassID
+                    });
                     PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, Player.GetPlayerName() + ", you are now a " + Player.GetClassName() + " onboard the " + Player.StartingShip.ShipNameValue + "!");
                 }
             }
