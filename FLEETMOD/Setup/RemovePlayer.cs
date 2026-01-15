@@ -14,10 +14,18 @@ namespace FLEETMOD.Setup
             if (!Variables.isrunningmod) return true;
             if (inPlayer != null)
             {
-                PLServer.Instance.photonView.RPC("LogoutMessage", PhotonTargets.All, new object[]
+                string name = inPlayer.GetPlayerName(false) + " ";
+                if (inPlayer.StartingShip != null && Mod.Config.JoinLeaveShipNameExtension.Value)
                 {
-                        inPlayer.GetPlayerName(false)
-                });
+                    name = inPlayer.StartingShip.ShipNameValue + " • " + name;
+                }
+                if (!(Mod.Config.JoinLeaveBotMessage && inPlayer.IsBot))
+                {
+                    PLServer.Instance.photonView.RPC("LogoutMessage", PhotonTargets.All, new object[]
+                    {
+                    name
+                    });
+                }
 
                 //int num = 0;
                 if (!inPlayer.IsBot)

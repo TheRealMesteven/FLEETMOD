@@ -1,13 +1,15 @@
-﻿using System;
+﻿using HarmonyLib;
+using PulsarModLoader;
+using PulsarModLoader.CustomGUI;
+using PulsarModLoader.SaveData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HarmonyLib;
-using PulsarModLoader;
-using PulsarModLoader.SaveData;
-using PulsarModLoader.Utilities;
 using UnityEngine;
+using static UnityEngine.GUILayout;
+using static FLEETMOD.Variables;
 
 namespace FLEETMOD
 {
@@ -123,7 +125,7 @@ namespace FLEETMOD
             gameObject.GetComponent<PLShipInfo>().LastAIAutoYellowAlertSetupTime = Time.time;
             gameObject.GetComponent<PLShipInfo>().SetupShipStats(false, true);
             gameObject.GetComponent<PLShipInfo>().AutoTarget = false;
-            Variables.Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
+            Fleet.Add(gameObject.GetComponent<PLShipInfo>().ShipID, new List<int>());
             PLServer.Instance.photonView.RPC("AddCrewWarning", PhotonTargets.All, new object[]
             {
                 "The " + Shipname + " Has Joined!",
@@ -131,7 +133,23 @@ namespace FLEETMOD
                 0,
                 "SHIP"
             });
-            Variables.ReCalculateMaxPlayers();
+            ReCalculateMaxPlayers();
+        }
+        internal class Config : ModSettingsMenu
+        {
+            internal static SaveValue<bool> JoinLeaveShipNameExtension = new SaveValue<bool>("JoinLeaveShipNameExtension", false);
+            internal static SaveValue<bool> JoinLeaveBotMessage = new SaveValue<bool>("JoinLeaveBotMessage", true);
+            public override string Name() => "Fleetmod";
+            public override void Draw()
+            {
+                BeginHorizontal();
+                Label("Running Mod: " + isrunningmod);
+                Label("Friendly Fire: " + shipfriendlyfire);
+                Label("Godmode: " + shipgodmode);
+                EndHorizontal();
+                JoinLeaveShipNameExtension.Value = Toggle(JoinLeaveShipNameExtension.Value, "Ship Name Extension on Join/Leave message");
+                JoinLeaveBotMessage.Value = Toggle(JoinLeaveBotMessage.Value, "Disable Bot Join/Leave message");
+            }
         }
     }
     [HarmonyPatch(typeof(PLServer), "Start")]
@@ -139,90 +157,90 @@ namespace FLEETMOD
     {
         public static void Postfix()
         {
-            if (Variables.isrunningmod && PhotonNetwork.isMasterClient)
+            if (isrunningmod && PhotonNetwork.isMasterClient)
             {
                 PLServer.Instance.StartCoroutine(Mod.SpawnFleetShips());
             }
         }
     }
-    /*
-    [HarmonyPatch(typeof(PLServer), nameof(PLServer.SpawnPlayerShipFromSaveData))]
-    internal class Patch
-    { /// ## Implementing applying of values
-        static void Postfix()
-        {
-            if (PhotonNetwork.isMasterClient)
-            {
-                PLServer.Instance.StartCoroutine(Plugin.plugin.SpawnFleetShips());
-            }
-        }
-    }
-        /*
-        public Plugin()  *** PATCHING FOR FUTURE SAVEGAME SHIP STORAGE ***
-        {
-            if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient && PulsarModLoader.ModManager.Instance.IsModLoaded("CustomSave"))
-            {
-                Plugin.pos = new Dictionary<int, ShipPos>();
-                ///<summary>
-                /// Below lines read all of the saved ships data.
-                /// <param name="key"> Crew ID of ship save</param>
-                /// <param name="value"> Pos = Position of ship, will also save Name & Ship Layout </param>
-                ///</summary>
-                SaveManager.instance.RegisterReader(this, delegate (BinaryReader reader)
-                {
-                    Plugin.pos.Clear();
-                    int num = reader.ReadInt32();
-                    for (int i = 0; i < num; i++)
-                    {
-                        int key = reader.ReadInt32();
-                        ShipPos value = default(ShipPos);
-                        value.pos = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-                        //value.hubid = reader.ReadInt32();
-                        //value.ttiid = reader.ReadInt32();
-                        Plugin.pos.Add(key, value);
-                    }
-                });
-                ///<summary>
-                /// Below lines write all of the saved ships data.
-                /// <param name="key"> Crew ID of ship save</param>
-                /// <param name="value"> Pos = Position of ship, will also save Name & Ship Layout </param>
-                ///</summary>
-                SaveManager.instance.RegisterWriter(this, delegate (BinaryWriter writer)
-                {
-                    Plugin.pos.Clear();
-                    int Count = 0;
-                    foreach (PLShipInfo plship in PLEncounterManager.Instance.AllShips.Values)
-                    {
-                        if (plship != null && plship.TagID == -23 && MyVariables.GetShipCaptain(plship.ShipID) != 0)
-                        {
-                            ShipPos value = new ShipPos
-                            {
-                                pos = plship.transform.position,
-                                //hubid = plplayer.MyCurrentTLI.SubHubID,
-                                //ttiid = plplayer.TTIID
-                            };
-                            Plugin.pos.Add(Count, value);
-                            Count++;
-                        }
-                    }
-                    writer.Write(Plugin.pos.Count);
-                    foreach (KeyValuePair<int, ShipPos> keyValuePair in Plugin.pos)
-                    {
-                        writer.Write(keyValuePair.Key);
-                        writer.Write(keyValuePair.Value.pos.x);
-                        writer.Write(keyValuePair.Value.pos.y);
-                        writer.Write(keyValuePair.Value.pos.z);
-                        //writer.Write(keyValuePair.Value.hubid);
-                        //writer.Write(keyValuePair.Value.ttiid);
-                    }
-                });
-                ///
-            }
-        }
-        internal static Dictionary<int, ShipPos> pos;
-        internal struct ShipPos
-        {
-            public Vector3 pos;
-        }*/
 
+            /*
+            [HarmonyPatch(typeof(PLServer), nameof(PLServer.SpawnPlayerShipFromSaveData))]
+            internal class Patch
+            { /// ## Implementing applying of values
+                static void Postfix()
+                {
+                    if (PhotonNetwork.isMasterClient)
+                    {
+                        PLServer.Instance.StartCoroutine(Plugin.plugin.SpawnFleetShips());
+                    }
+                }
+            }
+                /*
+                public Plugin()  *** PATCHING FOR FUTURE SAVEGAME SHIP STORAGE ***
+                {
+                    if (MyVariables.isrunningmod && PhotonNetwork.isMasterClient && PulsarModLoader.ModManager.Instance.IsModLoaded("CustomSave"))
+                    {
+                        Plugin.pos = new Dictionary<int, ShipPos>();
+                        ///<summary>
+                        /// Below lines read all of the saved ships data.
+                        /// <param name="key"> Crew ID of ship save</param>
+                        /// <param name="value"> Pos = Position of ship, will also save Name & Ship Layout </param>
+                        ///</summary>
+                        SaveManager.instance.RegisterReader(this, delegate (BinaryReader reader)
+                        {
+                            Plugin.pos.Clear();
+                            int num = reader.ReadInt32();
+                            for (int i = 0; i < num; i++)
+                            {
+                                int key = reader.ReadInt32();
+                                ShipPos value = default(ShipPos);
+                                value.pos = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+                                //value.hubid = reader.ReadInt32();
+                                //value.ttiid = reader.ReadInt32();
+                                Plugin.pos.Add(key, value);
+                            }
+                        });
+                        ///<summary>
+                        /// Below lines write all of the saved ships data.
+                        /// <param name="key"> Crew ID of ship save</param>
+                        /// <param name="value"> Pos = Position of ship, will also save Name & Ship Layout </param>
+                        ///</summary>
+                        SaveManager.instance.RegisterWriter(this, delegate (BinaryWriter writer)
+                        {
+                            Plugin.pos.Clear();
+                            int Count = 0;
+                            foreach (PLShipInfo plship in PLEncounterManager.Instance.AllShips.Values)
+                            {
+                                if (plship != null && plship.TagID == -23 && MyVariables.GetShipCaptain(plship.ShipID) != 0)
+                                {
+                                    ShipPos value = new ShipPos
+                                    {
+                                        pos = plship.transform.position,
+                                        //hubid = plplayer.MyCurrentTLI.SubHubID,
+                                        //ttiid = plplayer.TTIID
+                                    };
+                                    Plugin.pos.Add(Count, value);
+                                    Count++;
+                                }
+                            }
+                            writer.Write(Plugin.pos.Count);
+                            foreach (KeyValuePair<int, ShipPos> keyValuePair in Plugin.pos)
+                            {
+                                writer.Write(keyValuePair.Key);
+                                writer.Write(keyValuePair.Value.pos.x);
+                                writer.Write(keyValuePair.Value.pos.y);
+                                writer.Write(keyValuePair.Value.pos.z);
+                                //writer.Write(keyValuePair.Value.hubid);
+                                //writer.Write(keyValuePair.Value.ttiid);
+                            }
+                        });
+                        ///
+                    }
+                }
+                internal static Dictionary<int, ShipPos> pos;
+                internal struct ShipPos
+                {
+                    public Vector3 pos;
+                }*/
 }

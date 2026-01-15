@@ -226,15 +226,12 @@ namespace FLEETMOD.Interface.Tab
             {
                 if (localplayer == admiral)
                 {
-                    if (!ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(true);
                     description += "Your Fleet ships are listed below. To allow them to be crewed, you must assign a captain to them when at a station.\n";
                 }
-                if (ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(false);
                 description += "As a Captain, you cannot abandon your ship.";
             }
             else
             {
-                if (ChangeTabMenuDisplay.FLEET_DiscardButton.activeSelf) ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(false);
                 description += "As a Crew Member, you can change ships by selecting a ship below and change class with the buttons at the bottom.";
             }
             ChangeTabMenuDisplay.TabDescription.text = description;
@@ -266,6 +263,24 @@ namespace FLEETMOD.Interface.Tab
                     ChangeTabMenuDisplay.FLEET_ShipRole.text = "Class Name";
                     ChangeTabMenuDisplay.FLEET_ShipPlayerLeft.text = "Player Name";
                     ChangeTabMenuDisplay.FLEET_ShipPlayerRight.text = "Extra";
+
+                    if ((localplayer != admiral && ChangeTabMenuDisplay.FLEET_DiscardButton.gameObject.activeSelf) || (localplayer.StartingShip == Ship && ChangeTabMenuDisplay.FLEET_DiscardButton.gameObject.activeSelf))
+                    {
+                        ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(false);
+                    }
+                    else if (localplayer == admiral && !ChangeTabMenuDisplay.FLEET_DiscardButton.gameObject.activeSelf && localplayer.StartingShip != Ship)
+                    {
+                        ChangeTabMenuDisplay.FLEET_DiscardButton.SetActive(true);
+                    }
+
+                    if (localplayer.StartingShip == Ship && ChangeTabMenuDisplay.FLEET_EquipButton.gameObject.activeSelf)
+                    {
+                        ChangeTabMenuDisplay.FLEET_EquipButton.SetActive(false);
+                    }
+                    else if (localplayer.StartingShip != Ship && !ChangeTabMenuDisplay.FLEET_EquipButton.gameObject.activeSelf)
+                    {
+                        ChangeTabMenuDisplay.FLEET_EquipButton.SetActive(true);
+                    }
                 }
             }
 

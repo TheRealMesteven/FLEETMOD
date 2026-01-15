@@ -27,7 +27,7 @@ namespace FLEETMOD.Bot
         internal static void AddCrewBotPlayer(PLPlayer pLPlayer, int PlayerID, int inClass)
         {
             if (pLPlayer.StartingShip == null) return;
-            PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, $"Spawning Bot With PlayerID {PlayerID}");
+            //PulsarModLoader.Utilities.Messaging.Echo(PhotonTargets.All, $"Spawning Bot With PlayerID {PlayerID}");
             PLPlayer component = PhotonNetwork.Instantiate("NetworkPrefabs/PLPlayer", Vector3.zero, Quaternion.identity, 0, null).GetComponent<PLPlayer>();
             PLServer.Instance.AddPlayer(component);
             component.SetPlayerID(PlayerID);
@@ -60,12 +60,20 @@ namespace FLEETMOD.Bot
                     component.SetPlayerName("CrewBot");
                     break;
             }
-            component.gameObject.name = component.GetPlayerName(false);
-            PLServer.Instance.photonView.RPC("LoginMessageForBot", PhotonTargets.All, new object[]
+            string name = component.GetPlayerName(false);
+            if (component.StartingShip != null && Mod.Config.JoinLeaveShipNameExtension.Value)
             {
-                    component.GetPlayerName(false),
+                name = component.StartingShip.ShipNameValue + " • " + name;
+            }
+            if (!(Mod.Config.JoinLeaveBotMessage && component.IsBot))
+            {
+                PLServer.Instance.photonView.RPC("LoginMessageForBot", PhotonTargets.All, new object[]
+                {
+                    name,
                     component.GetClassID()
-            });
+                });
+            }
+
             PLBot plbot = component.gameObject.AddComponent<PLBot>();
             plbot.PlayerOwner = component;
             component.MyBot = plbot;

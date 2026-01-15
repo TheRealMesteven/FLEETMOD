@@ -9,13 +9,15 @@ namespace FLEETMOD
     internal class Variables
     {
         public static bool isrunningmod = false;
-        public static bool shipfriendlyfire = false;
         public static bool shipgodmode = false;
-        public static int shipcount = 5;
+        public static bool shipfriendlyfire = false;
         public static bool recentfriendlyfire = false;
+        public static int shipcount = 5;
+
         public static bool DialogGenerated = false;
         public static bool FuelDialog = false;
         public static bool CargoMenu = false;
+
         public static Dictionary<int, List<int>> Fleet; /*ShipID, List<PlayerID>*/
         public static List<int> Modded; // PlayerID of the Players who have Fleetmod active and running
         public static List<int> NonModded; // PlayerID of the Players who dont have Fleetmod active and running
