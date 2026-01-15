@@ -54,12 +54,12 @@ namespace FLEETMOD.Setup
         }
     }
     [HarmonyPatch(typeof(PLServer), "NotifyPlayerStart")]
-    internal class NotifyPlayerStart
+    internal class NotifyPlayerStart // Called whenever pawn is spawned.
     {
         private static void Postfix(PLServer __instance, int inPlayerID)
         {
             PLPlayer playerAtID = __instance.GetPlayerFromPlayerID(inPlayerID);
-            if (playerAtID != null && PhotonNetwork.isMasterClient)
+            if (playerAtID != null && PhotonNetwork.isMasterClient && !(Variables.Modded.Contains(inPlayerID) || Variables.NonModded.Contains(inPlayerID) || playerAtID.IsBot))
             {
                 if (playerAtID == PLNetworkManager.Instance.LocalPlayer) Variables.Modded.Add(inPlayerID);
                 else if (PulsarModLoader.MPModChecks.MPModCheckManager.Instance.NetworkedPeerHasMod(playerAtID.GetPhotonPlayer(), Mod.harmonyIden)) Variables.Modded.Add(inPlayerID);

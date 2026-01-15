@@ -386,10 +386,6 @@ namespace FLEETMOD.Interface.Tab
                     PLPlayer Captain = PLServer.Instance.GetCachedFriendlyPlayerOfClass(0, ship);
                     sd.Desc.text = PLLocalize.Localize($"{ship.GetShipTypeName()} which is Captained by {(Captain == null ? "No-one" : Captain.GetPlayerName(false) )}", false);
                     sd.Available = true;
-                    if (Variables.Fleet[shipID].Count >= 5)
-                    {
-                        sd.Available = false;
-                    }
                 }
                 allSDs.Sort(delegate (ShipDisplay a, ShipDisplay b)
                 {
