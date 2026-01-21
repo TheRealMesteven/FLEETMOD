@@ -35,7 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot\BotPriorityPatches.cs" />
-    <Compile Include="Interface\Tab\PageChanges.cs" />
+    <Compile Include="Interface\Tab\ExpandedCargo.cs" />
+    <Compile Include="Interface\Tab\HomeTabMenu.cs" />
+    <Compile Include="Interface\Tab\PatchPageChanges.cs" />
     <Compile Include="ModMessages\ChangeShip.cs" />
     <Compile Include="Warp\CanActivateWarp.cs" />
     <Compile Include="Bot\ShipInfoIntruderCheck.cs" />
