@@ -49,7 +49,7 @@ namespace FLEETMOD.Interface.Tab
     internal class UpdateLabels
     {
         internal static bool Executed = false;
-        public static void Postfix()
+        public static void Postfix(PLTabMenu __instance)
         {
             if (PLServer.Instance == null || !ChangeTabMenuDisplay.Executed) return;
             if (!Executed)
@@ -62,7 +62,7 @@ namespace FLEETMOD.Interface.Tab
 
             if (!Variables.isrunningmod || PLNetworkManager.Instance.LocalPlayer == null || !PLNetworkManager.Instance.LocalPlayer.GetHasStarted()) return;
             HomeTabMenu.Update();
-            ExpandedCargo.Update();
+            ExpandedCargo.Update(__instance);
         }
 
         internal static int ShipID = -1;
