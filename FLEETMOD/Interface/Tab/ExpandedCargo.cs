@@ -15,5 +15,22 @@ namespace FLEETMOD.Interface.Tab
         {
 
         }
+
+        /// <summary>
+        /// First execution
+        /// </summary>
+        internal static void OnAwake()
+        {
+
+        }
+
+        /// <summary>
+        /// Update the tab features
+        /// </summary>
+        internal static void Update()
+        {
+            if (!Variables.isrunningmod) return;
+
+        }
     }
 }

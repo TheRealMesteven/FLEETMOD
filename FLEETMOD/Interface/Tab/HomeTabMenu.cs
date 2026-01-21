@@ -11,27 +11,25 @@ namespace FLEETMOD.Interface.Tab
 {
     internal class HomeTabMenu
     {
-        internal static Text TabDescription;
-        internal static GameObject TargetShipBG;
-        internal static GameObject HomePageDescription;
-        internal static GameObject PlayerList;
-        internal static GameObject ShipList;
-        internal static Transform ShipGrid;
-        internal static RectTransform ShipScrollContent;
-        internal static Transform ChangeClass;
+        static Text TabDescription;
+        static GameObject TargetShipBG;
+        static GameObject HomePageDescription;
+        static GameObject PlayerList;
+        static GameObject ShipList;
+        static Transform ShipGrid;
+        static RectTransform ShipScrollContent;
+        static Transform ChangeClass;
 
-        internal static GameObject CrewPage;
-        internal static Transform ComponentDisplay;
-        internal static Transform FLEET_ShipDisplay;
-        internal static Transform shipScrollView;
-        internal static Text FLEET_ShipName;
-        internal static Text FLEET_ShipType;
-        internal static Text FLEET_ShipDesc;
-        internal static Text FLEET_ShipRole;
-        internal static Text FLEET_ShipPlayerLeft;
-        internal static Text FLEET_ShipPlayerRight;
-        internal static GameObject FLEET_EquipButton;
-        internal static GameObject FLEET_DiscardButton;
+        static Transform FLEET_ShipDisplay;
+        static Transform shipScrollView;
+        static Text FLEET_ShipName;
+        static Text FLEET_ShipType;
+        static Text FLEET_ShipDesc;
+        static Text FLEET_ShipRole;
+        static Text FLEET_ShipPlayerLeft;
+        static Text FLEET_ShipPlayerRight;
+        static GameObject FLEET_EquipButton;
+        static GameObject FLEET_DiscardButton;
 
         /// <summary>
         /// Find existing tab features and curate the new implementations for the first time
@@ -105,15 +103,11 @@ namespace FLEETMOD.Interface.Tab
 
 
             // Fleet Ship Info Panel
-            Transform BGRight = FindDeepChild(PLTabMenu.Instance.gameObject.transform, "BGRight", 5);
-            CrewPage = BGRight.Find("CREW").gameObject;
-
-            ComponentDisplay = BGRight.Find("SHIP");
-            FLEET_ShipDisplay = GameObject.Instantiate(ComponentDisplay, BGRight);
-            FLEET_ShipDisplay.position = ComponentDisplay.position;
-            FLEET_ShipDisplay.localPosition = ComponentDisplay.position;
-            FLEET_ShipDisplay.rotation = ComponentDisplay.rotation;
-            FLEET_ShipDisplay.localScale = ComponentDisplay.localScale;
+            FLEET_ShipDisplay = GameObject.Instantiate(SHIP, BGRight);
+            FLEET_ShipDisplay.position = SHIP.position;
+            FLEET_ShipDisplay.localPosition = SHIP.position;
+            FLEET_ShipDisplay.rotation = SHIP.rotation;
+            FLEET_ShipDisplay.localScale = SHIP.localScale;
             FLEET_ShipDisplay.name = "FleetCrewDisplay";
             FLEET_ShipDisplay.parent = BGRight;
 
@@ -167,13 +161,13 @@ namespace FLEETMOD.Interface.Tab
             HomePageDescription.SetActive(Variables.isrunningmod);
             PlayerList.SetActive(!Variables.isrunningmod);
             ChangeClass.gameObject.SetActive(Variables.isrunningmod);
-            CrewPage.SetActive(true);
+            CREW.SetActive(true);
             FLEET_ShipDisplay.gameObject.SetActive(false);
             shipScrollView.gameObject.SetActive(Variables.isrunningmod);
         }
 
-        private static List<ShipDisplay> allSDs = new List<ShipDisplay>();
-        internal static float totalWidth = 600f;
+        static List<ShipDisplay> allSDs = new List<ShipDisplay>();
+        static float totalWidth = 600f;
         static float nameWidth = 210f;
         static float descWidth = 210f;
         static float rankStartX = 140f;
@@ -215,7 +209,7 @@ namespace FLEETMOD.Interface.Tab
             // Hide Fleet Ship Display Menu when not needed.
             if (FLEET_ShipDisplay.gameObject.activeSelf && (PLTabMenu.Instance.CurrentTabIndex != 0 || PLTabMenu.Instance.GetCrewPageIndex() != 0 || !PLTabMenu.Instance.TabMenuActive))
             {
-                CrewPage.SetActive(true);
+                CREW.SetActive(true);
                 FLEET_ShipDisplay.gameObject.SetActive(false);
             }
 
@@ -226,12 +220,12 @@ namespace FLEETMOD.Interface.Tab
                 if (Ship == null)
                 {
                     ShipID = -1;
-                    CrewPage.SetActive(true);
+                    CREW.SetActive(true);
                     FLEET_ShipDisplay.gameObject.SetActive(false);
                 }
                 else
                 {
-                    FLEET_ShipDisplay.position = ComponentDisplay.position;
+                    FLEET_ShipDisplay.position = SHIP.position;
                     FLEET_ShipDisplay.gameObject.SetActive(true);
                     FLEET_ShipName.text = Ship.ShipNameValue;
                     FLEET_ShipType.text = Ship.GetShipTypeName();
@@ -448,7 +442,7 @@ namespace FLEETMOD.Interface.Tab
                 return;
             }
             ShipID = inSD.ShipID;
-            CrewPage.SetActive(false);
+            CREW.SetActive(false);
             FLEET_ShipDisplay.gameObject.SetActive(true);
             return;
             /*PLPlayer playerFromPlayerID = PLServer.Instance.GetPlayerFromPlayerID(TalentsListSelectedPlayerID);
@@ -502,7 +496,7 @@ namespace FLEETMOD.Interface.Tab
             public Image[] Ranks;
             public bool Available;
         }
-        private static ShipDisplay GetShipDisplay(int inShipId)
+        static ShipDisplay GetShipDisplay(int inShipId)
         {
             for (int i = 0; i < allSDs.Count; i++)
             {
