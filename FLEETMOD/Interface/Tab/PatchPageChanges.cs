@@ -24,6 +24,7 @@ namespace FLEETMOD.Interface.Tab
             BGRight = FindDeepChild(PLTabMenu.Instance.gameObject.transform, "BGRight", 5);
             SHIP = BGRight.Find("SHIP");
             CREW = BGRight.Find("CREW").gameObject;
+            FleetShipListView.Initialize();
             HomeTabMenu.Initialize();
             ExpandedCargo.Initialize();
         }
@@ -55,16 +56,15 @@ namespace FLEETMOD.Interface.Tab
             if (!Executed)
             {
                 Executed = true;
-                ShipID = -1;
+                FleetShipListView.OnAwake();
                 HomeTabMenu.OnAwake();
                 ExpandedCargo.OnAwake();
             }
 
             if (!Variables.isrunningmod || PLNetworkManager.Instance.LocalPlayer == null || !PLNetworkManager.Instance.LocalPlayer.GetHasStarted()) return;
+            FleetShipListView.Update(__instance);
             HomeTabMenu.Update();
             ExpandedCargo.Update(__instance);
         }
-
-        internal static int ShipID = -1;
     }
 }
