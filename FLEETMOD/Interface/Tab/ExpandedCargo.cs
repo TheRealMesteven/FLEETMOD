@@ -20,11 +20,12 @@ namespace FLEETMOD.Interface.Tab
         /// </summary>
         internal static void Initialize()
         {
-            GameObject SHIP_Stats2 = PLTabMenu.Instance.SHIP_Stats2.gameObject;
+            GameObject SHIP_Stats1 = PLTabMenu.Instance.SHIP_Stats1.gameObject;
             ShipSelector = new GameObject("MultiShipSelector");
-            ShipSelector.transform.SetParent(SHIP_Stats2.transform, false);
+            ShipSelector.transform.SetParent(SHIP_Stats1.transform, false);
 
             VerticalLayoutGroup layout = ShipSelector.AddComponent<VerticalLayoutGroup>();
+            layout.transform.localPosition += new Vector3(0, 60, 0);
             layout.childForceExpandHeight = false;
             return;
         }
@@ -52,6 +53,8 @@ namespace FLEETMOD.Interface.Tab
             if (!Variables.isrunningmod) return;
             if (__instance.TabMenuActive && __instance.ExpandedComponentView && __instance.CurrentTabIndex == 1)
             {
+                if (!ShipSelector.activeSelf) ShipSelector.SetActive(true);
+
                 // Attribute Override
                 PLShipInfoBase Ship = null;
                 if (UpdateLabels.ShipID == -1)
@@ -64,12 +67,12 @@ namespace FLEETMOD.Interface.Tab
                 }
                 if (Ship != null) 
                 {
-                    __instance.SHIP_Stats1.text = $"{Ship.ShipNameValue}\n{Ship.GetShipTypeName()}\n{(PLNetworkManager.Instance.LocalPlayer.StartingShip == Ship ? "Your ship" : "A Fleetmod ship")}";
-                    __instance.SHIP_Stats1.enabled = true;
+                    __instance.SHIP_Stats2.text = $"Currently Viewing\n{Ship.ShipNameValue} • {(PLNetworkManager.Instance.LocalPlayer.StartingShip == Ship ? "Your Ship" : "A Fleet Ship")}\n{Ship.GetShipTypeName()}";
+                    __instance.SHIP_Stats2.enabled = true;
                 }
-                __instance.SHIP_Stats2.text = "Says";
-                __instance.SHIP_Stats3.text = "Hi";
-                __instance.SHIP_Stats2.enabled = true;
+                __instance.SHIP_Stats1.text = "Fleetmod Ships";
+                __instance.SHIP_Stats3.text = "Stats";
+                __instance.SHIP_Stats1.enabled = true;
                 __instance.SHIP_Stats3.enabled = true;
 
                 // Ship Change Button Addons
@@ -246,6 +249,10 @@ namespace FLEETMOD.Interface.Tab
                     global::UnityEngine.Object.Destroy(talentDisplay3.BG.gameObject);
                     allSDs.Remove(talentDisplay3);
                 }
+            }
+            else
+            {
+                if (ShipSelector.activeSelf) ShipSelector.SetActive(false);
             }
         }
         static ShipDisplay GetShipDisplay(int inShipId)
