@@ -59,6 +59,7 @@ namespace FLEETMOD.Interface.Tab
                 __instance.SHIP_Stats1.enabled = true;
                 __instance.SHIP_Stats3.enabled = true;
 
+                // Fleet Ship List Enable
                 if (transform != null && CurrentParent != transform)
                 {
                     ChangeVisual(transform, new Vector3(0, 60, 0));
@@ -67,6 +68,7 @@ namespace FLEETMOD.Interface.Tab
             }
             else
             {
+                // Fleet Ship List Disable
                 if (transform != null && CurrentParent == transform)
                 {
                     ChangeVisual(null, new Vector3(0, 0, 0));

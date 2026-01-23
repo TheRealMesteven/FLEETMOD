@@ -11,7 +11,7 @@ namespace FLEETMOD.Interface.Tab
     {
         public static void Postfix(PLOverviewPlayerInfoDisplay __instance, ref float ___cached_LastUpdatedPlayerInfoTime, ref PLPlayer ___cached_DisplayedPlayer, ref int ___cached_DisplayedPlayerClass, ref float ___cached_DisplayedPlayerHealth, ref bool ___cached_DisplayedPlayerIsTalking)
         {
-            if (!Variables.isrunningmod || __instance.name != "FleetPageChangeClass") return;
+            if (!Variables.isrunningmod || __instance.name != "FleetChangeClass") return;
             PLPlayer LocalPlayer = PLNetworkManager.Instance.LocalPlayer;
             __instance.MyPlayer = LocalPlayer;
             __instance.ClassID = LocalPlayer.GetClassID();
@@ -49,7 +49,7 @@ namespace FLEETMOD.Interface.Tab
         }
         public static bool Prefix(PLOverviewPlayerInfoDisplay __instance, ref List<int> ___ButtonsActiveTypes)
         {
-            if (!Variables.isrunningmod || __instance.name != "FleetPageChangeClass" || PLNetworkManager.Instance.LocalPlayer == null) return true;
+            if (!Variables.isrunningmod || __instance.name != "FleetChangeClass" || PLNetworkManager.Instance.LocalPlayer == null) return true;
             
             ___ButtonsActiveTypes.Clear();
             bool Captain = false;
@@ -97,7 +97,7 @@ namespace FLEETMOD.Interface.Tab
         }
         public static void Prefix(PLOverviewPlayerInfoDisplay __instance, ref PLTabMenuPlayerInfoButton inButton, ref float ___LastButtonPressProcessTime, ref float ___cached_LastUpdatedPlayerInfoTime)
         {
-            if (!Variables.isrunningmod || __instance.name != "FleetPageChangeClass") return;
+            if (!Variables.isrunningmod || __instance.name != "FleetChangeClass") return;
             if (Time.unscaledTime - ___LastButtonPressProcessTime < 0.1f || !(!PLNetworkManager.IsActiveMenuOpen() && PLTabMenu.Instance.TabMenuActive && inButton.m_Label.gameObject.activeSelf)) return;
             string[] args = inButton.m_Label.text.Split(new[] { '\n' });
             if (args.Length < 2) return;

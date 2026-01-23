@@ -11,9 +11,6 @@ namespace FLEETMOD.Interface.Tab
         static GameObject TargetShipBG;
         static GameObject HomePageDescription;
         static GameObject PlayerList;
-        static GameObject ShipList;
-        static Transform ShipGrid;
-        static RectTransform ShipScrollContent;
         static Transform ChangeClass;
 
         static Transform FLEET_ShipDisplay;
@@ -27,12 +24,14 @@ namespace FLEETMOD.Interface.Tab
         static GameObject FLEET_EquipButton;
         static GameObject FLEET_DiscardButton;
 
+        static Transform Home;
+
         /// <summary>
         /// Find existing tab features and curate the new implementations for the first time
         /// </summary>
         internal static void Initialize()
         {
-            Transform Home = CREW_Tab.Find("Home"); // Main Page
+            Home = CREW_Tab.Find("Home"); // Main Page
             Transform CrewSettings = CREW_Tab.Find("CrewSettings"); // Captain Page
             Transform Talents = CREW_Tab.Find("Talents"); // Talents Page
 
@@ -46,7 +45,7 @@ namespace FLEETMOD.Interface.Tab
             newDescriptionLabel.localPosition = newDescriptionLabel.localPosition;
             newDescriptionLabel.rotation = descriptionLabel.rotation;
             newDescriptionLabel.localScale = descriptionLabel.localScale;
-            newDescriptionLabel.name = "FleetPageDescriptionLabel";
+            newDescriptionLabel.name = "FleetDescriptionLabel";
             newDescriptionLabel.parent = Home;
             Text description = newDescriptionLabel.GetComponent<Text>();
             description.supportRichText = true;
@@ -65,20 +64,8 @@ namespace FLEETMOD.Interface.Tab
             ChangeClass.localPosition = PlayerFive.localPosition;
             ChangeClass.rotation = PlayerFive.rotation;
             ChangeClass.localScale = PlayerFive.localScale;
-            ChangeClass.name = "FleetPageChangeClass";
+            ChangeClass.name = "FleetChangeClass"; // <--- This has lots of name matching you'll need to update.
             ChangeClass.parent = Home;
-
-            /*PLOverviewPlayerInfoDisplay PlayerInfo = ChangeClass.GetComponent<PLOverviewPlayerInfoDisplay>();
-            OverviewFleetInfoDisplay FleetInfo = ChangeClass.gameObject.AddComponent<OverviewFleetInfoDisplay>();
-            FleetInfo.Buttons.Concat(PlayerInfo.Buttons);
-            UnityEngine.Object.Destroy(PlayerInfo);
-            for (int i = 2; i < 6; i++)
-            {
-                GameObject button = ChangeClass.GetChild(i).gameObject;
-                UnityEngine.Object.Destroy(button.GetComponent<PLTabMenuPlayerInfoButton>());
-                FleetInfoDisplayButton FleetInfoButton = ChangeClass.gameObject.AddComponent<FleetInfoDisplayButton>();
-                FleetInfo.Buttons.Append(FleetInfoButton);
-            }*/
 
 
             // Add Ship List
@@ -172,7 +159,6 @@ namespace FLEETMOD.Interface.Tab
         internal static void Update()
         {
             if (!Variables.isrunningmod) return;
-
             if (PLTabMenu.Instance.TabMenuActive && PLTabMenu.Instance.CurrentTabIndex == 0 && PLTabMenu.Instance.GetCrewPageIndex() == 0)
             {
                 // Description Variables
@@ -202,6 +188,13 @@ namespace FLEETMOD.Interface.Tab
                     description += "As a Crew Member, you can change ships by selecting a ship below and change class with the buttons at the bottom.";
                 }
                 TabDescription.text = description;
+
+                // Fleet Ship List Enable
+                if (Home != null && CurrentParent != Home)
+                {
+                    ChangeVisual(Home, new Vector3(20, 35, 0));
+                    ShowShipList = true;
+                }
             }
             else
             {
@@ -211,6 +204,13 @@ namespace FLEETMOD.Interface.Tab
                     FLEET_ShipDisplay.gameObject.SetActive(false);
                     CREW.SetActive(true);
                 }*/
+
+                // Fleet Ship List Disable
+                if (Home != null && CurrentParent == Home)
+                {
+                    ChangeVisual(null, new Vector3(0, 0, 0));
+                    ShowShipList = false;
+                }
             }
 
             /*
