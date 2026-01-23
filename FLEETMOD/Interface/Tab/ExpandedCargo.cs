@@ -47,7 +47,7 @@ namespace FLEETMOD.Interface.Tab
                 {
                     Ship = PLEncounterManager.Instance.GetShipFromID(ShipID);
                 }
-                if (Ship != null) 
+                if (Ship != null)
                 {
                     __instance.SHIP_Stats2.text = $"Currently Viewing\n{Ship.ShipNameValue} • {(PLNetworkManager.Instance.LocalPlayer.StartingShip == Ship ? "Your Ship" : "A Fleet Ship")}\n{Ship.GetShipTypeName()}";
                     __instance.SHIP_Stats2.enabled = true;
@@ -104,6 +104,64 @@ namespace FLEETMOD.Interface.Tab
         public static bool Replacement()
         {
             return !Variables.isrunningmod && PLEncounterManager.Instance.PlayerShip.MyStats != null;
+        }
+    }
+
+    [HarmonyPatch(typeof(PLTabMenu), "UpdateSCDs")]
+    class OverrideShipSlots
+    {
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            CodeInstruction[] target = new CodeInstruction[]
+            {
+                new CodeInstruction(OpCodes.Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
+                new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLLevelSync), "PlayerShip")),
+                new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLShipInfoBase), "MyStats")),
+                new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLInventory), "GetAllSlots")),
+            };
+            /* 
+             * Target:  PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots()
+            */
+            return PatchBySequence(instructions,
+            target, new CodeInstruction[] {
+                new CodeInstruction(OpCodes.Call, Method(typeof(OverrideShipSlots), "GetShipSlots"))
+            }, PatchMode.REPLACE, CheckMode.NONNULL);
+        }
+        public static IEnumerable<PLSlot> GetShipSlots()
+        {
+            PLShipInfoBase pLShipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
+            if (pLShipInfoBase != null) return pLShipInfoBase.MyStats.GetAllSlots();
+            else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) return PLNetworkManager.Instance.LocalPlayer.StartingShip.MyStats.GetAllSlots();
+            return PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots();
+        }
+    }
+
+
+    [HarmonyPatch(typeof(PLDraggedShipCompUI), "Update")]
+    class OverrideShipForRearrange
+    {
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            CodeInstruction[] target = new CodeInstruction[]
+            {
+                new CodeInstruction(OpCodes.Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
+                new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLLevelSync), "PlayerShip")),
+                new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLShipInfoBase), "get_ShipID")),
+            };
+            /* 
+             * Target:  PLEncounterManager.Instance.PlayerShip.ShipID
+            */
+            return PatchBySequence(instructions,
+            target, new CodeInstruction[] {
+                new CodeInstruction(OpCodes.Call, Method(typeof(OverrideShipForRearrange), "GetShipForRearrange"))
+            }, PatchMode.REPLACE, CheckMode.NONNULL);
+        }
+        public static int GetShipForRearrange()
+        {
+            PLShipInfoBase pLShipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
+            if (pLShipInfoBase != null) return ShipID;
+            else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) return PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID;
+            return PLEncounterManager.Instance.PlayerShip.ShipID;
         }
     }
 }
