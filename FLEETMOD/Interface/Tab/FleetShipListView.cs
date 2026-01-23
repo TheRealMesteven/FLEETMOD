@@ -255,7 +255,10 @@ namespace FLEETMOD.Interface.Tab
                 return;
             }
             ShipID = inSD.ShipID;
-            return;
+
+            // Bring up right-side ship info display
+            ChangeTabMenuDisplay.CREW.SetActive(false);
+            HomeTabMenu.FLEET_ShipDisplay.gameObject.SetActive(true);
         }
         static ShipDisplay GetShipDisplay(int inShipId)
         {

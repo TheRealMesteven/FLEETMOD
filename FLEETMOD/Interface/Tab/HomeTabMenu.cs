@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using PulsarModLoader;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static FLEETMOD.Interface.Tab.ChangeTabMenuDisplay;
 using static FLEETMOD.Interface.Tab.FleetShipListView;
@@ -13,8 +15,9 @@ namespace FLEETMOD.Interface.Tab
         static GameObject PlayerList;
         static Transform ChangeClass;
 
-        static Transform FLEET_ShipDisplay;
-        static Transform shipScrollView;
+        static Transform Home;
+
+        internal static Transform FLEET_ShipDisplay;
         static Text FLEET_ShipName;
         static Text FLEET_ShipType;
         static Text FLEET_ShipDesc;
@@ -23,8 +26,6 @@ namespace FLEETMOD.Interface.Tab
         static Text FLEET_ShipPlayerRight;
         static GameObject FLEET_EquipButton;
         static GameObject FLEET_DiscardButton;
-
-        static Transform Home;
 
         /// <summary>
         /// Find existing tab features and curate the new implementations for the first time
@@ -67,34 +68,13 @@ namespace FLEETMOD.Interface.Tab
             ChangeClass.name = "FleetChangeClass"; // <--- This has lots of name matching you'll need to update.
             ChangeClass.parent = Home;
 
-
-            // Add Ship List
-            /*
-            Transform scrollView = Talents.Find("Scroll View");
-            shipScrollView = GameObject.Instantiate(scrollView, Home);
-            shipScrollView.position = PlayerList.transform.position; //-0.078 -399.4167 17.7626
-            shipScrollView.localPosition = PlayerList.transform.position + new Vector3(-7f, -76f); // 40.1707 -74.8114 -109.4851
-            shipScrollView.rotation = scrollView.rotation;
-            shipScrollView.localScale = scrollView.localScale;
-            shipScrollView.name = "FleetShipList";
-            shipScrollView.parent = Home;
-            ShipList = shipScrollView.gameObject;
-            ShipGrid = FindDeepChild(shipScrollView, "TalentGrid", 5);
-            ShipGrid.name = "ShipGrid";
-            ShipScrollContent = ShipGrid.GetComponent<RectTransform>();
-
-            shipScrollView.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 300);
-            shipScrollView.GetComponent<ScrollRect>().verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
-            shipScrollView.GetComponent<ScrollRect>().horizontal = false;
-
-
             // Fleet Ship Info Panel
             FLEET_ShipDisplay = GameObject.Instantiate(SHIP, BGRight);
             FLEET_ShipDisplay.position = SHIP.position;
             FLEET_ShipDisplay.localPosition = SHIP.position;
             FLEET_ShipDisplay.rotation = SHIP.rotation;
             FLEET_ShipDisplay.localScale = SHIP.localScale;
-            FLEET_ShipDisplay.name = "FleetCrewDisplay";
+            FLEET_ShipDisplay.name = "FleetShipInfoDisplay";
             FLEET_ShipDisplay.parent = BGRight;
 
             Transform CompInfo = FLEET_ShipDisplay.GetChild(1);
@@ -117,7 +97,7 @@ namespace FLEETMOD.Interface.Tab
             {
                 ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ChangeShip", PhotonTargets.MasterClient, new object[]
                 {
-                    UpdateLabels.ShipID
+                    FleetShipListView.ShipID
                 });
             });
             Equip.triggers.Add(equip_entry);
@@ -131,12 +111,11 @@ namespace FLEETMOD.Interface.Tab
             };
             discard_entry.callback.AddListener((BaseEventData data) =>
             {
-                PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID).DestroySelf(PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID));
-                UnityEngine.Object.Destroy(PLEncounterManager.Instance.GetShipFromID(UpdateLabels.ShipID).gameObject);
+                PLEncounterManager.Instance.GetShipFromID(FleetShipListView.ShipID).DestroySelf(PLEncounterManager.Instance.GetShipFromID(FleetShipListView.ShipID));
+                UnityEngine.Object.Destroy(PLEncounterManager.Instance.GetShipFromID(FleetShipListView.ShipID).gameObject);
             });
             Discard.triggers.Add(discard_entry);
             GameObject.Destroy(CompInfo.GetChild(5).gameObject);
-            */
         }
 
         /// <summary>
@@ -149,8 +128,7 @@ namespace FLEETMOD.Interface.Tab
             PlayerList.SetActive(!Variables.isrunningmod);
             ChangeClass.gameObject.SetActive(Variables.isrunningmod);
             CREW.SetActive(true);
-            //FLEET_ShipDisplay.gameObject.SetActive(false);
-            //shipScrollView.gameObject.SetActive(Variables.isrunningmod);
+            FLEET_ShipDisplay.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -189,74 +167,66 @@ namespace FLEETMOD.Interface.Tab
                 }
                 TabDescription.text = description;
 
-                // Fleet Ship List Enable
                 if (Home != null && CurrentParent != Home)
-                {
+                { // Fleet Ship List Enable
                     ChangeVisual(Home, new Vector3(20, 35, 0));
                     ShowShipList = true;
+                }
+
+                if (FLEET_ShipDisplay.gameObject.activeSelf && ShipID != -1)
+                { // Fleet Ship Info Display
+                    PLShipInfoBase Ship = PLEncounterManager.Instance.GetShipFromID(ShipID);
+                    if (Ship == null)
+                    {
+                        ShipID = -1;
+                        CREW.SetActive(true);
+                        FLEET_ShipDisplay.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        FLEET_ShipDisplay.position = SHIP.position;
+                        FLEET_ShipDisplay.gameObject.SetActive(true);
+                        FLEET_ShipName.text = Ship.ShipNameValue;
+                        FLEET_ShipType.text = Ship.GetShipTypeName();
+                        FLEET_ShipDesc.text = "Fleetmod ship";
+                        FLEET_ShipRole.text = "Class Name";
+                        FLEET_ShipPlayerLeft.text = "Player Name";
+                        FLEET_ShipPlayerRight.text = "Extra";
+
+                        if ((localplayer != admiral && FLEET_DiscardButton.gameObject.activeSelf) || (localplayer.StartingShip == Ship && FLEET_DiscardButton.gameObject.activeSelf))
+                        {
+                            FLEET_DiscardButton.SetActive(false);
+                        }
+                        else if (localplayer == admiral && !FLEET_DiscardButton.gameObject.activeSelf && localplayer.StartingShip != Ship)
+                        {
+                            FLEET_DiscardButton.SetActive(true);
+                        }
+
+                        if (localplayer.StartingShip == Ship && FLEET_EquipButton.gameObject.activeSelf)
+                        {
+                            FLEET_EquipButton.SetActive(false);
+                        }
+                        else if (localplayer.StartingShip != Ship && !FLEET_EquipButton.gameObject.activeSelf)
+                        {
+                            FLEET_EquipButton.SetActive(true);
+                        }
+                    }
                 }
             }
             else
             {
-                /*
                 if (FLEET_ShipDisplay.gameObject.activeSelf)
                 { // Hide Fleet Ship Display Menu when not needed.
                     FLEET_ShipDisplay.gameObject.SetActive(false);
                     CREW.SetActive(true);
-                }*/
+                }
 
-                // Fleet Ship List Disable
                 if (Home != null && CurrentParent == Home)
-                {
+                { // Fleet Ship List Disable
                     ChangeVisual(null, new Vector3(0, 0, 0));
                     ShowShipList = false;
                 }
             }
-
-            /*
-            // Update Fleet Ship Display Menu Details
-            if (FLEET_ShipDisplay.gameObject.activeSelf && ShipID != -1)
-            {
-                PLShipInfoBase Ship = PLEncounterManager.Instance.GetShipFromID(ShipID);
-                if (Ship == null)
-                {
-                    ShipID = -1;
-                    CREW.SetActive(true);
-                    FLEET_ShipDisplay.gameObject.SetActive(false);
-                }
-                else
-                {
-                    FLEET_ShipDisplay.position = SHIP.position;
-                    FLEET_ShipDisplay.gameObject.SetActive(true);
-                    FLEET_ShipName.text = Ship.ShipNameValue;
-                    FLEET_ShipType.text = Ship.GetShipTypeName();
-                    FLEET_ShipDesc.text = "Fleetmod ship";
-                    FLEET_ShipRole.text = "Class Name";
-                    FLEET_ShipPlayerLeft.text = "Player Name";
-                    FLEET_ShipPlayerRight.text = "Extra";
-
-                    if ((localplayer != admiral && FLEET_DiscardButton.gameObject.activeSelf) || (localplayer.StartingShip == Ship && FLEET_DiscardButton.gameObject.activeSelf))
-                    {
-                        FLEET_DiscardButton.SetActive(false);
-                    }
-                    else if (localplayer == admiral && !FLEET_DiscardButton.gameObject.activeSelf && localplayer.StartingShip != Ship)
-                    {
-                        FLEET_DiscardButton.SetActive(true);
-                    }
-
-                    if (localplayer.StartingShip == Ship && FLEET_EquipButton.gameObject.activeSelf)
-                    {
-                        FLEET_EquipButton.SetActive(false);
-                    }
-                    else if (localplayer.StartingShip != Ship && !FLEET_EquipButton.gameObject.activeSelf)
-                    {
-                        FLEET_EquipButton.SetActive(true);
-                    }
-                }
-            }
-
-            // Add Talents-style ship list.
-            */
         }
     }
 }
