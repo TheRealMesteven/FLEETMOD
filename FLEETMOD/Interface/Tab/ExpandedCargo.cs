@@ -57,7 +57,7 @@ namespace FLEETMOD.Interface.Tab
                 __instance.SHIP_Stats1.text = "Fleetmod Ships";
                 __instance.SHIP_Stats3.text = "Stats";
                 __instance.SHIP_Stats1.enabled = true;
-                __instance.SHIP_Stats3.enabled = true;
+                __instance.SHIP_Stats3.enabled = false;
 
                 // Fleet Ship List Enable
                 if (transform != null && CurrentParent != transform)
@@ -112,6 +112,7 @@ namespace FLEETMOD.Interface.Tab
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
+            // Adds other ship cargos to the expanded cargo menu.
             CodeInstruction[] target = new CodeInstruction[]
             {
                 new CodeInstruction(OpCodes.Ldsfld, Field(typeof(PLEncounterManager), "Instance")),
@@ -119,13 +120,51 @@ namespace FLEETMOD.Interface.Tab
                 new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLShipInfoBase), "MyStats")),
                 new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLInventory), "GetAllSlots")),
             };
-            /* 
-             * Target:  PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots()
-            */
-            return PatchBySequence(instructions,
-            target, new CodeInstruction[] {
+
+            CodeInstruction[] patch = new CodeInstruction[]
+            {
                 new CodeInstruction(OpCodes.Call, Method(typeof(OverrideShipSlots), "GetShipSlots"))
-            }, PatchMode.REPLACE, CheckMode.NONNULL);
+            }; // Target:  PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots()
+
+            // More slots for Expanded Cargo
+
+            CodeInstruction[] target2 = new CodeInstruction[]
+            {
+                new CodeInstruction(OpCodes.Ldc_R4),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_R4),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Stloc_S),
+                new CodeInstruction(OpCodes.Ldc_I4_0),
+                new CodeInstruction(OpCodes.Stloc_S),
+            };
+            /*  Target:
+                float num7 = 0f;
+				float num8 = -30f;
+				int num9 = 0;
+				int num10 = 0;
+				ESlotType eslotType = ESlotType.E_COMP_NONE;
+				bool flag = false;
+            */
+
+            int index = FindSequence(instructions, target2, CheckMode.NONNULL);
+            int index2 = FindSequence(instructions, target, CheckMode.NONNULL, true);
+
+            List<CodeInstruction> patch2 = new List<CodeInstruction>()
+            {
+                new CodeInstruction(OpCodes.Ldloc_S, instructions.ToList()[index-15].operand),          // Transform transform2
+                new CodeInstruction(OpCodes.Call, Method(typeof(OverrideShipSlots), "Replacement")),
+                new CodeInstruction(instructions.ToList()[index2 - 8])                                  // int num4 = 9 or 12;
+            };
+            instructions = PatchBySequence(instructions, target2, patch2, PatchMode.AFTER, CheckMode.NONNULL, true);
+            return PatchBySequence(instructions, target, patch, PatchMode.REPLACE, CheckMode.NONNULL); // Do replacement after the complicated one.
         }
         public static IEnumerable<PLSlot> GetShipSlots()
         {
@@ -148,6 +187,46 @@ namespace FLEETMOD.Interface.Tab
                 }
             }
             return (IEnumerable<PLSlot>)pLSlotItems;
+        }
+        public static int Replacement(Transform transform2)
+        {
+            if (Variables.isrunningmod && PLTabMenu.Instance.ExpandedComponentView && transform2.name == "Components_Cargo")
+            {
+                return 12;
+            }
+            return 9;
+        }
+    }
+
+    [HarmonyPatch(typeof(PLTabMenu), "UpdateSCDs")]
+    class ExpandedExpandedCargo
+    { // Other ship cargos go off screen if all rolands. So need to make more space.
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            CodeInstruction[] target = new CodeInstruction[]
+            {
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldc_R4),
+                new CodeInstruction(OpCodes.Ldc_R4),
+                new CodeInstruction(OpCodes.Ldc_R4),
+                new CodeInstruction(OpCodes.Newobj),
+                new CodeInstruction(OpCodes.Stfld)
+            };//this.ShipComponentsGrid_Basics_TargetLocalPosition = new Vector3(-800f, 600f, 0f);
+
+            int index = FindSequence(instructions, target, CheckMode.NONNULL);
+            List<CodeInstruction> PatchedInstructions = instructions.ToList();
+            PatchedInstructions[index - 5].operand = -1000f; // ShipComponentsGrid_Basics_TargetLocalPosition.x
+            PatchedInstructions[index - 4].operand = 700f; // ShipComponentsGrid_Basics_TargetLocalPosition.y
+            PatchedInstructions[index + 1].operand = -200f;  // ShipComponentsGrid_Computer_TargetLocalPosition.x
+            PatchedInstructions[index + 2].operand = 700f;  // ShipComponentsGrid_Computer_TargetLocalPosition.y
+            PatchedInstructions[index + 7].operand = -1000f; // ShipComponentsGrid_Weapons_TargetLocalPosition.x
+            PatchedInstructions[index + 8].operand = 30f; // ShipComponentsGrid_Weapons_TargetLocalPosition.y
+            PatchedInstructions[index + 13].operand = 600f;  // ShipComponentsGrid_Cargo_TargetLocalPosition.x
+            PatchedInstructions[index + 14].operand = 700f;  // ShipComponentsGrid_Cargo_TargetLocalPosition.y
+            PatchedInstructions[index + 19].operand = -200f; // ShipComponentsGrid_Thrusters_TargetLocalPosition.x
+            PatchedInstructions[index + 20].operand = 30f; // ShipComponentsGrid_Thrusters_TargetLocalPosition.y
+
+            return (IEnumerable<CodeInstruction>)PatchedInstructions;
         }
     }
 
