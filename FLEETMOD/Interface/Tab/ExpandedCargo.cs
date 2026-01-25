@@ -155,7 +155,7 @@ namespace FLEETMOD.Interface.Tab
             */
 
             int index = FindSequence(instructions, target2, CheckMode.NONNULL);
-            int index2 = FindSequence(instructions, target, CheckMode.NONNULL, true);
+            int index2 = FindSequence(instructions, target, CheckMode.NONNULL);
 
             List<CodeInstruction> patch2 = new List<CodeInstruction>()
             {
@@ -163,7 +163,7 @@ namespace FLEETMOD.Interface.Tab
                 new CodeInstruction(OpCodes.Call, Method(typeof(OverrideShipSlots), "Replacement")),
                 new CodeInstruction(instructions.ToList()[index2 - 8])                                  // int num4 = 9 or 12;
             };
-            instructions = PatchBySequence(instructions, target2, patch2, PatchMode.AFTER, CheckMode.NONNULL, true);
+            instructions = PatchBySequence(instructions, target2, patch2, PatchMode.AFTER, CheckMode.NONNULL);
             return PatchBySequence(instructions, target, patch, PatchMode.REPLACE, CheckMode.NONNULL); // Do replacement after the complicated one.
         }
         public static IEnumerable<PLSlot> GetShipSlots()
@@ -241,6 +241,12 @@ namespace FLEETMOD.Interface.Tab
                 __result = PLTabMenu.Instance.ShipComponentsGrid_Cargo;
                 return false;
             }
+            /*if (inSlotType == ESlotType.E_COMP_AIRLOCK)
+            {
+                transformIndex = 3;
+                __result = PLTabMenu.Instance.ShipComponentsGrid_Cargo;
+                return false;
+            }*/
             return true;
         }
     }

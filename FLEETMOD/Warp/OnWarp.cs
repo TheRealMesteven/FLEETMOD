@@ -179,7 +179,7 @@ namespace FLEETMOD.Warp
                 new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(PLShipInfo),"WarpObjectAlpha")),
                 new CodeInstruction(OpCodes.Ldc_R4, 1.01f),
             };
-            return PatchBySequence(instructions, targetSequence, injectedSequence, patchMode: PatchMode.REPLACE, checkMode: CheckMode.NONNULL, showDebugOutput: true);
+            return PatchBySequence(instructions, targetSequence, injectedSequence, patchMode: PatchMode.REPLACE, checkMode: CheckMode.NONNULL);
         }
     }
     /* PLShipControl - Rework this bit to change 'a' to the desired ship positions
