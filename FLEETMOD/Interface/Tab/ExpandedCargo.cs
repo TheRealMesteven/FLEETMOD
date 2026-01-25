@@ -129,10 +129,61 @@ namespace FLEETMOD.Interface.Tab
         }
         public static IEnumerable<PLSlot> GetShipSlots()
         {
+            List<PLSlot> pLSlotItems = new List<PLSlot>();
             PLShipInfoBase pLShipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
-            if (pLShipInfoBase != null) return pLShipInfoBase.MyStats.GetAllSlots();
-            else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) return PLNetworkManager.Instance.LocalPlayer.StartingShip.MyStats.GetAllSlots();
-            return PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots();
+            if (pLShipInfoBase != null) pLSlotItems = pLShipInfoBase.MyStats.GetAllSlots().ToList();
+            else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) pLSlotItems = PLNetworkManager.Instance.LocalPlayer.StartingShip.MyStats.GetAllSlots().ToList();
+            else if (PLEncounterManager.Instance.PlayerShip != null) pLSlotItems = PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots().ToList();
+            foreach (int i in Variables.Fleet.Keys)
+            {
+                PLShipInfoBase pLShipInfoBase1 = PLEncounterManager.Instance.GetShipFromID(i);
+                if (pLShipInfoBase1 != null)
+                {
+                    PLSlot Cargo = pLShipInfoBase1.MyStats.GetSlot(ESlotType.E_COMP_CARGO);
+                    Cargo.Type = ESlotType.E_COMP_CARGO + (i*1000);
+                    if (Cargo != null) pLSlotItems.Add(Cargo);
+                    PLSlot HiddenCargo = pLShipInfoBase1.MyStats.GetSlot(ESlotType.E_COMP_HIDDENCARGO);
+                    HiddenCargo.Type = ESlotType.E_COMP_HIDDENCARGO + (i*1000);
+                    if (HiddenCargo != null) pLSlotItems.Add(HiddenCargo);
+                }
+            }
+            return (IEnumerable<PLSlot>)pLSlotItems;
+        }
+    }
+
+    [HarmonyPatch(typeof(PLTabMenu), "GetComponentParent")]
+    class AddCargoGrids
+    {
+        public static bool Prefix(ESlotType inSlotType, ref int transformIndex, ref Transform __result)
+        {
+            if ((int)inSlotType > 1000)
+            {
+                transformIndex = 3;
+                __result = PLTabMenu.Instance.ShipComponentsGrid_Cargo;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(PLShipComponent), "GetStringForType")]
+    class RenameCargoGrids
+    {
+        public static bool Prefix(ESlotType inSlotType, ref string __result)
+        {
+            if ((int)inSlotType > 1000)
+            {
+                int ShipID = (int)inSlotType / 1000;
+                int SlotType = (int)inSlotType % 1000;
+                PLShipInfoBase ship = PLEncounterManager.Instance.GetShipFromID(ShipID);
+                if (ship != null)
+                {
+                    if (SlotType == (int)ESlotType.E_COMP_CARGO) __result = $"{ship.ShipNameValue}'s Cargo";
+                    else __result = $"{ship.ShipNameValue}'s Hidden Cargo";
+                }
+                return false;
+            }
+            return true;
         }
     }
 

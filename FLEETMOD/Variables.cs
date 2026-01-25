@@ -146,11 +146,31 @@ namespace FLEETMOD
                             Label($" startid:{shipInfoBase.ShipID}");
                             Label($" startship:{shipInfoBase.ShipNameValue}");
                         }
-                        if (Button("Create FleetShip"))
+
+                        // 0 Intrepid, 1 Cruiser, 2 Stargazer, 3 Grim Cutlass, 4 Roland, 5 Destroyer, 6 Carrier, 7 Outrider
+                        if (Button("Create Intrepid"))
                         {
                             ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
                                     {
                         0,
+                        k,
+                        PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
+                                    });
+                        }
+                        if (Button("Create Stargazer"))
+                        {
+                            ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+                                    {
+                        2,
+                        k,
+                        PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
+                                    });
+                        }
+                        if (Button("Create Roland"))
+                        {
+                            ModMessage.SendRPC(Mod.harmonyIden, "FLEETMOD.ModMessages.ServerCreateShip", PhotonTargets.MasterClient, new object[]
+                                    {
+                        4,
                         k,
                         PLServer.Instance.CUShipNameGenerator.GetName(UnityEngine.Random.Range(0, 7000))
                                     });
