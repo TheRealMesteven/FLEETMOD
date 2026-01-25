@@ -168,11 +168,13 @@ namespace FLEETMOD.Interface.Tab
         }
         public static IEnumerable<PLSlot> GetShipSlots()
         {
+            if (!Variables.isrunningmod) return PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots().ToList();
             List<PLSlot> pLSlotItems = new List<PLSlot>();
             PLShipInfoBase pLShipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
             if (pLShipInfoBase != null) pLSlotItems = pLShipInfoBase.MyStats.GetAllSlots().ToList();
             else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) pLSlotItems = PLNetworkManager.Instance.LocalPlayer.StartingShip.MyStats.GetAllSlots().ToList();
             else if (PLEncounterManager.Instance.PlayerShip != null) pLSlotItems = PLEncounterManager.Instance.PlayerShip.MyStats.GetAllSlots().ToList();
+            if (!PLTabMenu.Instance.ExpandedComponentView) return (IEnumerable<PLSlot>)pLSlotItems;
             foreach (int i in Variables.Fleet.Keys)
             {
                 PLShipInfoBase pLShipInfoBase1 = PLEncounterManager.Instance.GetShipFromID(i);
@@ -294,6 +296,7 @@ namespace FLEETMOD.Interface.Tab
         }
         public static int GetShipForRearrange()
         {
+            if (!Variables.isrunningmod) return PLEncounterManager.Instance.PlayerShip.ShipID;
             PLShipInfoBase pLShipInfoBase = PLEncounterManager.Instance.GetShipFromID(ShipID);
             if (pLShipInfoBase != null) return ShipID;
             else if (PLNetworkManager.Instance.LocalPlayer.StartingShip != null) return PLNetworkManager.Instance.LocalPlayer.StartingShip.ShipID;
