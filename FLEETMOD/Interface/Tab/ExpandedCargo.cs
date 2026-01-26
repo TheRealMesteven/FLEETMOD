@@ -1,12 +1,11 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using UnityEngine;
+using static FLEETMOD.Interface.Tab.FleetShipListView;
 using static HarmonyLib.AccessTools;
 using static PulsarModLoader.Patches.HarmonyHelpers;
-using static FLEETMOD.Interface.Tab.FleetShipListView;
 
 namespace FLEETMOD.Interface.Tab
 {
@@ -232,6 +231,58 @@ namespace FLEETMOD.Interface.Tab
         }
     }
 
+    [HarmonyPatch(typeof(PLTabMenu), "UpdateSCDs")]
+    class HighlightCargoOnDrag
+    { // Other ship cargos technically arent "cargo" slot. Fixes visual highlight.
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            CodeInstruction[] target1 = new CodeInstruction[]
+            {
+        new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLTabMenu.ShipComponentDisplay), "Slot")),
+        new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLSlot), "get_Type")),
+        new CodeInstruction(OpCodes.Ldc_I4_S, (sbyte)12),
+        new CodeInstruction(OpCodes.Beq_S)
+            };
+
+            List<CodeInstruction> instructionsList = instructions.ToList();
+            int index1 = FindSequence(instructionsList, target1, CheckMode.NONNULL);
+
+            CodeInstruction[] patch1 = new CodeInstruction[]
+            {
+        instructionsList[index1 - 5],
+        instructionsList[index1 - 4],
+        instructionsList[index1 - 3],
+        new CodeInstruction(OpCodes.Ldc_I4, 1000),
+        new CodeInstruction(OpCodes.Bgt_S, instructionsList[index1 - 1].operand)
+            };
+
+            instructionsList = PatchBySequence(instructionsList, target1, patch1, PatchMode.AFTER, CheckMode.NONNULL).ToList();
+
+            CodeInstruction[] target2 = new CodeInstruction[]
+            {
+        new CodeInstruction(OpCodes.Ldfld, Field(typeof(PLTabMenu.ShipSlotTitleDisplay), "Slot")),
+        new CodeInstruction(OpCodes.Callvirt, Method(typeof(PLSlot), "get_Type")),
+        new CodeInstruction(OpCodes.Ldc_I4_S, (sbyte)12),
+        new CodeInstruction(OpCodes.Beq_S)
+            };
+
+            int index2 = FindSequence(instructionsList, target2, CheckMode.NONNULL);
+
+            CodeInstruction[] patch2 = new CodeInstruction[]
+            {
+        instructionsList[index2 - 5],
+        instructionsList[index2 - 4],
+        instructionsList[index2 - 3],
+        new CodeInstruction(OpCodes.Ldc_I4, 1000),
+        new CodeInstruction(OpCodes.Bgt_S, instructionsList[index2 - 1].operand)
+            };
+
+            instructionsList = PatchBySequence(instructionsList, target2, patch2, PatchMode.AFTER, CheckMode.NONNULL).ToList();
+
+            return instructionsList;
+        }
+    }
+
     [HarmonyPatch(typeof(PLTabMenu), "GetComponentParent")]
     class AddCargoGrids
     {
@@ -249,6 +300,32 @@ namespace FLEETMOD.Interface.Tab
                 __result = PLTabMenu.Instance.ShipComponentsGrid_Cargo;
                 return false;
             }*/
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(PLShipComponent), "IsCargoSlot")]
+    class AssignCargoGrids
+    {
+        public static bool Prefix(ESlotType slotType, ref bool __result)
+        {
+            if (slotType == ESlotType.E_COMP_AIRLOCK)
+            {
+                __result = true;
+                return false;
+            }
+            if ((int)slotType > 1000)
+            {
+                int ShipID = (int)slotType / 1000;
+                int SlotType = (int)slotType % 1000;
+                PLShipInfoBase ship = PLEncounterManager.Instance.GetShipFromID(ShipID);
+                if (ship != null)
+                {
+                    __result = true;
+                }
+                __result = false;
+                return false;
+            }
             return true;
         }
     }
